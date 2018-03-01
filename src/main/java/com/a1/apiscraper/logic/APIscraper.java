@@ -16,6 +16,7 @@ public class APIscraper {
         HashMap<String, String> endpointResults = new HashMap<String, String>();
        for (String endpoint : api.getEndpoints()) {
            endpointResults.put(endpoint, Unirest.get(api.getBaseUrl() + endpoint).toString());
+           System.out.println(Unirest.get(api.getBaseUrl()+ endpoint).toString());
        }
     }
 }

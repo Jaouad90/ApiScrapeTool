@@ -17,6 +17,7 @@ public class APIManager {
     public APIManager(APIRepository apiRepository) {
         this.apiRepository = apiRepository;
         apiArrayList = (ArrayList<API>) apiRepository.findAll();
+        doScrape();
     }
 
     public void doScrape() {
