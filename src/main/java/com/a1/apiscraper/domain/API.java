@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
 @Getter
@@ -22,7 +22,9 @@ public class API {
 
     private String baseUrl;
 
-    private ArrayList<String> endpoints = new ArrayList<String>();
+    @ElementCollection
+    @Column(name = "endpointUrl")
+    private Collection<String> endpoints = new ArrayList<>();
 
     public void addEndpoint(String endpoint) {
         this.endpoints.add(endpoint);
