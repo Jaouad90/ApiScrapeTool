@@ -18,19 +18,19 @@ public class HomeController {
     @Autowired
     private APIRepository apiRepository;
 
-    private APIManager apiManager = new APIManager(apiRepository);
 
     public HomeController(APIRepository apiRepository) {
         this.apiRepository = apiRepository;
-    }
-
-    @GetMapping
-    @Transactional
-    public ModelAndView home() {
         API api = new API();
         api.setBaseUrl("https://api.coinmarketcap.com/v1/");
         api.addEndpoint("ticker/");
         apiRepository.save(api);
+    }
+
+    @GetMapping
+    @Transactional
+    public ModelAndView home() {    
+        APIManager apiManager = new APIManager(apiRepository);
         apiManager.doScrape();
         return new ModelAndView("home/home");
     }

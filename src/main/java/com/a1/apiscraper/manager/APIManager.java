@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 
 public class APIManager {
-    private ArrayList<API> apiArrayList = new ArrayList<>();
+    private ArrayList<API> apiArrayList;
 
 
     @Autowired
