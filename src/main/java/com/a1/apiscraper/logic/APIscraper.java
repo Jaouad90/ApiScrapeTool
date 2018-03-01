@@ -18,5 +18,4 @@ public class APIscraper {
            endpointResults.put(endpoint, Unirest.get(api.getBaseUrl() + endpoint).toString());
        }
     }
-
 }
