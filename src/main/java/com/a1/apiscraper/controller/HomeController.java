@@ -29,7 +29,7 @@ public class HomeController {
 
     @GetMapping
     @Transactional
-    public ModelAndView home() {    
+    public ModelAndView home() {
         APIManager apiManager = new APIManager(apiRepository);
         apiManager.doScrape();
         return new ModelAndView("home/home");
