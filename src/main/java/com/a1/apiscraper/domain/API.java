@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,8 +22,7 @@ public class API {
 
     private String baseUrl;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private ArrayList<String> endpoints = new ArrayList<>();
+    private ArrayList<String> endpoints = new ArrayList<String>();
 
     public void addEndpoint(String endpoint) {
         this.endpoints.add(endpoint);
