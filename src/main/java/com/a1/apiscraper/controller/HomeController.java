@@ -47,12 +47,16 @@ public class HomeController {
         endpoint.setApi(api);
         endpoints.add(endpoint);
         endpointRepository.save(endpoint);
-        Endpoint endpoint2 =    new Endpoint();
+
+        Endpoint endpoint2 = new Endpoint();
         endpoint2.setName("ticker/bitcoin");
+        endpoint2.setApi(api);
         endpoints.add(endpoint2);
         endpointRepository.save(endpoint2);
+
         api.setEndpoints(endpoints);
         apiRepository.save(api);
+
         APIManager apiManager = new APIManager(apiRepository, resultRepository, endpointRepository);
         apiManager.doScrape();
 
