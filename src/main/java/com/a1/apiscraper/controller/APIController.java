@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
@@ -39,8 +40,15 @@ public class APIController {
         return "api/edit";
     }
 
+    @Transactional
     @RequestMapping(value = "/api", method = RequestMethod.POST)
     public String submit(API api) {
+        List<Endpoint> endpoints = (List<Endpoint>) api.getEndpoints();
+        for (Endpoint endpoint : endpoints) {
+            endpoint.setApi(api);
+        }
+        api.setEndpoints(endpoints);
+        endpointRepository.save(endpoints);
         apiRepository.save(api);
         return "api/list";
     }

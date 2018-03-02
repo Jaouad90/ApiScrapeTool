@@ -26,10 +26,10 @@
                 </div>
             </div>
 
-            <tr th:each="endpoint, rowStat : *{endpoints}">
+            <tr>
                 <td></td>
                 <td><input type="text" class="form-control"
-                    th:field="*{endpoints[__${rowStat.index}__].name}"/></td>
+                    th:field="*{endpoints[0].name}"/></td>
             </tr>
 
             <div class="form-group">
