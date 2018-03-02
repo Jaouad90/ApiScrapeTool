@@ -1,0 +1,55 @@
+package com.a1.apiscraper.controller;
+
+import com.a1.apiscraper.domain.API;
+import com.a1.apiscraper.domain.Endpoint;
+import com.a1.apiscraper.repository.APIRepository;
+import com.a1.apiscraper.repository.EndpointRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+import java.util.Collection;
+import java.util.List;
+
+@Controller
+public class APIController {
+
+    @Autowired
+    APIRepository apiRepository;
+    @Autowired
+    EndpointRepository endpointRepository;
+
+    public APIController(APIRepository apiRepository, EndpointRepository endpointRepository) {
+        this.apiRepository = apiRepository;
+        this.endpointRepository = endpointRepository;
+    }
+
+
+
+    @RequestMapping(value = "/api/add", method = RequestMethod.GET)
+    public String showForm(Model model) {
+        model.addAttribute("api", new API());
+        return "api/edit";
+    }
+
+    @Transactional
+    @RequestMapping(value = "/api", method = RequestMethod.POST)
+    public String submit(API api) {
+        List<Endpoint> endpoints = (List<Endpoint>) api.getEndpoints();
+        for (Endpoint endpoint : endpoints) {
+            endpoint.setApi(api);
+        }
+        api.setEndpoints(endpoints);
+        endpointRepository.save(endpoints);
+        apiRepository.save(api);
+        return "api/list";
+    }
+}

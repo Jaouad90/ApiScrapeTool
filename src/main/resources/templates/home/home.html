@@ -60,11 +60,9 @@
                 </li>
 
                 <li >
-                    <a href="table.html">
-                        <i class="pe-7s-note2"></i>
-                        <div sec:authorize="hasAnyRole('Admin')">
-                            <p>IS EEN ADMIN</p>
-                        </div>
+                    <a th:href="@{'/api/add'}">
+                        <i class="pe-7s-graph"></i>
+                        <p>Dashboard</p>
                     </a>
                 </li>
                 <li>
