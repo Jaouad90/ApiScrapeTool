@@ -1,12 +1,10 @@
 package com.a1.apiscraper.controller;
 
-import com.a1.apiscraper.domain.API;
-import com.a1.apiscraper.domain.Endpoint;
-import com.a1.apiscraper.domain.Result;
+import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.manager.APIManager;
-import com.a1.apiscraper.repository.APIRepository;
-import com.a1.apiscraper.repository.EndpointRepository;
-import com.a1.apiscraper.repository.ResultRepository;
+import com.a1.apiscraper.repository.*;
+import com.a1.apiscraper.service.UserService;
+import com.a1.apiscraper.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,14 +24,22 @@ public class HomeController {
     private EndpointRepository endpointRepository;
     @Autowired
     private ResultRepository resultRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private UserServiceImpl userService;
+
 
     private ArrayList<Endpoint> endpoints = new ArrayList<>();
 
 
-    public HomeController(APIRepository apiRepository, EndpointRepository endpointRepository, ResultRepository resultRepository) {
+    public HomeController(APIRepository apiRepository, EndpointRepository endpointRepository, ResultRepository resultRepository, RoleRepository roleRepository, UserServiceImpl userService) {
         this.apiRepository = apiRepository;
         this.endpointRepository = endpointRepository;
         this.resultRepository = resultRepository;
+        this.roleRepository = roleRepository;
+        this.userService = userService;
+
     }
 
     @GetMapping
@@ -41,7 +47,6 @@ public class HomeController {
     public ModelAndView home() {
         API api = new API();
         api.setBaseUrl("https://api.coinmarketcap.com/v1/");
-
         Endpoint endpoint = new Endpoint();
         endpoint.setName("ticker/");
         endpoint.setApi(api);
@@ -59,7 +64,6 @@ public class HomeController {
 
         APIManager apiManager = new APIManager(apiRepository, resultRepository, endpointRepository);
         apiManager.doScrape();
-
         return new ModelAndView("home/home");
     }
     @GetMapping("detail")
