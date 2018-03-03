@@ -3,22 +3,44 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Spring Security Example </title>
+    <!--  Light Bootstrap Table core CSS    -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+          href="../../css/bootstrap.min.css" />
+    <link th:href="@{/css/light-bootstrap-dashboard.css}" href="../../css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
+
 </head>
 <body>
+<!--<div th:replace="fragments :: navbar"></div> -->
+<div class="container">
 <div th:if="${param.error}">
     Invalid username and password.
 </div>
 <div th:if="${param.logout}">
     You have been logged out.
 </div>
-<form th:action="@{/login}" method="post">
-    <input type="hidden"
-           th:name="${_csrf.parameterName}"
-           th:value="${_csrf.token}" />
+    <div class="row">
+        <div class="col-md-6 col-lg-4 offset-lg-4 offset-md-4">
+            <div class="card">
 
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
+                <div class="header">
+                    <h4 class="title">Log-in</h4>
+                    <hr/>
+                    <h6 class="text-muted">Indien uw het wachtwoord vergeten bent bent u fucked up</h6>
+                </div>
+                <div class="content">
+                    <form th:action="@{/login}" method="post">
+                        <input type="hidden"
+                               th:name="${_csrf.parameterName}"
+                               th:value="${_csrf.token}" />
+
+                        <div><label> User Name : <input class="form-control" type="text" name="username"/> </label></div>
+                        <div><label> Password: <input type="password" name="password" class="form-control"/> </label></div>
+                        <div><input type="submit" value="Sign In" class="btn btn-default"/></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
