@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
+<head th:replace="fragments :: head">
     <title>Edit Product Details</title>
 
 </head>
 <body>
-<div class="container">
+<div class="wrapper">
+    <div th:replace="fragments :: navbar"></div>
+    <div class="main-panel">
     <h2>Edit Product Details</h2>
     <div>
         <form class="form-horizontal" th:object="${api}" th:action="@{/api}" method="post" >
@@ -25,21 +27,55 @@
                     <input type="text" class="form-control" th:field="*{baseUrl}" />
                 </div>
             </div>
-
-            <tr>
-                <td></td>
-                <td><input type="text" class="form-control"
-                    th:field="*{endpoints[0].name}"/></td>
-            </tr>
-
+    <div class="form-group">
+        <label class="col-sm-2 control-label">API endpoints:</label>
+        <div id="p_scents">
+        <div class="col-sm-10">
+            <p>
+            <input type="text" class="form-control"
+                    th:field="*{endpoints[0].name}"/>
+            </p>
+        </div>
+        </div>
+    </div>
             <div class="form-group">
+                <div class="col-sm-3">
+                    <button type="button"  id="addScnt" class="btn btn-primary">Add field</button>
+                </div>
                 <div class="col-sm-2">
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>
 
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 </body>
 </html>
+<script src="../../js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script>
+    $(function() {
+        var scntDiv = $('#p_scents');
+        var fields = $('#p_scents p').size + 1;
+        var i = 1;
+        var field = "*{endpoints[" + i +"].name"
+
+        $('#addScnt').on('click', function() {
+            $('<p><input type="text" id="p_scnt" class="form-control" placeholder="Input Value" name="endpoints[' + i + '].name"/> <a href="#" id="remScnt">Remove</a></p>').appendTo(scntDiv);
+            console.log(i);
+            i++;
+            console.log(i);
+            return false;
+        });
+
+        $('#remScnt').on('click', function() {
+            if( i > 2 ) {
+                $(this).parents('p').remove();
+                i--;
+            }
+            return false;
+        });
+    });
+
+</script>

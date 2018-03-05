@@ -1,16 +1,86 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head (title)">
-    <title th:text="${title}">Fragments</title>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:fragment="head">
+    <title>Fragments</title>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="../css/animate.min.css" rel="stylesheet"/>
+
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="../../css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
-    <nav th:fragment="navbar" class="navbar navbar-dark bg-primary">
-        <a class="navbar-brand" href="http://thymeleaf.org">Thymeleaf</a>
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item"><a class="nav-link" th:href="@{/}" href="messages.html">Messages</a></li>
-        </ul>
-    </nav>
+    <div class="wrapper">
+        <div class="sidebar" th:fragment="navbar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
+
+            <!--
+                Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+                Tip 2: you can also add an image using data-image tag
+            -->
+
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="http://www.creative-tim.com" class="simple-text">
+                        API Scrape tool
+                    </a>
+                </div>
+
+                <ul class="nav">
+                    <li class="active">
+                        <a th:href="@{'/detail'}" href="detail.html">
+                            <i class="pe-7s-graph"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li sec:authorize="hasAuthority('Admin')">
+                        <a th:href="@{'/detail'}">
+                            <i class="pe-7s-user"></i>
+                            <span sec:authentication="name">"name"</span>
+                        </a>
+                    </li>
+
+                    <li >
+                        <a th:href="@{'/api/add'}">
+                            <i class="pe-7s-graph"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="typography.html">
+                            <i class="pe-7s-news-paper"></i>
+                            <p>Typography</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="icons.html">
+                            <i class="pe-7s-science"></i>
+                            <p>Icons</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="maps.html">
+                            <i class="pe-7s-map-marker"></i>
+                            <p>Maps</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="notifications.html">
+                            <i class="pe-7s-bell"></i>
+                            <p>Notifications</p>
+                        </a>
+                    </li>
+                    <li class="active-pro">
+                        <a href="upgrade.html">
+                            <i class="pe-7s-rocket"></i>
+                            <p>Upgrade to PRO</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
