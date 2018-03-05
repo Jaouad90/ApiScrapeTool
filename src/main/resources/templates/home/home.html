@@ -40,7 +40,7 @@
 
         <div class="sidebar-wrapper">
             <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text">
+                <a href="/" class="simple-text">
                     API Scrape tool
                 </a>
             </div>
@@ -211,26 +211,31 @@
                     <div class="col-md-8">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Users Behavior</h4>
-                                <p class="category">24 Hours performance</p>
+                                <h4 class="title">API's in het systeem</h4>
+                                <p class="category">Laatste 24 uur</p>
                             </div>
-                            <div class="content">
-                                <div id="chartHours" class="ct-chart"></div>
-                                <div class="footer">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Open
-                                        <i class="fa fa-circle text-danger"></i> Click
-                                        <i class="fa fa-circle text-warning"></i> Click Second Time
-                                    </div>
-                                    <hr/>
-                                    <div class="stats">
-                                        <i class="fa fa-history"></i> Updated 3 minutes ago
-                                    </div>
-                                </div>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>API Name</th>
+                                    <th>Base URL</th>
+                                    <th>Last scrape</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:if="${apis.empty}">
+                                    <td colspan="3">No messages</td>
+                                </tr>
+                                  <tr th:each="api : ${apis}">
+                                      <td th:text="${api.name}">Tijn</td>
+                                      <td th:text="${api.baseUrl}">Basis url</td>
+                                  </tr>
+                                </tbody>
+                            </table>
                             </div>
                         </div>
                     </div>
-                </div>
+
 
 
 

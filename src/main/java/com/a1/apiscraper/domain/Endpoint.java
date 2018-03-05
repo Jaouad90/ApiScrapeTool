@@ -21,7 +21,7 @@ public class Endpoint {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY )
     API api;
 
     @OneToMany(mappedBy = "endpoint")
