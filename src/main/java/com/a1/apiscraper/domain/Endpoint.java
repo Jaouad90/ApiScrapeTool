@@ -22,6 +22,7 @@ public class Endpoint {
     
     private String name;
 
+    @JoinColumn(name = "api_fk")
     @ManyToOne(fetch = FetchType.LAZY )
     API api;
 
