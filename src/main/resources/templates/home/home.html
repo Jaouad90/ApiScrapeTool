@@ -222,6 +222,8 @@
                                   <tr th:each="api : ${apis}">
                                       <td><a href="detail.html" th:href="@{'/api/' + ${api.id}}"
                                              th:text="${api.name}"> The name </a></td>
+                                      <td><a th:href="@{'/api/edit/' + ${api.id}}"
+                                             > EDIT </a></td>
                                   </tr>
                                 </tbody>
                             </table>

@@ -10,7 +10,7 @@
     <div class="main-panel">
     <h2>Edit Product Details</h2>
     <div>
-        <form class="form-horizontal" th:object="${api}" th:action="@{/api}" method="post" >
+        <form th:if="${api}" class="form-horizontal" th:object="${api}" th:action="@{/api/}" method="post" >
             <input type="hidden"
                    th:name="${_csrf.parameterName}"
                    th:value="${_csrf.token}" />
@@ -32,8 +32,14 @@
         <div id="p_scents">
         <div class="col-sm-10">
             <p>
-            <input type="text" class="form-control"
-                    th:field="*{endpoints[0].name}"/>
+            <div th:if="${api.endpoints}">
+                <div th:each="endpoint, iter : ${api.endpoints}">
+                    <input type="text" class="form-control" th:field="*{endpoints[__${iter.index}__].name}"/>
+                </div>
+            </div>
+
+                <input th:unless="${api.endpoints}" type="text" class="form-control" th:field="*{endpoints[0].name}"/>
+
             </p>
         </div>
         </div>

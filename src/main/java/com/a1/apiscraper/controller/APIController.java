@@ -55,4 +55,10 @@ public class APIController {
     public ModelAndView view(@PathVariable("id") API api) {
         return new ModelAndView("home/detail", "api", api);
     }
+
+    @RequestMapping(value = "/api/edit/{id}")
+    public ModelAndView edit(@PathVariable("id") API api) {
+        return new ModelAndView("api/edit", "api", api);
+    }
+
 }
