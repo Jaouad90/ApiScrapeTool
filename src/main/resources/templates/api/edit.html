@@ -35,8 +35,14 @@
         <div id="p_scents">
         <div class="col-sm-10">
             <p>
-            <input type="text" class="form-control"
-                    th:field="*{endpoints[0].name}"/>
+            <div th:if="${api.endpoints}">
+                <div th:each="endpoint, iter : ${api.endpoints}">
+                    <input type="text" class="form-control" th:field="*{endpoints[__${iter.index}__].name}"/>
+                </div>
+            </div>
+
+                <input th:unless="${api.endpoints}" type="text" class="form-control" th:field="*{endpoints[0].name}"/>
+
             </p>
         </div>
         </div>
