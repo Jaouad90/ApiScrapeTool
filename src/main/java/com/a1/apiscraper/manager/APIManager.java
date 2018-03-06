@@ -44,6 +44,7 @@ public class APIManager {
                 result.setResult(hash.get(endpoint));
                 result.setEndpoint(endpoint);
                 results.add(result);
+                endpoint.setResults(results);
 
             }
         }

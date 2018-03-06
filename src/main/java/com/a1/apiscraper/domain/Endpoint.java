@@ -1,5 +1,6 @@
 package com.a1.apiscraper.domain;
 
+import com.sun.corba.se.spi.activation.EndPointInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +25,7 @@ public class Endpoint {
     @ManyToOne(fetch = FetchType.LAZY )
     API api;
 
-    @OneToMany(mappedBy = "endpoint")
+    @OneToMany(mappedBy = "endpoint", targetEntity = Result.class)
     @Column(name = "result")
-    private List<Result> results = new ArrayList<>();
+    private Collection<Result> results = new ArrayList<>();
 }

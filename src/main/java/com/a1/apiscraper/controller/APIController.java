@@ -9,9 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
@@ -50,6 +48,11 @@ public class APIController {
         api.setEndpoints(endpoints);
         endpointRepository.save(endpoints);
         apiRepository.save(api);
-        return "api/list";
+        return "/";
+    }
+
+    @RequestMapping(value = "/api/{id}")
+    public ModelAndView view(@PathVariable("id") API api) {
+        return new ModelAndView("home/detail", "api", api);
     }
 }

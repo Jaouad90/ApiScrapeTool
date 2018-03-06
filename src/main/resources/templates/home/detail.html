@@ -2,8 +2,74 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: head">
     <title>Messages : View all</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
+
 </head>
 <body>
- <div th:replace="fragments :: navbar"></div>
+<div class="wrapper">
+    <div th:replace="fragments :: navbar"></div>
+    <div class="main-panel">
+    <h3 th:text="${api.name}" class="text-muted offset-lg-4 ">API name</h3>
+        <div class="row">
+        <div class="col-md-8 offset-lg-2">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Endpoints bij de betreffende API</h4>
+                    <p class="category">Klap open voor laatste resultaat</p>
+                </div>
+                <table class="table" id="endpointtable">
+                    <thead>
+                    <tr>
+                        <th>Endpoint url</th>
+                        <th>Details</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${api.endpoints.empty}">
+                        <td>No endpoints</td>
+                    </tr>
+                    <tr th:each="endpoint : ${api.endpoints}" th:attr="data-child-value=${endpoint.results[0].result}" >
+                        <td class="details-control"></td>
+                        <td th:text="${endpoint.name}">endpoint name</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
 </body>
+<script src="../../js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
+<script>
+
+    function format(value) {
+        console.log(value);
+        return '<div>Result: ' + JSON.stringify(value) + '</div>';
+    }
+
+    $(document).ready(function() {
+      var table =  $('#endpointtable').DataTable( {
+            responsive: true
+
+        });
+        $('#endpointtable').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            } else {
+                // Open this row
+                row.child(format(tr.data('child-value'))).show();
+                tr.addClass('shown');
+            }
+        });
+    } );
+
+</script>
 </html>
