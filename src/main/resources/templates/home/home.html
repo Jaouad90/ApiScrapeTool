@@ -10,7 +10,7 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
     <!-- Bootstrap core CSS     -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet" />
 
@@ -22,7 +22,8 @@
 
 
     <!--     Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
+
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'/>
 
     <link href="../../css/pe-icon-7-stroke.css" rel="stylesheet" />
@@ -208,17 +209,15 @@
                                 <h4 class="title">API's in het systeem</h4>
                                 <p class="category">Laatste 24 uur</p>
                             </div>
-                            <table class="table">
+                            <table class="table" id="apitable">
                                 <thead>
                                 <tr>
                                     <th>API Name</th>
-                                    <th>Base URL</th>
-                                    <th>Last scrape</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:if="${apis.empty}">
-                                    <td colspan="3">No messages</td>
+                                    <td>No messages</td>
                                 </tr>
                                   <tr th:each="api : ${apis}">
                                       <td><a href="detail.html" th:href="@{'/api/' + ${api.id}}"
@@ -429,7 +428,7 @@
 <!--   Core JS Files   -->
 <script src="../../js/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script src="../../js/bootstrap.min.js" type="text/javascript"></script>
-
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
 <!--  Charts Plugin -->
 <script src="../../js/chartist.min.js"></script>
 
@@ -439,17 +438,11 @@
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="../../js/demo.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        demo.initChartist();
-        $.notify({
-            icon: 'pe-7s-gift',
-            message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
-        },{
-            type: 'info',
-            timer: 4000
+<script>
+    $(document).ready(function() {
+        $('#apitable').DataTable( {
+            responsive: true
         });
-    });
+    } );
 </script>
-
 </html>
