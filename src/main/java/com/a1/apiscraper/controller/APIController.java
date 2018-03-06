@@ -38,7 +38,7 @@ public class APIController {
 
     @Transactional
     @RequestMapping(value = "/api", method = RequestMethod.POST)
-    public ModelAndView submit(@Valid @ModelAttribute("api") API api, BindingResult result) {
+    public ModelAndView submit(@Valid API api, BindingResult result) {
         if (result.hasErrors()) {
             return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
         }
@@ -49,7 +49,7 @@ public class APIController {
         api.setEndpoints(endpoints);
         endpointRepository.save(endpoints);
         apiRepository.save(api);
-        return new ModelAndView("/");
+        return new ModelAndView("api/edit", "api", api);
     }
 
     @RequestMapping(value = "/api/{id}")
