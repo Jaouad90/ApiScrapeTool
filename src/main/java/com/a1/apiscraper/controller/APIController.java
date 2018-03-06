@@ -31,8 +31,7 @@ public class APIController {
 
 
     @RequestMapping(value = "/api/add", method = RequestMethod.GET)
-    public String showForm(Model model)
-    {
+    public String showForm(Model model) {
         model.addAttribute("api", new API());
         return "api/edit";
     }
@@ -50,7 +49,7 @@ public class APIController {
         api.setEndpoints(endpoints);
         endpointRepository.save(endpoints);
         apiRepository.save(api);
-        return new ModelAndView("/");
+        return new ModelAndView("api/edit", "api", api);
     }
 
     @RequestMapping(value = "/api/{id}")

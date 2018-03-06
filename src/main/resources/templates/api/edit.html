@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-                <input th:unless="${api.endpoints}" type="text" class="form-control" th:field="*{endpoints[0].name}"/>
+                <input th:if="${#lists.isEmpty(api.endpoints)}" type="text" class="form-control" th:field="*{endpoints[0].name}"/>
 
             </p>
         </div>
