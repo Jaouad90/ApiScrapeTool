@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments :: head">
     <title>Messages : View all</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
 </head>
 <body>
 <div class="wrapper">
@@ -15,17 +16,15 @@
                     <h4 class="title">Endpoints bij de betreffende API</h4>
                     <p class="category">Klap open voor laatste resultaat</p>
                 </div>
-                <table class="table">
+                <table class="table" id="endpointtable">
                     <thead>
                     <tr>
                         <th>Endpoint url</th>
-                        <th></th>
-                        <th>Last scrape</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:if="${api.endpoints.empty}">
-                        <td colspan="3">No endpoints</td>
+                        <td>No endpoints</td>
                     </tr>
                     <tr th:each="endpoint : ${api.endpoints}">
                         <td th:text="${endpoint.name}">endpoint name</td>
@@ -39,4 +38,13 @@
 </div>
 
 </body>
+<script src="../../js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#endpointtable').DataTable( {
+            responsive: true
+        });
+    } );
+</script>
 </html>
