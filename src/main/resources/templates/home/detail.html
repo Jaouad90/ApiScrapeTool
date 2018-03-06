@@ -4,6 +4,12 @@
     <title>Messages : View all</title>
 </head>
 <body>
- <div th:replace="fragments :: navbar"></div>
+<div class="wrapper">
+    <div th:replace="fragments :: navbar"></div>
+    <div class="main-panel">
+
+    <p th:text="${api.name}"></p>
+    </div>
+</div>
 </body>
 </html>
