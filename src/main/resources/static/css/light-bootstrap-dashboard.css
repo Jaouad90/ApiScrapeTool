@@ -3867,3 +3867,12 @@ fieldset[disabled] .btn-neutral.active {
         -webkit-overflow-scrolling: touch;
     }
 }
+
+@import url('//cdn.datatables.net/1.10.2/css/jquery.dataTables.css');
+td.details-control {
+    background: url('http://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+}
