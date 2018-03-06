@@ -31,14 +31,15 @@ public class APIController {
 
 
     @RequestMapping(value = "/api/add", method = RequestMethod.GET)
-    public String showForm(Model model) {
+    public String showForm(Model model)
+    {
         model.addAttribute("api", new API());
         return "api/edit";
     }
 
     @Transactional
     @RequestMapping(value = "/api", method = RequestMethod.POST)
-    public ModelAndView submit(@Valid @ModelAttribute("api") API api, BindingResult result) {
+    public ModelAndView submit(@Valid API api, BindingResult result) {
         if (result.hasErrors()) {
             return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
         }
