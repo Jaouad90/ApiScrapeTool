@@ -3,6 +3,8 @@ package com.a1.apiscraper.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import java.util.ArrayDeque;
@@ -21,12 +23,15 @@ public class API {
     @GeneratedValue
     private long id;
 
+    @NotEmpty(message = "Name cannot be empty!")
     private String name;
 
     private String username;
 
     private String password;
 
+    @NotEmpty(message = "Base URL cannot be not empty!")
+    @URL(message = "Please insert a valid URL!")
     private String baseUrl;
 
 

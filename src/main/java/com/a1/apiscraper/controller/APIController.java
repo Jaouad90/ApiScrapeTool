@@ -7,14 +7,12 @@ import com.a1.apiscraper.repository.EndpointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -40,7 +38,10 @@ public class APIController {
 
     @Transactional
     @RequestMapping(value = "/api", method = RequestMethod.POST)
-    public String submit(API api) {
+    public ModelAndView submit(@Valid @ModelAttribute("api") API api, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
+        }
         List<Endpoint> endpoints = (List<Endpoint>) api.getEndpoints();
         for (Endpoint endpoint : endpoints) {
             endpoint.setApi(api);
@@ -48,7 +49,7 @@ public class APIController {
         api.setEndpoints(endpoints);
         endpointRepository.save(endpoints);
         apiRepository.save(api);
-        return "/";
+        return new ModelAndView("/");
     }
 
     @RequestMapping(value = "/api/{id}")
