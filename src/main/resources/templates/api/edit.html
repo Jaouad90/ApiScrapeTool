@@ -41,12 +41,12 @@
             <p>
             <div th:if="${api.endpoints}">
                 <div th:each="endpoint, iter : ${api.endpoints}">
-                    <input type="text" class="form-control" th:field="*{endpoints[__${iter.index}__].name}"/>
+                    <input type="text" class="form-control" th:field="*{endpoints[__${iter.index}__].name}" data-endpoint=""/>
                     <input type="hidden" class="form-control" th:field="*{endpoints[__${iter.index}__].id}"/>
                 </div>
             </div>
 
-                <input th:if="${#lists.isEmpty(api.endpoints)}" type="text" class="form-control" th:field="*{endpoints[0].name}"/>
+                <input th:if="${#lists.isEmpty(api.endpoints)}" type="text" class="form-control" th:field="*{endpoints[0].name}" data-endpoint=""/>
 
             </p>
         </div>
@@ -72,7 +72,7 @@
     $(function() {
         var scntDiv = $('#p_scents');
         var fields = $('#p_scents p').size + 1;
-        var i = 1;
+        var i = $('[data-endpoint=""]').length;
         var field = "*{endpoints[" + i +"].name"
 
         $('#addScnt').on('click', function() {
