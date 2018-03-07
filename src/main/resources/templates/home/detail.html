@@ -25,12 +25,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:if="${api.endpoints.empty}">
+                    <tr th:unless="${api.endpoints}">
                         <td>No endpoints</td>
                     </tr>
-                    <tr th:each="endpoint : ${api.endpoints}" th:attr="data-child-value=${endpoint.getResults()[0].result}" >
+                    <tr th:each="endpoint : ${api.endpoints.entrySet()}">
+                        <th:block th:each="result :${endpoint.getValue().getResults().entrySet()}">
+                            <div th:text="${result.getValue().getResult()}"/>
+                        </th:block>
                         <td class="details-control"></td>
-                        <td th:text="${endpoint.name}">endpoint name</td>
+                        <td th:text="${endpoint.getValue().getName()}">endpoint name</td>
                     </tr>
                     </tbody>
                 </table>
