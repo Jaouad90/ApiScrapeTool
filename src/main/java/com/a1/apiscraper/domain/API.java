@@ -35,7 +35,8 @@ public class API {
     private String baseUrl;
 
 
-    @OneToMany(mappedBy="api", targetEntity = Endpoint.class, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Endpoint.class, cascade = CascadeType.ALL)
+    @JoinColumn(name="api_fk")
     private Collection<Endpoint> endpoints = new ArrayList<>();
 
 

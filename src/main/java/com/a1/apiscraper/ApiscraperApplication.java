@@ -65,11 +65,8 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			api.setName("Coindesk API");
 			api.setBaseUrl("https://api.coindesk.com/v1/bpi");
 			api.setEndpoints(endpointList);
-			endpoint1.setApi(api);
 			apiRepository.save(api);
 			endpointRepository.save(endpoint1);
-
-
 		};
 	}
 }
