@@ -16,10 +16,6 @@ public class Result {
     @GeneratedValue
     private Long id;
 
-    @JoinColumn(name = "endpoint_fk")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Endpoint endpoint;
-
     @Lob
     private String result;
 }
