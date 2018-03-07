@@ -12,13 +12,13 @@ import java.util.Map;
 public class APIscraper {
     private API api;
 
-        public APIscraper(API api) {
+    public APIscraper(API api) {
         this.api = api;
     }
 
     public HashMap<Endpoint, String> scrape() {
         HashMap<Endpoint, String> endpointResults = new HashMap<Endpoint, String>();
-         Map<Long, Endpoint> endpoints =  api.getEndpoints();
+        Map<Long, Endpoint> endpoints =  api.getEndpoints();
         for (Map.Entry<Long, Endpoint> endpoint : endpoints.entrySet() ) {
             HttpResponse<String> result = null;
             try {

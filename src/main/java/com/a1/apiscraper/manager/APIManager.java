@@ -36,20 +36,17 @@ public class APIManager {
 
     @Transactional
     public void doScrape() {
-        Map<Long, Result> results = new HashMap<>();
         for(API api : apiArrayList) {
             APIscraper tempScraper = new APIscraper(api);
             HashMap<Endpoint, String> hash = tempScraper.scrape();
             for (Endpoint endpoint: hash.keySet()) {
-
+                Map<Long, Result> results = new HashMap<>();
                 Result result = new Result();
                 resultRepository.save(result);
                 result.setResult(hash.get(endpoint));
                 results.put(result.getId(), result);
                 endpoint.setResults(results);
                 endpointRepository.save(endpoint);
-
-
             }
         }
     }
