@@ -7,10 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Getter
@@ -21,7 +18,7 @@ public class API {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @NotEmpty(message = "Name cannot be empty!")
     private String name;
@@ -35,12 +32,12 @@ public class API {
     private String baseUrl;
 
 
-    @OneToMany(targetEntity = Endpoint.class, cascade = CascadeType.ALL)
-    @JoinColumn(name="api_fk")
-    private Collection<Endpoint> endpoints = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private Map<Long, Endpoint> endpoints = new HashMap<>();
 
 
     public void addEndpoint(Endpoint endpoint) {
-        this.endpoints.add(endpoint);
+        assert(endpoint.getId() != null);
+        endpoints.put(endpoint.getId(), endpoint );
     }
 }

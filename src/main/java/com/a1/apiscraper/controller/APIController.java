@@ -42,9 +42,6 @@ public class APIController {
         if (result.hasErrors()) {
             return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
         }
-        List<Endpoint> endpoints = (List<Endpoint>) api.getEndpoints();
-        api.setEndpoints(endpoints);
-        endpointRepository.save(endpoints);
         apiRepository.save(api);
         return new ModelAndView("api/edit", "api", api);
     }
