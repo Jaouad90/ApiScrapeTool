@@ -42,7 +42,6 @@ public class APIManager {
 
                 Result result = new Result();
                 result.setResult(hash.get(endpoint));
-                result.setEndpoint(endpoint);
                 results.add(result);
                 endpoint.setResults(results);
 

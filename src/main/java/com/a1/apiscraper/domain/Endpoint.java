@@ -22,7 +22,7 @@ public class Endpoint {
     
     private String name;
 
-    @OneToMany(mappedBy = "endpoint", targetEntity = Result.class)
-    @Column(name = "result")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="endpoint_fk")
     private Collection<Result> results = new ArrayList<>();
 }
