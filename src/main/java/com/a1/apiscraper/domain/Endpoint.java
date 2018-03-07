@@ -22,10 +22,6 @@ public class Endpoint {
     
     private String name;
 
-    @JoinColumn(name = "api_fk")
-    @ManyToOne(fetch = FetchType.LAZY )
-    API api;
-
     @OneToMany(mappedBy = "endpoint", targetEntity = Result.class)
     @Column(name = "result")
     private Collection<Result> results = new ArrayList<>();
