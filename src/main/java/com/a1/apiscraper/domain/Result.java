@@ -18,4 +18,5 @@ public class Result {
 
     @Lob
     private String result;
+
 }

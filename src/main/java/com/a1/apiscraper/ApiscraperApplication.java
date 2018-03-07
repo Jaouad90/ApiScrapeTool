@@ -19,7 +19,9 @@ import org.springframework.context.annotation.Bean;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootApplication
 public class ApiscraperApplication extends SpringBootServletInitializer{
@@ -46,7 +48,6 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 		return () -> {
 			List<User> userList = new ArrayList<>();
 			List<Role> roleList = new ArrayList<>();
-			List<Endpoint> endpointList = new ArrayList<>();
 			Role role = new Role();
 			role.setName("Admin");
 			User user = new User();
@@ -58,15 +59,10 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			role.setUsers(userList);
 			user.setRoles(roleList);
 			userService.save(user);
-			Endpoint endpoint1 = new Endpoint();
-			endpoint1.setName("/currentprice.json");
-			endpointList.add(endpoint1);
 			API api = new API();
 			api.setName("Coindesk API");
 			api.setBaseUrl("https://api.coindesk.com/v1/bpi");
-			api.setEndpoints(endpointList);
 			apiRepository.save(api);
-			endpointRepository.save(endpoint1);
 		};
 	}
 }

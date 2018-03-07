@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class APIManager {
     private ArrayList<API> apiArrayList;
@@ -33,20 +34,23 @@ public class APIManager {
         apiArrayList = (ArrayList<API>) apiRepository.findAll();
     }
 
+    @Transactional
     public void doScrape() {
-        ArrayList<Result> results = new ArrayList<>();
+        Map<Long, Result> results = new HashMap<>();
         for(API api : apiArrayList) {
             APIscraper tempScraper = new APIscraper(api);
             HashMap<Endpoint, String> hash = tempScraper.scrape();
             for (Endpoint endpoint: hash.keySet()) {
 
                 Result result = new Result();
+                resultRepository.save(result);
                 result.setResult(hash.get(endpoint));
-                results.add(result);
+                results.put(result.getId(), result);
                 endpoint.setResults(results);
+                endpointRepository.save(endpoint);
+
 
             }
         }
-        resultRepository.save(results);
     }
 }

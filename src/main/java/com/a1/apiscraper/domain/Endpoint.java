@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
@@ -23,6 +21,5 @@ public class Endpoint {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="endpoint_fk")
-    private Collection<Result> results = new ArrayList<>();
+    private Map<Long, Result> results = new HashMap<>();
 }
