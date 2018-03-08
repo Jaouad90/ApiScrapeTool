@@ -1,13 +1,7 @@
 package com.a1.apiscraper;
 
-import com.a1.apiscraper.domain.API;
-import com.a1.apiscraper.domain.Endpoint;
-import com.a1.apiscraper.domain.Role;
-import com.a1.apiscraper.domain.User;
-import com.a1.apiscraper.repository.APIRepository;
-import com.a1.apiscraper.repository.EndpointRepository;
-import com.a1.apiscraper.repository.RoleRepository;
-import com.a1.apiscraper.repository.UserRepository;
+import com.a1.apiscraper.domain.*;
+import com.a1.apiscraper.repository.*;
 import com.a1.apiscraper.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +28,7 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 	private EndpointRepository endpointRepository;
 	@Autowired
 	private APIRepository apiRepository;
+
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(ApiscraperApplication.class);
@@ -59,9 +54,23 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			role.setUsers(userList);
 			user.setRoles(roleList);
 			userService.save(user);
+//			Map<Long, Endpoint> endpoints = new HashMap<>();
+//			Endpoint endpoint = new Endpoint();
+//			endpoint.setName("/currentprice.json");
+//			Endpoint endpoint1 = new Endpoint();
+//			endpoint1.setName("/oldprice.json");
+//			Endpoint endpoint2 = new Endpoint();
+//			endpoint2.setName("/highprice.json");
+//			endpointRepository.save(endpoint);
+//			endpointRepository.save(endpoint1);
+//			endpointRepository.save(endpoint2);
+//			endpoints.put(endpoint.getId(), endpoint);
+//			endpoints.put(endpoint1.getId(), endpoint1);
+//			endpoints.put(endpoint2.getId(), endpoint2);
 			API api = new API();
 			api.setName("Coindesk API");
 			api.setBaseUrl("https://api.coindesk.com/v1/bpi");
+//			api.setEndpoints(endpoints);
 			apiRepository.save(api);
 		};
 	}

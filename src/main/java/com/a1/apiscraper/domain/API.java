@@ -23,21 +23,29 @@ public class API {
     @NotEmpty(message = "Name cannot be empty!")
     private String name;
 
-    private String username;
-
-    private String password;
-
     @NotEmpty(message = "Base URL cannot be not empty!")
     @URL(message = "Please insert a valid URL!")
     private String baseUrl;
 
+    private String state;
 
-    @OneToMany(cascade = CascadeType.ALL)
+
+    @OneToMany(cascade = CascadeType.MERGE)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
-
 
     public void addEndpoint(Endpoint endpoint) {
         assert(endpoint.getId() != null);
         endpoints.put(endpoint.getId(), endpoint );
     }
+
+    public APIMemento saveStateToMemente() {
+        return new APIMemento(state, endpoints, baseUrl);
+    }
+
+    public void getStateFromMemento(APIMemento memento) {
+        state = memento.getState();
+        endpoints = memento.getEndpoints();
+        baseUrl = memento.getBaseUrl();
+    }
+
 }
