@@ -15,6 +15,9 @@ public class CareTaker {
     @Id
     private Long Id;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "api_id")
+    private API api;
     @OneToMany(cascade = CascadeType.ALL)
     private List<APIMemento> mementoList = new ArrayList<>();
 
