@@ -39,8 +39,7 @@ public class Mailer {
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(receiver));
                 message.setSubject(subject);
-                message.setText("Dear Mail Crawler,"
-                        + "\n\n No spam to my email, please!");
+                message.setText(this.message);
 
                 Transport.send(message);
             } catch (MessagingException e) {
