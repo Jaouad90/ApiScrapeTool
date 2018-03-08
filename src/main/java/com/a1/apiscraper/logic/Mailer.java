@@ -16,6 +16,7 @@ public class Mailer {
 
     private String message = null;
     private String receiver = null;
+    private String subject = null;
 
     public boolean sendMail() {
         if (this.checkInfo()) {
@@ -36,8 +37,8 @@ public class Mailer {
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(username));
                 message.setRecipients(Message.RecipientType.TO,
-                        InternetAddress.parse(username));
-                message.setSubject("Testing Subject");
+                        InternetAddress.parse(receiver));
+                message.setSubject(subject);
                 message.setText("Dear Mail Crawler,"
                         + "\n\n No spam to my email, please!");
 
@@ -50,6 +51,6 @@ public class Mailer {
     }
 
     private boolean checkInfo() {
-        return message != null && receiver != null;
+        return message != null && receiver != null && subject != null;
     }
 }
