@@ -3,17 +3,17 @@ package com.a1.apiscraper.manager;
 import com.a1.apiscraper.domain.API;
 import com.a1.apiscraper.domain.Endpoint;
 import com.a1.apiscraper.domain.Result;
-import com.a1.apiscraper.logic.APIscraper;
+import com.a1.apiscraper.logic.APIScraper;
+import com.a1.apiscraper.logic.EmailScrape;
+import com.a1.apiscraper.logic.SimpleAPIscraper;
 import com.a1.apiscraper.repository.APIRepository;
 import com.a1.apiscraper.repository.EndpointRepository;
 import com.a1.apiscraper.repository.ResultRepository;
-import com.fasterxml.jackson.databind.util.TypeKey;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class APIManager {
@@ -37,7 +37,8 @@ public class APIManager {
     @Transactional
     public void doScrape() {
         for(API api : apiArrayList) {
-            APIscraper tempScraper = new APIscraper(api);
+            APIScraper tempScraper = new SimpleAPIscraper(api);
+            tempScraper = new EmailScrape(tempScraper);
             HashMap<Endpoint, String> hash = tempScraper.scrape();
             for (Endpoint endpoint: hash.keySet()) {
                 Map<Long, Result> results = new HashMap<>();
