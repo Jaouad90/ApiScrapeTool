@@ -5,14 +5,16 @@ import com.a1.apiscraper.domain.Endpoint;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class APIscraper {
+@Getter
+public abstract class APIScraper {
     private API api;
 
-    public APIscraper(API api) {
+    APIScraper(API api) {
         this.api = api;
     }
 
@@ -28,7 +30,7 @@ public class APIscraper {
             }
             String output = result.getBody();
             endpointResults.put(endpoint.getValue(), output );
-       }
-       return endpointResults;
+        }
+        return endpointResults;
     }
 }
