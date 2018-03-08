@@ -1,6 +1,9 @@
 package com.a1.apiscraper;
 
 import com.a1.apiscraper.domain.*;
+import com.a1.apiscraper.logic.APIScraper;
+import com.a1.apiscraper.logic.APIScraperDecorator;
+import com.a1.apiscraper.logic.EmailDecorator;
 import com.a1.apiscraper.repository.*;
 import com.a1.apiscraper.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
@@ -13,9 +16,7 @@ import org.springframework.context.annotation.Bean;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @SpringBootApplication
 public class ApiscraperApplication extends SpringBootServletInitializer{
@@ -28,6 +29,11 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 	private EndpointRepository endpointRepository;
 	@Autowired
 	private APIRepository apiRepository;
+	@Autowired
+	private APIConfigRepository apiConfigRepository;
+	@Autowired
+	private DecoratorRepository decoratorRepository;
+
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -72,6 +78,15 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			api.setBaseUrl("https://api.coindesk.com/v1/bpi");
 //			api.setEndpoints(endpoints);
 			apiRepository.save(api);
+
+			APIScraperDecorator decarator = new EmailDecorator(new APIScraper(api));
+
+			APIConfig apiConfig = new APIConfig();
+			apiConfig.setApi(api);
+			apiConfigRepository.save(apiConfig);
+
+
+
 		};
 	}
 }
