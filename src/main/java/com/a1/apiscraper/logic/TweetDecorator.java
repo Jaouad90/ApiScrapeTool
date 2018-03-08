@@ -20,7 +20,8 @@ public class TweetDecorator extends APIScraper {
 
     @Override
     public HashMap<Endpoint, String> scrape() {
-        apiScraper.scrape();
+        HashMap<Endpoint, String> results = apiScraper.scrape();
+
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
 				.setOAuthConsumerKey("gpJXTPM4hsGhZ3OtEcSG9CrDp")
@@ -35,6 +36,6 @@ public class TweetDecorator extends APIScraper {
         } catch (TwitterException e) {
             e.printStackTrace();
         }
-        return apiScraper.scrape();
+        return results;
     }
 }
