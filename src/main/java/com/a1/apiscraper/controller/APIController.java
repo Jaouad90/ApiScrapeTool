@@ -43,25 +43,32 @@ public class APIController {
         return "api/edit";
     }
 
-
+    @Transactional
     @RequestMapping(value = "/api", method = RequestMethod.POST)
     public ModelAndView submit(@Valid @ModelAttribute("api") API api, BindingResult result) {
         if (result.hasErrors()) {
             return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
         }
-        CareTaker careTaker = new CareTaker();
-        api.setState("state 0");
-        careTaker.add(api.saveStateToMemente());
-        careTakerRepository.save(careTaker);
-        api.setBaseUrl("https://google.nl");
-        api.getStateFromMemento(careTaker.get(0));
-        System.out.println(api.getState());
-        apiRepository.save(api);
+//        CareTaker careTaker = new CareTaker();
+//        api.setState("state 0");
+//        api.setCareTaker(careTaker);
+//        careTaker.add(api.saveStateToMemente());
+//        careTakerRepository.save(careTaker);
+//        System.out.println(api.getState());
+          apiRepository.save(api);
         return new ModelAndView("api/edit", "api", api);
     }
 
     @RequestMapping(value = "/api/{id}")
     public ModelAndView view(@PathVariable("id") API api) {
+//          api.setName("GOOGLE");
+//           api.setBaseUrl("https://google.nl");
+//           Endpoint endpoint1 = new Endpoint();
+//           endpoint1.setName("/historicalprice.json");
+//           endpointRepository.save(endpoint1);
+//           api.addEndpoint(endpoint1);
+//           CareTaker careTaker = api.getCareTaker();
+//           api.getStateFromMemento(careTaker.get(careTaker.getMementoList().size() - 1));
         return new ModelAndView("home/detail", "api", api);
     }
 

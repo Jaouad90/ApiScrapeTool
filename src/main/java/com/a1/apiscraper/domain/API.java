@@ -29,6 +29,8 @@ public class API {
 
     private String state;
 
+    @OneToOne
+    private CareTaker careTaker;
 
     @OneToMany(cascade = CascadeType.MERGE)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
@@ -39,10 +41,11 @@ public class API {
     }
 
     public APIMemento saveStateToMemente() {
-        return new APIMemento(state, endpoints, baseUrl);
+        return new APIMemento(name, state, endpoints, baseUrl);
     }
 
     public void getStateFromMemento(APIMemento memento) {
+        name = memento.getName();
         state = memento.getState();
         endpoints = memento.getEndpoints();
         baseUrl = memento.getBaseUrl();
