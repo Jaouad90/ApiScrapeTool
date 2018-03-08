@@ -7,6 +7,7 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
+import java.time.Instant;
 import java.util.HashMap;
 
 public class TweetScrape extends APIScraper {
@@ -29,7 +30,8 @@ public class TweetScrape extends APIScraper {
 		TwitterFactory tf = new TwitterFactory(cb.build());
 		Twitter twitter = tf.getInstance();
         try {
-            twitter.updateStatus(getApi().getName() + " Has successfully been scraped");
+            twitter.updateStatus("Successfully scraped API: " + getApi().getName() + " on " + Instant.now().toString() + "."
+                    +"\n\nAPIScrapeTool");
         } catch (TwitterException e) {
             e.printStackTrace();
         }
