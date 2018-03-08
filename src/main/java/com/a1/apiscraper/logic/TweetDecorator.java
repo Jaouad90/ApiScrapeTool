@@ -10,10 +10,10 @@ import twitter4j.conf.ConfigurationBuilder;
 import java.time.Instant;
 import java.util.HashMap;
 
-public class TweetScrape extends APIScraper {
+public class TweetDecorator extends APIScraper {
     private APIScraper apiScraper;
 
-    public TweetScrape(APIScraper apiScraper) {
+    public TweetDecorator(APIScraper apiScraper) {
         super(apiScraper.getApi());
         this.apiScraper = apiScraper;
     }

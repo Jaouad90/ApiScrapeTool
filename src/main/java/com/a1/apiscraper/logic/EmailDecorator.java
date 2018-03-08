@@ -5,10 +5,10 @@ import com.a1.apiscraper.domain.Endpoint;
 import java.time.Instant;
 import java.util.HashMap;
 
-public class EmailScrape extends APIScraperDecorator {
+public class EmailDecorator extends APIScraperDecorator {
     private APIScraper apiScraper;
 
-    public EmailScrape(APIScraper apiScraper) {
+    public EmailDecorator(APIScraper apiScraper) {
         super(apiScraper.getApi());
         this.apiScraper = apiScraper;
     }
