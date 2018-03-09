@@ -5,7 +5,8 @@ import com.a1.apiscraper.domain.Endpoint;
 import java.time.Instant;
 import java.util.HashMap;
 
-public class EmailDecorator extends APIScraperDecorator {
+
+public class EmailDecorator extends DecoratedScraper {
     private APIScraper apiScraper;
 
     public EmailDecorator(APIScraper apiScraper) {
@@ -21,7 +22,7 @@ public class EmailDecorator extends APIScraperDecorator {
         mailer.setSubject(getApi().getName() + " Has successfully been scraped");
         mailer.setMessage("Successfully scraped API: " + getApi().getName() + " on " + Instant.now().toString() + "."
         +"\n\nAPIScrapeTool");
-        mailer.setReceiver("tbergh1@student.avans.nl");
+        mailer.setReceivers("tbergh1@student.avans.nl, apiscrapetool@gmail.com");
         mailer.sendMail();
         return results;
     }

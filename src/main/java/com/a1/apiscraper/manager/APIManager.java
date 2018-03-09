@@ -1,12 +1,10 @@
 package com.a1.apiscraper.manager;
 
 import com.a1.apiscraper.domain.API;
+import com.a1.apiscraper.domain.Decorator;
 import com.a1.apiscraper.domain.Endpoint;
 import com.a1.apiscraper.domain.Result;
-import com.a1.apiscraper.logic.APIScraper;
-import com.a1.apiscraper.logic.EmailDecorator;
-import com.a1.apiscraper.logic.SimpleAPIscraper;
-import com.a1.apiscraper.logic.TweetDecorator;
+import com.a1.apiscraper.logic.*;
 import com.a1.apiscraper.repository.APIRepository;
 import com.a1.apiscraper.repository.EndpointRepository;
 import com.a1.apiscraper.repository.ResultRepository;
@@ -39,8 +37,10 @@ public class APIManager {
     public void doScrape() {
         for(API api : apiArrayList) {
             APIScraper tempScraper = new SimpleAPIscraper(api);
-//            tempScraper = new EmailDecorator(tempScraper);
-//            tempScraper = new TweetDecorator(tempScraper);
+            DecoratorFactory decoratorFactory = new DecoratorFactory();
+            for(Decorator decorator : api.getConfig().getDecorators()){
+                tempScraper = decoratorFactory.getDecorator(decorator.getName(), tempScraper);
+            }
             HashMap<Endpoint, String> hash = tempScraper.scrape();
             for (Endpoint endpoint: hash.keySet()) {
                 Map<Long, Result> results = new HashMap<>();

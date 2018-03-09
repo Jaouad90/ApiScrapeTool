@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Entity
@@ -30,10 +31,14 @@ public class API {
     private String state;
 
     @OneToOne
+    private APIConfig config;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private CareTaker careTaker;
 
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
+
 
     public void addEndpoint(Endpoint endpoint) {
         assert(endpoint.getId() != null);
