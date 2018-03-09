@@ -29,6 +29,8 @@ public class API {
 
     private String state;
 
+    @OneToOne
+    private APIConfig config;
 
     @OneToMany(cascade = CascadeType.MERGE)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
