@@ -25,13 +25,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:if="${api.endpoints.empty}">
+                    <tr th:unless="${api.endpoints}">
                         <td>No endpoints</td>
                     </tr>
-                    <tr th:each="endpoint : ${api.endpoints}" th:attr="data-child-value=${endpoint.results[0].result}" >
+                    <div th:each="endpoint : ${api.endpoints.entrySet()}">
+                        <div th:if="${endpoint.getValue().getResults().size()!= null}">
+                        <div th:each="result :${endpoint.getValue().getResults().entrySet()}">
+                        <tr th:attr="data-child-value=${result.getValue().result}" >
                         <td class="details-control"></td>
-                        <td th:text="${endpoint.name}">endpoint name</td>
-                    </tr>
+                        <td th:text="${endpoint.getValue().getName()}">endpoint name</td>
+                        </tr>
+                        </div>
+                    </div>
+                    </div>
                     </tbody>
                 </table>
             </div>
@@ -46,7 +52,7 @@
 <script>
     function format(value) {
         console.log(value);
-        return '<div style="height:120px;width:250px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;" id="textjson">Result: ' + JSON.stringify(value) + '</div>';
+        return '<pre style="height:120px;width:600px;border:1px solid #ccc;font:16px/26px Droid Sans, Garamond, Serif;overflow:auto;" id="textjson">Result: ' + JSON.stringify(value, null, ' ') + '</pre>';
     }
 
     $(document).ready(function() {
@@ -66,7 +72,6 @@
                 // Open this row
                 row.child(format(tr.data('child-value'))).show();
                 tr.addClass('shown');
-                jsonPrettyHighlightToId(value, textjson);
             }
         });
     } );

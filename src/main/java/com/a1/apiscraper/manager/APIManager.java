@@ -3,17 +3,19 @@ package com.a1.apiscraper.manager;
 import com.a1.apiscraper.domain.API;
 import com.a1.apiscraper.domain.Endpoint;
 import com.a1.apiscraper.domain.Result;
-import com.a1.apiscraper.logic.APIscraper;
+import com.a1.apiscraper.logic.APIScraper;
+import com.a1.apiscraper.logic.EmailDecorator;
+import com.a1.apiscraper.logic.SimpleAPIscraper;
+import com.a1.apiscraper.logic.TweetDecorator;
 import com.a1.apiscraper.repository.APIRepository;
 import com.a1.apiscraper.repository.EndpointRepository;
 import com.a1.apiscraper.repository.ResultRepository;
-import com.fasterxml.jackson.databind.util.TypeKey;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 public class APIManager {
     private ArrayList<API> apiArrayList;
@@ -33,21 +35,22 @@ public class APIManager {
         apiArrayList = (ArrayList<API>) apiRepository.findAll();
     }
 
+    @Transactional
     public void doScrape() {
-        ArrayList<Result> results = new ArrayList<>();
         for(API api : apiArrayList) {
-            APIscraper tempScraper = new APIscraper(api);
+            APIScraper tempScraper = new SimpleAPIscraper(api);
+//            tempScraper = new EmailDecorator(tempScraper);
+//            tempScraper = new TweetDecorator(tempScraper);
             HashMap<Endpoint, String> hash = tempScraper.scrape();
             for (Endpoint endpoint: hash.keySet()) {
-
+                Map<Long, Result> results = new HashMap<>();
                 Result result = new Result();
+                resultRepository.save(result);
                 result.setResult(hash.get(endpoint));
-                result.setEndpoint(endpoint);
-                results.add(result);
+                results.put(result.getId(), result);
                 endpoint.setResults(results);
-
+                endpointRepository.save(endpoint);
             }
         }
-        resultRepository.save(results);
     }
 }

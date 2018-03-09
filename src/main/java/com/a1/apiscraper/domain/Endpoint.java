@@ -4,11 +4,10 @@ import com.sun.corba.se.spi.activation.EndPointInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
@@ -19,14 +18,10 @@ public class Endpoint {
     @Id
     @GeneratedValue
     private Long id;
-    
+
+    @NotEmpty
     private String name;
 
-    @JoinColumn(name = "api_fk")
-    @ManyToOne(fetch = FetchType.LAZY )
-    API api;
-
-    @OneToMany(mappedBy = "endpoint", targetEntity = Result.class)
-    @Column(name = "result")
-    private Collection<Result> results = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private Map<Long, Result> results = new HashMap<>();
 }

@@ -7,10 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Getter
@@ -21,25 +18,37 @@ public class API {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @NotEmpty(message = "Name cannot be empty!")
     private String name;
-
-    private String username;
-
-    private String password;
 
     @NotEmpty(message = "Base URL cannot be not empty!")
     @URL(message = "Please insert a valid URL!")
     private String baseUrl;
 
+    private String state;
 
-    @OneToMany(mappedBy="api", targetEntity = Endpoint.class, cascade = CascadeType.ALL)
-    private Collection<Endpoint> endpoints = new ArrayList<>();
+    @OneToOne
+    private CareTaker careTaker;
 
+    @OneToMany(cascade = CascadeType.MERGE)
+    private Map<Long, Endpoint> endpoints = new HashMap<>();
 
     public void addEndpoint(Endpoint endpoint) {
-        this.endpoints.add(endpoint);
+        assert(endpoint.getId() != null);
+        endpoints.put(endpoint.getId(), endpoint );
     }
+
+    public APIMemento saveStateToMemente() {
+        return new APIMemento(name, state, endpoints, baseUrl);
+    }
+
+    public void getStateFromMemento(APIMemento memento) {
+        name = memento.getName();
+        state = memento.getState();
+        endpoints = memento.getEndpoints();
+        baseUrl = memento.getBaseUrl();
+    }
+
 }
