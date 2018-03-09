@@ -15,7 +15,7 @@ public class Mailer {
     final String password = "apiscrapetoola1";
 
     private String message = null;
-    private String receiver = null;
+    private String receivers = null;
     private String subject = null;
 
     public boolean sendMail() {
@@ -37,7 +37,7 @@ public class Mailer {
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(username));
                 message.setRecipients(Message.RecipientType.TO,
-                        InternetAddress.parse(receiver));
+                        InternetAddress.parse(receivers));
                 message.setSubject(subject);
                 message.setText(this.message);
 
@@ -50,6 +50,6 @@ public class Mailer {
     }
 
     private boolean checkInfo() {
-        return message != null && receiver != null && subject != null;
+        return message != null && receivers != null && subject != null;
     }
 }
