@@ -33,7 +33,7 @@ public class API {
     @OneToOne
     private APIConfig config;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private CareTaker careTaker;
 
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
