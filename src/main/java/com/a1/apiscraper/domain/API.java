@@ -30,6 +30,9 @@ public class API {
 
     private String state;
 
+    @OneToOne
+    private APIConfig config;
+
     @OneToOne(cascade = CascadeType.ALL)
     private CareTaker careTaker;
 
