@@ -57,24 +57,24 @@ public class APIController {
         if (result.hasErrors()) {
             return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
         }
-//        CareTaker careTaker;
-//        String out = formatter.format(Instant.now());
-//         if (api.getCareTaker() == null) {
-//              careTaker = new CareTaker();
-//         } else {
-//              careTaker = api.getCareTaker();
-//         }
-//          api.setState("" + out);
-//          api.setCareTaker(careTaker);
-//          careTaker.setApi(api);
+        CareTaker careTaker;
+        String out = formatter.format(Instant.now());
+         if (api.getCareTaker() == null) {
+              careTaker = new CareTaker();
+         } else {
+              careTaker = api.getCareTaker();
+         }
+          api.setState("" + out);
+          api.setCareTaker(careTaker);
+          careTaker.setApi(api);
 //          Map<Long, Endpoint> endpoints = new HashMap<>();
 //          endpoints = api.getEndpoints();
 //         for(Map.Entry<Long, Endpoint> endpoint : endpoints.entrySet()){
 //             Endpoint endpoint1 = endpoint.getValue();
 //             endpointRepository.save(endpoint1);
 //         }
-//          careTaker.add(api.saveStateToMemente());
-//          careTakerRepository.save(careTaker);
+          careTaker.add(api.saveStateToMemente());
+          careTakerRepository.save(careTaker);
           apiRepository.save(api);
         return new ModelAndView("api/edit", "api", api);
     }
