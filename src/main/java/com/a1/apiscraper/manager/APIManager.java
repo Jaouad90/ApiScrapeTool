@@ -39,8 +39,8 @@ public class APIManager {
     public void doScrape() {
         for(API api : apiArrayList) {
             APIScraper tempScraper = new SimpleAPIscraper(api);
-//            tempScraper = new EmailDecorator(tempScraper);
-//            tempScraper = new TweetDecorator(tempScraper);
+            tempScraper = new EmailDecorator(tempScraper);
+            tempScraper = new TweetDecorator(tempScraper);
             HashMap<Endpoint, String> hash = tempScraper.scrape();
             for (Endpoint endpoint: hash.keySet()) {
                 Map<Long, Result> results = new HashMap<>();
