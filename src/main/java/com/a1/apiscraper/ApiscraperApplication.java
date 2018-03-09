@@ -99,8 +99,6 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 //            apiConfig.addDecorator(mailDecorator);
 			apiConfigRepository.save(apiConfig);
 
-
-
 		};
 	}
 }
