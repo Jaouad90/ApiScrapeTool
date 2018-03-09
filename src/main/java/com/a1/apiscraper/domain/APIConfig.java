@@ -1,11 +1,8 @@
 package com.a1.apiscraper.domain;
 
-import com.a1.apiscraper.logic.APIScraperDecorator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import java.util.*;
@@ -25,13 +22,12 @@ public class APIConfig {
     @JoinColumn(name ="api_FK")
     private API api;
 
-    @OneToMany(cascade = CascadeType.MERGE)
-    private Map<Long, APIScraperDecorator> decorators = new HashMap<>();
+    @ElementCollection
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Decorator> decorators = new ArrayList<>();
 
-
-    public void addDecorator(APIScraperDecorator decorator) {
-
-
+    public void addDecorator(Decorator decorator){
+        this.decorators.add(decorator);
     }
 
 }

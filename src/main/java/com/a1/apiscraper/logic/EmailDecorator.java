@@ -5,7 +5,8 @@ import com.a1.apiscraper.domain.Endpoint;
 import java.time.Instant;
 import java.util.HashMap;
 
-public class EmailDecorator extends APIScraperDecorator {
+
+public class EmailDecorator extends DecoratedScraper {
     private APIScraper apiScraper;
 
     public EmailDecorator(APIScraper apiScraper) {

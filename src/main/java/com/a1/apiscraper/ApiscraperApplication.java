@@ -2,8 +2,8 @@ package com.a1.apiscraper;
 
 import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.logic.APIScraper;
-import com.a1.apiscraper.logic.APIScraperDecorator;
-import com.a1.apiscraper.logic.EmailDecorator;
+import com.a1.apiscraper.logic.SimpleAPIscraper;
+import com.a1.apiscraper.logic.TweetDecorator;
 import com.a1.apiscraper.repository.*;
 import com.a1.apiscraper.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
@@ -31,8 +31,9 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 	private APIRepository apiRepository;
 	@Autowired
 	private APIConfigRepository apiConfigRepository;
-	@Autowired
-	private DecoratorRepository decoratorRepository;
+    @Autowired
+    private DecoratorRepository decoratorRepository;
+
 
 
 	@Override
@@ -79,10 +80,20 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 //			api.setEndpoints(endpoints);
 			apiRepository.save(api);
 
-			APIScraperDecorator decarator = new EmailDecorator(new APIScraper(api));
+			Decorator tweetDecorator = new Decorator();
+            tweetDecorator.setName("Tweetdecorator");
+            decoratorRepository.save(tweetDecorator);
+
+            Decorator mailDecorator = new Decorator();
+			mailDecorator.setName("MailDecorator");
+            decoratorRepository.save(mailDecorator);
 
 			APIConfig apiConfig = new APIConfig();
 			apiConfig.setApi(api);
+            apiConfigRepository.save(apiConfig);
+
+            apiConfig.addDecorator(tweetDecorator);
+            apiConfig.addDecorator(mailDecorator);
 			apiConfigRepository.save(apiConfig);
 
 
