@@ -76,7 +76,7 @@ public class APIController {
           careTaker.add(api.saveStateToMemente());
           careTakerRepository.save(careTaker);
           apiRepository.save(api);
-        return new ModelAndView("api/edit", "api", api);
+        return new ModelAndView("redirect:/api/" + api.getId(), "api", api);
     }
 
     @Transactional
