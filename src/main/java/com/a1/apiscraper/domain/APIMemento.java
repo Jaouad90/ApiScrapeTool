@@ -24,7 +24,7 @@ public class APIMemento {
 
     private String baseUrl;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @Transient
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
 
