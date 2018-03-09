@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Entity
@@ -32,8 +33,12 @@ public class API {
     @OneToOne
     private APIConfig config;
 
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
+    private CareTaker careTaker;
+
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
+
 
     public void addEndpoint(Endpoint endpoint) {
         assert(endpoint.getId() != null);
@@ -41,10 +46,11 @@ public class API {
     }
 
     public APIMemento saveStateToMemente() {
-        return new APIMemento(state, endpoints, baseUrl);
+        return new APIMemento(name, state, endpoints, baseUrl);
     }
 
     public void getStateFromMemento(APIMemento memento) {
+        name = memento.getName();
         state = memento.getState();
         endpoints = memento.getEndpoints();
         baseUrl = memento.getBaseUrl();

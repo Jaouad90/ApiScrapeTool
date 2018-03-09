@@ -1,6 +1,7 @@
 package com.a1.apiscraper.controller;
 
 import com.a1.apiscraper.domain.API;
+import com.a1.apiscraper.domain.APIMemento;
 import com.a1.apiscraper.domain.CareTaker;
 import com.a1.apiscraper.domain.Endpoint;
 import com.a1.apiscraper.repository.APIRepository;
@@ -15,9 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.*;
 
 @Controller
 public class APIController {
@@ -28,11 +31,16 @@ public class APIController {
     EndpointRepository endpointRepository;
     @Autowired
     CareTakerRepository careTakerRepository;
+    DateTimeFormatter formatter;
 
     public APIController(APIRepository apiRepository, EndpointRepository endpointRepository, CareTakerRepository careTakerRepository) {
         this.apiRepository = apiRepository;
         this.endpointRepository = endpointRepository;
         this.careTakerRepository = careTakerRepository;
+
+            formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
+                        .withLocale( Locale.ENGLISH)
+                        .withZone( ZoneId.systemDefault() );
     }
 
 
@@ -43,30 +51,53 @@ public class APIController {
         return "api/edit";
     }
 
-
+    @Transactional
     @RequestMapping(value = "/api", method = RequestMethod.POST)
     public ModelAndView submit(@Valid @ModelAttribute("api") API api, BindingResult result) {
         if (result.hasErrors()) {
             return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
         }
-        CareTaker careTaker = new CareTaker();
-        api.setState("state 0");
-        careTaker.add(api.saveStateToMemente());
-        careTakerRepository.save(careTaker);
-        api.setBaseUrl("https://google.nl");
-        api.getStateFromMemento(careTaker.get(0));
-        System.out.println(api.getState());
-        apiRepository.save(api);
+        CareTaker careTaker;
+        String out = formatter.format(Instant.now());
+         if (api.getCareTaker() == null) {
+              careTaker = new CareTaker();
+         } else {
+              careTaker = api.getCareTaker();
+         }
+          api.setState("" + out);
+          api.setCareTaker(careTaker);
+          careTaker.setApi(api);
+//          Map<Long, Endpoint> endpoints = new HashMap<>();
+//          endpoints = api.getEndpoints();
+//         for(Map.Entry<Long, Endpoint> endpoint : endpoints.entrySet()){
+//             Endpoint endpoint1 = endpoint.getValue();
+//             endpointRepository.save(endpoint1);
+//         }
+          careTaker.add(api.saveStateToMemente());
+          careTakerRepository.save(careTaker);
+          apiRepository.save(api);
         return new ModelAndView("api/edit", "api", api);
     }
 
+    @Transactional
     @RequestMapping(value = "/api/{id}")
     public ModelAndView view(@PathVariable("id") API api) {
+        api.getCareTaker().getMementoList();
         return new ModelAndView("home/detail", "api", api);
     }
 
+    @Transactional
+    @RequestMapping(value = "/api/restore", method = RequestMethod.POST)
+    public ModelAndView restoreState(@Valid APIMemento api) {
+
+        return new ModelAndView("api/edit", "api", api);
+    }
+
+    @Transactional
     @RequestMapping(value = "/api/edit/{id}")
     public ModelAndView edit(@PathVariable("id") API api) {
+        api.getEndpoints();
+        System.out.println(api.getEndpoints().entrySet().size());
         return new ModelAndView("api/edit", "api", api);
     }
 

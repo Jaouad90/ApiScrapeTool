@@ -24,4 +24,5 @@ public class Endpoint {
 
     @OneToMany(cascade = CascadeType.ALL)
     private Map<Long, Result> results = new HashMap<>();
+
 }

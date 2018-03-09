@@ -41,8 +41,6 @@ public class APIManager {
             for(Decorator decorator : api.getConfig().getDecorators()){
                 tempScraper = decoratorFactory.getDecorator(decorator.getName(), tempScraper);
             }
-//            tempScraper = new EmailDecorator(tempScraper);
-//            tempScraper = new TweetDecorator(tempScraper);
             HashMap<Endpoint, String> hash = tempScraper.scrape();
             for (Endpoint endpoint: hash.keySet()) {
                 Map<Long, Result> results = new HashMap<>();

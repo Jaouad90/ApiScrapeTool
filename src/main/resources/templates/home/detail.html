@@ -43,6 +43,41 @@
             </div>
         </div>
         </div>
+        <div class="row">
+            <div class="col-md-8 offset-lg-2">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">States bij de betreffende API</h4>
+                        <p class="category">Klap open voor de endpoints bij betreffende state</p>
+                    </div>
+                    <table class="table" id="statestable">
+                        <thead>
+                        <tr>
+                            <th>Endpoint url</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:unless="${api.endpoints}">
+                            <td>No endpoints</td>
+                        </tr>
+                    <div th:if="${api.careTaker != null}">
+                        <div th:each="APImemento : ${api.careTaker.mementoList}">
+                                    <tr>
+                                        <td>
+                                           <div th:each="endpoint : ${APImemento.endpoints.entrySet()}">
+                                               <p th:text="${endpoint.getValue().name}"></p>
+                                           </div>
+                                        </td>
+                                        <td th:text="${APImemento.state}">Status</td>
+                                    </tr>
+                        </div>
+                    </div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -60,6 +95,9 @@
             responsive: true
 
         });
+      var table2 = $('#statestable').DataTable( {
+          responsive: true
+      });
         $('#endpointtable').on('click', 'td.details-control', function () {
             var tr = $(this).closest('tr');
             var row = table.row(tr);

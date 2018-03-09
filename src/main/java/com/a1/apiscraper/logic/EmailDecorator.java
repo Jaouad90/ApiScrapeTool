@@ -16,13 +16,14 @@ public class EmailDecorator extends DecoratedScraper {
 
     @Override
     public HashMap<Endpoint, String> scrape() {
-        apiScraper.scrape();
+        HashMap<Endpoint, String> results = apiScraper.scrape();
+
         Mailer mailer = new Mailer();
         mailer.setSubject(getApi().getName() + " Has successfully been scraped");
         mailer.setMessage("Successfully scraped API: " + getApi().getName() + " on " + Instant.now().toString() + "."
         +"\n\nAPIScrapeTool");
-        mailer.setReceiver("tbergh1@student.avans.nl");
+        mailer.setReceivers("tbergh1@student.avans.nl, apiscrapetool@gmail.com");
         mailer.sendMail();
-        return apiScraper.scrape();
+        return results;
     }
 }
