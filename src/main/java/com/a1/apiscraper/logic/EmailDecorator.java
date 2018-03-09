@@ -21,7 +21,7 @@ public class EmailDecorator extends APIScraperDecorator {
         mailer.setSubject(getApi().getName() + " Has successfully been scraped");
         mailer.setMessage("Successfully scraped API: " + getApi().getName() + " on " + Instant.now().toString() + "."
         +"\n\nAPIScrapeTool");
-        mailer.setReceiver("tbergh1@student.avans.nl");
+        mailer.setReceivers("tbergh1@student.avans.nl, apiscrapetool@gmail.com");
         mailer.sendMail();
         return results;
     }
