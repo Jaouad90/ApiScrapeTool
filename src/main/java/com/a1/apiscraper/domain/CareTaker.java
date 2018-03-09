@@ -22,7 +22,7 @@ public class CareTaker {
     @JoinColumn(name = "api_id")
     private API api;
 
-    @OneToMany(cascade = CascadeType.MERGE, fetch=FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     private List<APIMemento> mementoList = new ArrayList<>();
 
     public void add(APIMemento state){
