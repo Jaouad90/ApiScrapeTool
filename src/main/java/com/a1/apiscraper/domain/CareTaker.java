@@ -18,8 +18,7 @@ public class CareTaker {
     @Id
     private Long Id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "api_id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private API api;
 
     @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
