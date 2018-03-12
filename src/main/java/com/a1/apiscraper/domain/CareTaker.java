@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class CareTaker {
+
     @GeneratedValue
     @Id
     private Long Id;
@@ -21,8 +22,8 @@ public class CareTaker {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private API api;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    private List<APIMemento> mementoList = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<APIMemento> mementoList;
 
     public void add(APIMemento state){
         mementoList.add(state);

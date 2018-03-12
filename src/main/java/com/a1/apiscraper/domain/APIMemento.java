@@ -14,6 +14,7 @@ import java.util.Map;
 @Entity
 @NoArgsConstructor
 public class APIMemento {
+
     @Id
     @GeneratedValue
     private Long Id;
@@ -24,7 +25,7 @@ public class APIMemento {
 
     private String baseUrl;
 
-    @Transient
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
 

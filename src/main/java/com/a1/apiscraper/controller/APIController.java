@@ -57,17 +57,11 @@ public class APIController {
         if (result.hasErrors()) {
             return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
         }
-         String out = formatter.format(Instant.now());
+          String out = formatter.format(Instant.now());
           api.setState("" + out);
-          if (api.getCareTaker() == null) {
-              CareTaker careTaker = new CareTaker();
-              api.setCareTaker(careTaker);
-              careTaker.setApi(api);
-              careTaker.add(api.saveStateToMemente());
-          } else {
-              api.getCareTaker().add(api.saveStateToMemente());
-          }
-
+          CareTaker careTaker = api.getCareTaker();
+          careTaker.setApi(api);
+          careTaker.add(api.saveStateToMemente());
           apiRepository.save(api);
         return new ModelAndView("redirect:/api/" + api.getId(), "api", api);
     }
@@ -75,7 +69,7 @@ public class APIController {
     @Transactional
     @RequestMapping(value = "/api/{id}")
     public ModelAndView view(@PathVariable("id") API api) {
-//        api.getCareTaker().getMementoList();
+        api.getCareTaker().getMementoList();
         return new ModelAndView("home/detail", "api", api);
     }
 

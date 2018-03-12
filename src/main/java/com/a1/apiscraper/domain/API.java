@@ -36,7 +36,7 @@ public class API {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CareTaker careTaker;
 
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
 
