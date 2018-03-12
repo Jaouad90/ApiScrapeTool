@@ -33,6 +33,8 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 	private APIConfigRepository apiConfigRepository;
     @Autowired
     private DecoratorRepository decoratorRepository;
+    @Autowired
+	private CareTakerRepository careTakerRepository;
 
 
 
@@ -79,7 +81,6 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			api.setBaseUrl("https://api.coindesk.com/v1/bpi");
 //			api.setEndpoints(endpoints);
 			apiRepository.save(api);
-
 			Decorator tweetDecorator = new Decorator();
             tweetDecorator.setName("TweetDecorator");
             decoratorRepository.save(tweetDecorator);

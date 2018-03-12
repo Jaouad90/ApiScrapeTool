@@ -7,6 +7,7 @@ import com.a1.apiscraper.domain.Endpoint;
 import com.a1.apiscraper.repository.APIRepository;
 import com.a1.apiscraper.repository.CareTakerRepository;
 import com.a1.apiscraper.repository.EndpointRepository;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,8 +38,7 @@ public class APIController {
         this.apiRepository = apiRepository;
         this.endpointRepository = endpointRepository;
         this.careTakerRepository = careTakerRepository;
-
-            formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
+        formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
                         .withLocale( Locale.ENGLISH)
                         .withZone( ZoneId.systemDefault() );
     }
@@ -57,24 +57,17 @@ public class APIController {
         if (result.hasErrors()) {
             return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
         }
-        CareTaker careTaker;
-        String out = formatter.format(Instant.now());
-         if (api.getCareTaker() == null) {
-              careTaker = new CareTaker();
-         } else {
-              careTaker = api.getCareTaker();
-         }
+         String out = formatter.format(Instant.now());
           api.setState("" + out);
-          api.setCareTaker(careTaker);
-          careTaker.setApi(api);
-//          Map<Long, Endpoint> endpoints = new HashMap<>();
-//          endpoints = api.getEndpoints();
-//         for(Map.Entry<Long, Endpoint> endpoint : endpoints.entrySet()){
-//             Endpoint endpoint1 = endpoint.getValue();
-//             endpointRepository.save(endpoint1);
-//         }
-          careTaker.add(api.saveStateToMemente());
-          careTakerRepository.save(careTaker);
+          if (api.getCareTaker() == null) {
+              CareTaker careTaker = new CareTaker();
+              api.setCareTaker(careTaker);
+              careTaker.setApi(api);
+              careTaker.add(api.saveStateToMemente());
+          } else {
+              api.getCareTaker().add(api.saveStateToMemente());
+          }
+
           apiRepository.save(api);
         return new ModelAndView("redirect:/api/" + api.getId(), "api", api);
     }
