@@ -1,4 +1,4 @@
-package com.a1.apiscraper.service;
+package com.a1.apiscraper.service.Converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,6 @@ public class JSONAdapterService implements ConvertService {
 
     @Override
     public void convertData(String data) {
-        jsonServiceImpl.
+        jsonServiceImpl.convertData(data);
     }
 }

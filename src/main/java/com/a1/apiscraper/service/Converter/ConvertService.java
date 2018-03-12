@@ -1,6 +1,8 @@
-package com.a1.apiscraper.service;
+package com.a1.apiscraper.service.Converter;
+
+import org.w3c.dom.Document;
 
 public interface ConvertService {
 
-    void convertData(String data);
+    Document convertData(String data);
 }
