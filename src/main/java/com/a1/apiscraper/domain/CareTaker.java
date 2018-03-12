@@ -23,7 +23,7 @@ public class CareTaker {
     private API api;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<APIMemento> mementoList;
+    private List<APIMemento> mementoList = new ArrayList<>();
 
     public void add(APIMemento state){
         mementoList.add(state);
