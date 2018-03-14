@@ -17,10 +17,7 @@ public class CareTaker {
 
     @GeneratedValue
     @Id
-    private Long Id;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private API api;
+    private Long id;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<APIMemento> mementoList = new ArrayList<>();

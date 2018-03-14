@@ -17,7 +17,7 @@ public class APIMemento {
 
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
 
     private String name;
 

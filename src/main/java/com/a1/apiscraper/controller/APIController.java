@@ -60,8 +60,8 @@ public class APIController {
           String out = formatter.format(Instant.now());
           api.setState("" + out);
           CareTaker careTaker = api.getCareTaker();
-          careTaker.setApi(api);
           careTaker.add(api.saveStateToMemente());
+          careTakerRepository.save(careTaker);
           apiRepository.save(api);
         return new ModelAndView("redirect:/api/" + api.getId(), "api", api);
     }
