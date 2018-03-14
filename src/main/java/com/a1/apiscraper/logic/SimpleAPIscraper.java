@@ -7,5 +7,5 @@ public class SimpleAPIscraper extends DecoratedScraper {
     public SimpleAPIscraper(API api) {
         super(api);
     }
-
+    public void communicate (){}
 }
