@@ -79,8 +79,8 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 //			api.setEndpoints(endpoints);
 			apiRepository.save(api);
 			Decorator tweetDecorator = new Decorator();
-            tweetDecorator.setName("TweetDecorator");
-            decoratorRepository.save(tweetDecorator);
+			tweetDecorator.setName("TweetDecorator");
+			decoratorRepository.save(tweetDecorator);
 
             Decorator mailDecorator = new Decorator();
 			mailDecorator.setName("MailDecorator");
@@ -92,8 +92,8 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
             api.setConfig(apiConfig);
             apiRepository.save(api);
 
-//            apiConfig.addDecorator(tweetDecorator);
-//            apiConfig.addDecorator(mailDecorator);
+            apiConfig.addDecorator(tweetDecorator);
+            //apiConfig.addDecorator(mailDecorator);
 			apiConfigRepository.save(apiConfig);
 
 		};
