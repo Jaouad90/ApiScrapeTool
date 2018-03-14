@@ -34,7 +34,7 @@ public class API {
     private APIConfig config;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private CareTaker careTaker;
+    private CareTaker careTaker = new CareTaker();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Map<Long, Endpoint> endpoints = new HashMap<>();

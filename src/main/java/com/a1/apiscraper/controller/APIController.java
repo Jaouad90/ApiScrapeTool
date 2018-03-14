@@ -53,15 +53,18 @@ public class APIController {
 
     @Transactional
     @RequestMapping(value = "/api", method = RequestMethod.POST)
-    public ModelAndView submit(@Valid @ModelAttribute("api") API api, BindingResult result) {
-        if (result.hasErrors()) {
-            return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
-        }
-          String out = formatter.format(Instant.now());
-          api.setState("" + out);
-          CareTaker careTaker = api.getCareTaker();
-          careTaker.add(api.saveStateToMemente());
-          apiRepository.save(api);
+    public ModelAndView submit(@Valid @ModelAttribute("api") API apiModel, BindingResult result) {
+            if (result.hasErrors()) {
+                return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
+            }
+            API api = apiRepository.findOne(apiModel.getId());
+            api.setEndpoints(apiModel.getEndpoints());
+            String out = formatter.format(Instant.now());
+            api.setState("" + out);
+            CareTaker careTaker = api.getCareTaker();
+            careTaker.getMementos();
+            careTaker.add(api.saveStateToMemente());
+            apiRepository.save(api);
         return new ModelAndView("redirect:/api/" + api.getId(), "api", api);
     }
 
