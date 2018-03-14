@@ -47,8 +47,6 @@ public class APIManager {
                 tempScraper = decoratorFactory.getDecorator(decorator.getName(), tempScraper);
             }
 
-            tempScraper.setScrapeBehavior(new DeepScrapeBehavior(hyperMediaRepository));
-
             HashMap<Endpoint, String> hash = tempScraper.scrape();
             for (Endpoint endpoint: hash.keySet()) {
                 Map<Long, Result> results = new HashMap<>();

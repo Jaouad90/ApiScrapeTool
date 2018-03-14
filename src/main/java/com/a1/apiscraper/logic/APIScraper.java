@@ -27,6 +27,7 @@ public abstract class APIScraper  {
 
     APIScraper(API api) {
         this.api = api;
+        this.scrapeBehavior = new NormalScrapeBehavior();
     }
 
     public HashMap<Endpoint, String> scrape() {
