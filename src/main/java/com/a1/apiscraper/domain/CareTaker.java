@@ -23,10 +23,10 @@ public class CareTaker {
     private List<APIMemento> mementos = new ArrayList<>();
 
     public void add(APIMemento state){
-        mementoList.add(state);
+        mementos.add(state);
     }
 
     public APIMemento get(int index) {
-        return mementoList.get(index);
+        return mementos.get(index);
     }
 }
