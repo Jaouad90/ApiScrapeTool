@@ -62,7 +62,7 @@
                             <td>No endpoints</td>
                         </tr>
                     <div th:if="${api.careTaker != null}">
-                        <div th:each="APImemento : ${api.careTaker.mementoList}">
+                        <div th:each="APImemento : ${api.careTaker.mementos}">
                                     <tr>
                                         <td>
                                            <div th:each="endpoint : ${APImemento.endpoints.entrySet()}">

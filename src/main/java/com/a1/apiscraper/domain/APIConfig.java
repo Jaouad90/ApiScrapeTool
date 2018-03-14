@@ -18,10 +18,6 @@ public class APIConfig {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name ="api_FK")
-    private API api;
-
     @ElementCollection
     @OneToMany(cascade = CascadeType.ALL)
     private List<Decorator> decorators = new ArrayList<>();

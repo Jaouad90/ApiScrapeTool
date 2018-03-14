@@ -7,6 +7,7 @@ import com.a1.apiscraper.domain.Endpoint;
 import com.a1.apiscraper.repository.APIRepository;
 import com.a1.apiscraper.repository.CareTakerRepository;
 import com.a1.apiscraper.repository.EndpointRepository;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,8 +38,7 @@ public class APIController {
         this.apiRepository = apiRepository;
         this.endpointRepository = endpointRepository;
         this.careTakerRepository = careTakerRepository;
-
-            formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
+        formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
                         .withLocale( Locale.ENGLISH)
                         .withZone( ZoneId.systemDefault() );
     }
@@ -53,36 +53,25 @@ public class APIController {
 
     @Transactional
     @RequestMapping(value = "/api", method = RequestMethod.POST)
-    public ModelAndView submit(@Valid @ModelAttribute("api") API api, BindingResult result) {
-        if (result.hasErrors()) {
-            return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
-        }
-        CareTaker careTaker;
-        String out = formatter.format(Instant.now());
-         if (api.getCareTaker() == null) {
-              careTaker = new CareTaker();
-         } else {
-              careTaker = api.getCareTaker();
-         }
-          api.setState("" + out);
-          api.setCareTaker(careTaker);
-          careTaker.setApi(api);
-//          Map<Long, Endpoint> endpoints = new HashMap<>();
-//          endpoints = api.getEndpoints();
-//         for(Map.Entry<Long, Endpoint> endpoint : endpoints.entrySet()){
-//             Endpoint endpoint1 = endpoint.getValue();
-//             endpointRepository.save(endpoint1);
-//         }
-          careTaker.add(api.saveStateToMemente());
-          careTakerRepository.save(careTaker);
-          apiRepository.save(api);
+    public ModelAndView submit(@Valid @ModelAttribute("api") API apiModel, BindingResult result) {
+            if (result.hasErrors()) {
+                return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
+            }
+            API api = apiRepository.findOne(apiModel.getId());
+            api.setEndpoints(apiModel.getEndpoints());
+            String out = formatter.format(Instant.now());
+            api.setState("" + out);
+            CareTaker careTaker = api.getCareTaker();
+            careTaker.getMementos();
+            careTaker.add(api.saveStateToMemente());
+            apiRepository.save(api);
         return new ModelAndView("redirect:/api/" + api.getId(), "api", api);
     }
 
     @Transactional
     @RequestMapping(value = "/api/{id}")
     public ModelAndView view(@PathVariable("id") API api) {
-//        api.getCareTaker().getMementoList();
+        api.getCareTaker().getMementos();
         return new ModelAndView("home/detail", "api", api);
     }
 

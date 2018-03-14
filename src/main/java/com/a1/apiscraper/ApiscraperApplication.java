@@ -1,9 +1,6 @@
 package com.a1.apiscraper;
 
 import com.a1.apiscraper.domain.*;
-import com.a1.apiscraper.logic.APIScraper;
-import com.a1.apiscraper.logic.SimpleAPIscraper;
-import com.a1.apiscraper.logic.TweetDecorator;
 import com.a1.apiscraper.repository.*;
 import com.a1.apiscraper.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
@@ -33,6 +30,8 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 	private APIConfigRepository apiConfigRepository;
     @Autowired
     private DecoratorRepository decoratorRepository;
+    @Autowired
+	private CareTakerRepository careTakerRepository;
 
 
 
@@ -79,7 +78,6 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			api.setBaseUrl("https://api.coindesk.com/v1/bpi");
 //			api.setEndpoints(endpoints);
 			apiRepository.save(api);
-
 			Decorator tweetDecorator = new Decorator();
 			tweetDecorator.setName("TweetDecorator");
 			decoratorRepository.save(tweetDecorator);
@@ -89,7 +87,6 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
             decoratorRepository.save(mailDecorator);
 
 			APIConfig apiConfig = new APIConfig();
-			apiConfig.setApi(api);
             apiConfigRepository.save(apiConfig);
 
             api.setConfig(apiConfig);

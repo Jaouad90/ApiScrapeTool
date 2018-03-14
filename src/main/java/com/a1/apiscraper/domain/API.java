@@ -33,10 +33,10 @@ public class API {
     @OneToOne
     private APIConfig config;
 
-    @OneToOne
-    private CareTaker careTaker;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private CareTaker careTaker = new CareTaker();
 
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
 
@@ -55,5 +55,8 @@ public class API {
         endpoints = memento.getEndpoints();
         baseUrl = memento.getBaseUrl();
     }
+
+
+
 
 }

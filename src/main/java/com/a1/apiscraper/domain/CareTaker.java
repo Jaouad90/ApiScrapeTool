@@ -14,22 +14,19 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class CareTaker {
+
     @GeneratedValue
     @Id
-    private Long Id;
+    private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "api_id")
-    private API api;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    private List<APIMemento> mementoList = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<APIMemento> mementos = new ArrayList<>();
 
     public void add(APIMemento state){
-        mementoList.add(state);
+        mementos.add(state);
     }
 
     public APIMemento get(int index) {
-        return mementoList.get(index);
+        return mementos.get(index);
     }
 }
