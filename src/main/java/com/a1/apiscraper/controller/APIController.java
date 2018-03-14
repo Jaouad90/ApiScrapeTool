@@ -69,7 +69,7 @@ public class APIController {
     @Transactional
     @RequestMapping(value = "/api/{id}")
     public ModelAndView view(@PathVariable("id") API api) {
-        api.getCareTaker().getMementoList();
+        api.getCareTaker().getMementos();
         return new ModelAndView("home/detail", "api", api);
     }
 
