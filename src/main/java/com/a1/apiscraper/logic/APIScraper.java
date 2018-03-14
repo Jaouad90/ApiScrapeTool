@@ -30,6 +30,15 @@ public abstract class APIScraper  {
     }
 
     public HashMap<Endpoint, String> scrape() {
-        return scrapeBehavior.scrape(api);
+        if (scrapeBehavior != null) {
+            return scrapeBehavior.scrape(api);
+        } else {
+            try {
+                throw new Exception("ScrapeBehavior is not set");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new HashMap<>();
+            }
+        }
     }
 }
