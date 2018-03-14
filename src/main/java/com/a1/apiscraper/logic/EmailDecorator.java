@@ -6,21 +6,11 @@ import java.time.Instant;
 import java.util.HashMap;
 
 
-public class EmailDecorator extends DecoratedScraper{
-//    private APIScraper apiScraper;
+public class EmailDecorator extends DecoratedScraper {
 
     public EmailDecorator(APIScraper apiScraper) {
         super(apiScraper.getApi());
-//        this.apiScraper = apiScraper;
     }
-
-
-//    @Override
-//    public HashMap<Endpoint, String> scrape() {
-//        HashMap<Endpoint, String> results = apiScraper.scrape();
-//        communicate();
-//        return results;
-//    }
 
     public void communicate(){
         Mailer mailer = new Mailer();
