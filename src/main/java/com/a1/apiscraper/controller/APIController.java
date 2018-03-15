@@ -1,13 +1,7 @@
 package com.a1.apiscraper.controller;
 
-import com.a1.apiscraper.domain.API;
-import com.a1.apiscraper.domain.APIMemento;
-import com.a1.apiscraper.domain.CareTaker;
-import com.a1.apiscraper.domain.Endpoint;
-import com.a1.apiscraper.repository.APIRepository;
-import com.a1.apiscraper.repository.CareTakerRepository;
-import com.a1.apiscraper.repository.EndpointRepository;
-import com.a1.apiscraper.repository.ScrapeBehaviorRepository;
+import com.a1.apiscraper.domain.*;
+import com.a1.apiscraper.repository.*;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +28,8 @@ public class APIController {
     @Autowired
     ScrapeBehaviorRepository scrapeBehaviorRepository;
     @Autowired
+    APIConfigRepository apiConfigRepository;
+    @Autowired
     CareTakerRepository careTakerRepository;
     DateTimeFormatter formatter;
 
@@ -50,6 +46,7 @@ public class APIController {
 
     @RequestMapping(value = "/api/add", method = RequestMethod.GET)
     public String showForm(Model model) {
+        model.addAttribute("scrapebehaviors", scrapeBehaviorRepository.findAll());
         model.addAttribute("api", new API());
         return "api/edit";
     }
@@ -60,16 +57,25 @@ public class APIController {
             if (result.hasErrors()) {
                 return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
             }
-            API api = apiRepository.findOne(apiModel.getId());
-            api.setEndpoints(apiModel.getEndpoints());
-            api.getConfig().setScrapeBehavior(apiModel.getConfig().getScrapeBehavior());
-            api.setName(apiModel.getName());
-            String out = formatter.format(Instant.now());
-            api.setState("" + out);
+            API api;
+            if (apiModel.getId() == null) {
+                APIConfig apiConfig = apiModel.getConfig();
+                apiConfigRepository.save(apiConfig);
+                apiModel.setConfig(apiConfig);
+                apiRepository.save(apiModel);
+                api = apiModel;
+            } else {
+                api = apiRepository.findOne(apiModel.getId());
+                api.setEndpoints(apiModel.getEndpoints());
+                api.getConfig().setScrapeBehavior(apiModel.getConfig().getScrapeBehavior());
+                api.setName(apiModel.getName());
+                String out = formatter.format(Instant.now());
+                api.setState("" + out);
+                CareTaker careTaker = api.getCareTaker();
+                careTaker.add(api.saveStateToMemente());
+                apiRepository.save(api);
+            }
 
-            CareTaker careTaker = api.getCareTaker();
-            careTaker.add(api.saveStateToMemente());
-            apiRepository.save(api);
         return new ModelAndView("redirect:/api/" + api.getId());
     }
 
