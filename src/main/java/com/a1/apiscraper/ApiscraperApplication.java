@@ -32,6 +32,8 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
     private DecoratorRepository decoratorRepository;
     @Autowired
 	private CareTakerRepository careTakerRepository;
+    @Autowired
+    private ScrapeBehaviorRepository scrapeBehaviorRepository;
 
 
 
@@ -92,7 +94,16 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
             api.setConfig(apiConfig);
             apiRepository.save(api);
 
+            ScrapeBehavior normalScrapeBehavior = new ScrapeBehavior();
+            normalScrapeBehavior.setName("NormalScrapeBehavior");
+            scrapeBehaviorRepository.save(normalScrapeBehavior);
+
+            ScrapeBehavior deepScrapeBehavior = new ScrapeBehavior();
+            normalScrapeBehavior.setName("DeepScrapeBehavior");
+            scrapeBehaviorRepository.save(deepScrapeBehavior);
+
             apiConfig.addDecorator(tweetDecorator);
+            apiConfig.setScrapeBehavior(normalScrapeBehavior);
             //apiConfig.addDecorator(mailDecorator);
 			apiConfigRepository.save(apiConfig);
 

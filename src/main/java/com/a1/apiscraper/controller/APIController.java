@@ -7,6 +7,7 @@ import com.a1.apiscraper.domain.Endpoint;
 import com.a1.apiscraper.repository.APIRepository;
 import com.a1.apiscraper.repository.CareTakerRepository;
 import com.a1.apiscraper.repository.EndpointRepository;
+import com.a1.apiscraper.repository.ScrapeBehaviorRepository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,8 @@ public class APIController {
     APIRepository apiRepository;
     @Autowired
     EndpointRepository endpointRepository;
+    @Autowired
+    ScrapeBehaviorRepository scrapeBehaviorRepository;
     @Autowired
     CareTakerRepository careTakerRepository;
     DateTimeFormatter formatter;
@@ -84,9 +87,13 @@ public class APIController {
     @Transactional
     @RequestMapping(value = "/api/edit/{id}")
     public ModelAndView edit(@PathVariable("id") API api) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("api/edit");
+        modelAndView.addObject("api", api);
+        modelAndView.addObject("scrapebehaviors", scrapeBehaviorRepository.findAll());
         api.getEndpoints();
         System.out.println(api.getEndpoints().entrySet().size());
-        return new ModelAndView("api/edit", "api", api);
+        return modelAndView;
     }
 
 }
