@@ -62,6 +62,7 @@ public class APIController {
             api.setName(apiModel.getName());
             String out = formatter.format(Instant.now());
             api.setState("" + out);
+
             CareTaker careTaker = api.getCareTaker();
             careTaker.add(api.saveStateToMemente());
             apiRepository.save(api);

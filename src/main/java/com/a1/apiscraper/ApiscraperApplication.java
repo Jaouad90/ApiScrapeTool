@@ -74,13 +74,13 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 //			endpoints.put(endpoint1.getId(), endpoint1);
 //			endpoints.put(endpoint2.getId(), endpoint2);
 			API api = new API();
-			api.setName("Coindesk API");
-			api.setBaseUrl("https://api.coindesk.com/v1/bpi");
+			api.setName("Marktplaats API");
+			api.setBaseUrl("https://www.marktplaats.nl/kijkinuwwijk/");
 //			api.setEndpoints(endpoints);
 			apiRepository.save(api);
 			Decorator tweetDecorator = new Decorator();
-            tweetDecorator.setName("TweetDecorator");
-            decoratorRepository.save(tweetDecorator);
+			tweetDecorator.setName("TweetDecorator");
+			decoratorRepository.save(tweetDecorator);
 
             Decorator mailDecorator = new Decorator();
 			mailDecorator.setName("MailDecorator");
@@ -92,8 +92,8 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
             api.setConfig(apiConfig);
             apiRepository.save(api);
 
-//            apiConfig.addDecorator(tweetDecorator);
-//            apiConfig.addDecorator(mailDecorator);
+            apiConfig.addDecorator(tweetDecorator);
+            //apiConfig.addDecorator(mailDecorator);
 			apiConfigRepository.save(apiConfig);
 
 		};

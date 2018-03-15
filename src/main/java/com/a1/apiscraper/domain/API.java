@@ -42,7 +42,7 @@ public class API {
 
     public void addEndpoint(Endpoint endpoint) {
         assert(endpoint.getId() != null);
-        endpoints.put(endpoint.getId(), endpoint );
+        endpoints.put(endpoint.getId(), endpoint);
     }
 
     public APIMemento saveStateToMemente() {

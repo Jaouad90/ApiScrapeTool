@@ -31,6 +31,8 @@ public class HomeController {
     private RoleRepository roleRepository;
     @Autowired
     private UserServiceImpl userService;
+    @Autowired
+    private HyperMediaRepository hyperMediaRepository;
 
 
     private ArrayList<Endpoint> endpoints = new ArrayList<>();
@@ -49,7 +51,7 @@ public class HomeController {
     @Transactional
     public ModelAndView home() {
         Iterable<API> apis = apiRepository.findAll();
-        APIManager apiManager = new APIManager(apiRepository, resultRepository, endpointRepository);
+        APIManager apiManager = new APIManager(apiRepository, resultRepository, endpointRepository, hyperMediaRepository);
         apiManager.doScrape();
         return new ModelAndView("home/home", "apis", apis);
     }
