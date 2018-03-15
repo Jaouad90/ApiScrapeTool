@@ -62,24 +62,22 @@ public class APIController {
             String out = formatter.format(Instant.now());
             api.setState("" + out);
             CareTaker careTaker = api.getCareTaker();
-            careTaker.getMementos();
             careTaker.add(api.saveStateToMemente());
             apiRepository.save(api);
-        return new ModelAndView("redirect:/api/" + api.getId(), "api", api);
+        return new ModelAndView("redirect:/api/" + api.getId());
     }
 
     @Transactional
     @RequestMapping(value = "/api/{id}")
     public ModelAndView view(@PathVariable("id") API api) {
-        api.getCareTaker().getMementos();
         return new ModelAndView("home/detail", "api", api);
     }
 
     @Transactional
-    @RequestMapping(value = "/api/restore", method = RequestMethod.POST)
-    public ModelAndView restoreState(@Valid APIMemento api) {
+    @RequestMapping(value = "/api/restore/{id}/{id} ")
+    public ModelAndView restoreState(@Valid @PathVariable("id") APIMemento api) {
 
-        return new ModelAndView("api/edit", "api", api);
+        return new ModelAndView("redirect:api/" + api.getId());
     }
 
     @Transactional

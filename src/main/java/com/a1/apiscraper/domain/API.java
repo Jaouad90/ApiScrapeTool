@@ -33,10 +33,10 @@ public class API {
     @OneToOne
     private APIConfig config;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private CareTaker careTaker = new CareTaker();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
 
