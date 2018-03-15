@@ -57,6 +57,7 @@
                         <tr>
                             <th>Endpoint url</th>
                             <th>Details</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -64,7 +65,7 @@
                             <td>No endpoints</td>
                         </tr>
                     <div th:if="${api.careTaker != null}">
-                        <div th:each="APImemento : ${api.careTaker.mementoList}">
+                        <div th:each="APImemento : ${api.careTaker.mementos}">
                                     <tr>
                                         <td>
                                            <div th:each="endpoint : ${APImemento.endpoints.entrySet()}">
@@ -72,6 +73,8 @@
                                            </div>
                                         </td>
                                         <td th:text="${APImemento.state}">Status</td>
+                                            <td><a th:href="@{'/api/restore/' + ${api.getId()} + '/' + ${APImemento.id}}"
+                                        > EDIT </a></td>
                                     </tr>
                         </div>
                     </div>

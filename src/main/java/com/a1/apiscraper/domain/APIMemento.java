@@ -14,9 +14,10 @@ import java.util.Map;
 @Entity
 @NoArgsConstructor
 public class APIMemento {
+
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
 
     private String name;
 
@@ -24,7 +25,7 @@ public class APIMemento {
 
     private String baseUrl;
 
-    @Transient
+    @ManyToMany(fetch = FetchType.LAZY)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
 

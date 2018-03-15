@@ -33,27 +33,31 @@ public class API {
     @OneToOne
     private APIConfig config;
 
-    @OneToOne
-    private CareTaker careTaker;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CareTaker careTaker = new CareTaker();
 
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
-
 
     public void addEndpoint(Endpoint endpoint) {
         assert(endpoint.getId() != null);
-        endpoints.put(endpoint.getId(), endpoint );
+        endpoints.put(endpoint.getId(), endpoint);
     }
 
     public APIMemento saveStateToMemente() {
-        return new APIMemento(name, state, endpoints, baseUrl);
+        Map<Long, Endpoint> endpointMap = new HashMap<>();
+        endpointMap = endpoints;
+        return new APIMemento(name, state, endpointMap, baseUrl);
     }
 
     public void getStateFromMemento(APIMemento memento) {
         name = memento.getName();
         state = memento.getState();
-        endpoints = memento.getEndpoints();
+        endpoints = new HashMap<>(memento.getEndpoints());
         baseUrl = memento.getBaseUrl();
     }
+
+
+
 
 }

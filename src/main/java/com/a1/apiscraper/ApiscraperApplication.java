@@ -1,9 +1,6 @@
 package com.a1.apiscraper;
 
 import com.a1.apiscraper.domain.*;
-import com.a1.apiscraper.logic.APIScraper;
-import com.a1.apiscraper.logic.SimpleAPIscraper;
-import com.a1.apiscraper.logic.TweetDecorator;
 import com.a1.apiscraper.repository.*;
 import com.a1.apiscraper.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
@@ -33,6 +30,10 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 	private APIConfigRepository apiConfigRepository;
     @Autowired
     private DecoratorRepository decoratorRepository;
+    @Autowired
+	private CareTakerRepository careTakerRepository;
+    @Autowired
+    private ScrapeBehaviorRepository scrapeBehaviorRepository;
 
 
 
@@ -75,28 +76,35 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 //			endpoints.put(endpoint1.getId(), endpoint1);
 //			endpoints.put(endpoint2.getId(), endpoint2);
 			API api = new API();
-			api.setName("Coindesk API");
-			api.setBaseUrl("https://api.coindesk.com/v1/bpi");
+			api.setName("Marktplaats API");
+			api.setBaseUrl("https://www.marktplaats.nl/kijkinuwwijk/");
 //			api.setEndpoints(endpoints);
 			apiRepository.save(api);
-
 			Decorator tweetDecorator = new Decorator();
-            tweetDecorator.setName("TweetDecorator");
-            decoratorRepository.save(tweetDecorator);
+			tweetDecorator.setName("TweetDecorator");
+			decoratorRepository.save(tweetDecorator);
 
             Decorator mailDecorator = new Decorator();
 			mailDecorator.setName("MailDecorator");
             decoratorRepository.save(mailDecorator);
 
 			APIConfig apiConfig = new APIConfig();
-			apiConfig.setApi(api);
             apiConfigRepository.save(apiConfig);
 
             api.setConfig(apiConfig);
             apiRepository.save(api);
 
-//            apiConfig.addDecorator(tweetDecorator);
-//            apiConfig.addDecorator(mailDecorator);
+            ScrapeBehavior normalScrapeBehavior = new ScrapeBehavior();
+            normalScrapeBehavior.setName("NormalScrapeBehavior");
+            scrapeBehaviorRepository.save(normalScrapeBehavior);
+
+            ScrapeBehavior deepScrapeBehavior = new ScrapeBehavior();
+            deepScrapeBehavior.setName("DeepScrapeBehavior");
+            scrapeBehaviorRepository.save(deepScrapeBehavior);
+
+            apiConfig.addDecorator(tweetDecorator);
+            apiConfig.setScrapeBehavior(normalScrapeBehavior);
+            //apiConfig.addDecorator(mailDecorator);
 			apiConfigRepository.save(apiConfig);
 
 		};
