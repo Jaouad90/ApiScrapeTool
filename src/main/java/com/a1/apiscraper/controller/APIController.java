@@ -31,12 +31,15 @@ public class APIController {
     APIConfigRepository apiConfigRepository;
     @Autowired
     CareTakerRepository careTakerRepository;
+    @Autowired
+    DecoratorRepository decoratorRepository;
     DateTimeFormatter formatter;
 
-    public APIController(APIRepository apiRepository, EndpointRepository endpointRepository, CareTakerRepository careTakerRepository) {
+    public APIController(APIRepository apiRepository, EndpointRepository endpointRepository, CareTakerRepository careTakerRepository, DecoratorRepository decoratorRepository) {
         this.apiRepository = apiRepository;
         this.endpointRepository = endpointRepository;
         this.careTakerRepository = careTakerRepository;
+        this.decoratorRepository = decoratorRepository;
         formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
                         .withLocale( Locale.ENGLISH)
                         .withZone( ZoneId.systemDefault() );
@@ -68,6 +71,7 @@ public class APIController {
                 api = apiRepository.findOne(apiModel.getId());
                 api.setEndpoints(apiModel.getEndpoints());
                 api.getConfig().setScrapeBehavior(apiModel.getConfig().getScrapeBehavior());
+                api.getConfig().setDecorators(apiModel.getConfig().getDecorators());
                 api.setName(apiModel.getName());
                 String out = formatter.format(Instant.now());
                 api.setState("" + out);
@@ -102,6 +106,7 @@ public class APIController {
         modelAndView.setViewName("api/edit");
         modelAndView.addObject("api", api);
         modelAndView.addObject("scrapebehaviors", scrapeBehaviorRepository.findAll());
+        modelAndView.addObject("decorators", decoratorRepository.findAll());
         api.getEndpoints();
         System.out.println(api.getEndpoints().entrySet().size());
         return modelAndView;
