@@ -61,9 +61,8 @@ public class APIController {
             api.setEndpoints(apiModel.getEndpoints());
             String out = formatter.format(Instant.now());
             api.setState("" + out);
-            CareTaker careTaker = api.getCareTaker();
-            careTaker.getMementos();
-            careTaker.add(api.saveStateToMemente());
+//            CareTaker careTaker = api.getCareTaker();
+//            careTaker.add(api.saveStateToMemente());
             apiRepository.save(api);
         return new ModelAndView("redirect:/api/" + api.getId(), "api", api);
     }
