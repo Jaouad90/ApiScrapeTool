@@ -22,6 +22,9 @@ public class APIConfig {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Decorator> decorators = new ArrayList<>();
 
+    @OneToOne
+    private ScrapeBehavior scrapeBehavior;
+
     public void addDecorator(Decorator decorator){
         this.decorators.add(decorator);
     }
