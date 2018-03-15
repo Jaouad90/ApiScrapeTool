@@ -62,6 +62,7 @@ public class APIController {
             }
             API api = apiRepository.findOne(apiModel.getId());
             api.setEndpoints(apiModel.getEndpoints());
+            api.getConfig().setScrapeBehavior(apiModel.getConfig().getScrapeBehavior());
             api.setName(apiModel.getName());
             String out = formatter.format(Instant.now());
             api.setState("" + out);

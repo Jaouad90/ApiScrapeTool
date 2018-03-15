@@ -41,11 +41,11 @@
                     <!--<p>DeepScrape <input type="radio" th:value="*{config.normalScrape}"  th:name="ScrapeBehavior"/></p>-->
                     <!--<p>NormalScrape <input type="radio" th:value="*{config.deepScrape}" th:name="ScrapeBehavior"/></p>-->
                         <ul>
-                            <li th:each="radioValue: ${scrapebehaviors}">
-                                <input type="radio"
+                            <div th:each="radioValue: ${scrapebehaviors}">
+                                <p th:text="${radioValue.getName()}"></p><input type="radio"
                                        th:field="*{config.scrapeBehavior}"
-                                       th:value="${api.config.scrapeBehavior.getId()}" />
-                            </li>
+                                       th:value="${radioValue.getId()}" />
+                            </div>
                         </ul>
                     </div>
                 </div>

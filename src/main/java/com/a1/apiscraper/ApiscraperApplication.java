@@ -99,7 +99,7 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
             scrapeBehaviorRepository.save(normalScrapeBehavior);
 
             ScrapeBehavior deepScrapeBehavior = new ScrapeBehavior();
-            normalScrapeBehavior.setName("DeepScrapeBehavior");
+            deepScrapeBehavior.setName("DeepScrapeBehavior");
             scrapeBehaviorRepository.save(deepScrapeBehavior);
 
             apiConfig.addDecorator(tweetDecorator);
