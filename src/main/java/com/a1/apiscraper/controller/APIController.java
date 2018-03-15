@@ -59,6 +59,7 @@ public class APIController {
             }
             API api = apiRepository.findOne(apiModel.getId());
             api.setEndpoints(apiModel.getEndpoints());
+            api.setName(apiModel.getName());
             String out = formatter.format(Instant.now());
             api.setState("" + out);
             CareTaker careTaker = api.getCareTaker();
@@ -74,9 +75,12 @@ public class APIController {
     }
 
     @Transactional
-    @RequestMapping(value = "/api/restore/{id}/{id} ")
-    public ModelAndView restoreState(@Valid @PathVariable("id") APIMemento api) {
-
+    @RequestMapping(value = "/api/restore/{apiid}/{mementoid}")
+    public ModelAndView restoreState(@PathVariable("apiid") API api, @PathVariable("mementoid") APIMemento apiMemento ) {
+        api.getId();
+        apiMemento.getId();
+        api.getStateFromMemento(apiMemento);
+        apiRepository.save(api);
         return new ModelAndView("redirect:api/" + api.getId());
     }
 

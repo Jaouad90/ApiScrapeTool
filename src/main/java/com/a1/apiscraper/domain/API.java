@@ -46,13 +46,15 @@ public class API {
     }
 
     public APIMemento saveStateToMemente() {
-        return new APIMemento(name, state, endpoints, baseUrl);
+        Map<Long, Endpoint> endpointMap = new HashMap<>();
+        endpointMap = endpoints;
+        return new APIMemento(name, state, endpointMap, baseUrl);
     }
 
     public void getStateFromMemento(APIMemento memento) {
         name = memento.getName();
         state = memento.getState();
-        endpoints = memento.getEndpoints();
+        endpoints = new HashMap<>(memento.getEndpoints());
         baseUrl = memento.getBaseUrl();
     }
 
