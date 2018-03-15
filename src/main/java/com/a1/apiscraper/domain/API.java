@@ -39,7 +39,6 @@ public class API {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
-
     public void addEndpoint(Endpoint endpoint) {
         assert(endpoint.getId() != null);
         endpoints.put(endpoint.getId(), endpoint);
