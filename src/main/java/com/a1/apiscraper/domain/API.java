@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
@@ -27,6 +28,10 @@ public class API {
     @NotEmpty(message = "Base URL cannot be not empty!")
     @URL(message = "Please insert a valid URL!")
     private String baseUrl;
+
+    @NotEmpty(message = "Interval cannot be empty!")
+    //@Size(min=6, max=30)
+    private Integer timeInterval;
 
     private String state;
 
