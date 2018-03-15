@@ -55,6 +55,7 @@
                         <tr>
                             <th>Endpoint url</th>
                             <th>Details</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -70,6 +71,8 @@
                                            </div>
                                         </td>
                                         <td th:text="${APImemento.state}">Status</td>
+                                            <td><a th:href="@{'/api/restore/' + ${api.getId()} + '/' + ${APImemento.id}}"
+                                        > EDIT </a></td>
                                     </tr>
                         </div>
                     </div>
