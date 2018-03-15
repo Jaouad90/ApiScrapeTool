@@ -14,7 +14,7 @@ public class JSONAdapterService implements ConvertService {
     }
 
     @Override
-    public void convertData(String data) {
-        jsonServiceImpl.convertData(data);
+    public String convertData(String data) {
+        return jsonServiceImpl.convertData(data);
     }
 }

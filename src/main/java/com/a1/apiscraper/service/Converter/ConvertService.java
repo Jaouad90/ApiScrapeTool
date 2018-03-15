@@ -4,5 +4,5 @@ import org.w3c.dom.Document;
 
 public interface ConvertService {
 
-    Document convertData(String data);
+    String convertData(String data);
 }

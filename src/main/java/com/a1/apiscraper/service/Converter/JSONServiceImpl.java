@@ -1,40 +1,58 @@
 package com.a1.apiscraper.service.Converter;
 
-import com.a1.apiscraper.repository.ResultRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.StringReader;
 
 @Service
 public class JSONServiceImpl
 {
-
-        @Autowired
-        private ResultRepository resultRepository;
-
-        public Document convertData(String data)
+        public String convertData(String data)
         {
-                Document JSONdoc;
-                return JSONdoc = convertStringToDocument(data);
+                return  convertXMLToJSON(data);
         }
 
-        private static Document convertStringToDocument(String data) {
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder;
-                try
+        private static String convertXMLToJSON(String data)
+        {
+                if(checkIfJSON(data))
                 {
-                        builder = factory.newDocumentBuilder();
-                        Document doc = builder.parse( new InputSource( new StringReader( data ) ) );
-                        return doc;
-                } catch (Exception e) {
-                        e.printStackTrace();
+                        return data;
                 }
-                return null;
+                else
+                {
+                        int PRETTY_PRINT_INDENT_FACTOR = 4;
+
+                        //Convert to JSON
+                        try {
+                                JSONObject xmlJSONObj = XML.toJSONObject(data);
+                                String jsonData = xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR);
+
+                                return jsonData;
+
+                        } catch (JSONException je) {
+                                System.out.println(je.toString());
+
+                                return null;
+                        }
+                }
+        }
+
+        private static boolean checkIfJSON(String data) {
+                try {
+                        new JSONObject(data);
+                } catch (JSONException ex) {
+                        // edited, to include @Arthur's comment
+                        // e.g. in case JSONArray is valid as well...
+                        try {
+                                new JSONArray(data);
+                        } catch (JSONException ex1) {
+                                return false;
+                        }
+                }
+                return true;
         }
 
 }
