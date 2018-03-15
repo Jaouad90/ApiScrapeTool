@@ -25,7 +25,7 @@ public class APIMemento {
 
     private String baseUrl;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
 

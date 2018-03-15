@@ -62,26 +62,30 @@ public class APIController {
             }
             API api = apiRepository.findOne(apiModel.getId());
             api.setEndpoints(apiModel.getEndpoints());
+            api.setName(apiModel.getName());
             String out = formatter.format(Instant.now());
             api.setState("" + out);
-//            CareTaker careTaker = api.getCareTaker();
-//            careTaker.add(api.saveStateToMemente());
+
+            CareTaker careTaker = api.getCareTaker();
+            careTaker.add(api.saveStateToMemente());
             apiRepository.save(api);
-        return new ModelAndView("redirect:/api/" + api.getId(), "api", api);
+        return new ModelAndView("redirect:/api/" + api.getId());
     }
 
     @Transactional
     @RequestMapping(value = "/api/{id}")
     public ModelAndView view(@PathVariable("id") API api) {
-        api.getCareTaker().getMementos();
         return new ModelAndView("home/detail", "api", api);
     }
 
     @Transactional
-    @RequestMapping(value = "/api/restore", method = RequestMethod.POST)
-    public ModelAndView restoreState(@Valid APIMemento api) {
-
-        return new ModelAndView("api/edit", "api", api);
+    @RequestMapping(value = "/api/restore/{apiid}/{mementoid}")
+    public ModelAndView restoreState(@PathVariable("apiid") API api, @PathVariable("mementoid") APIMemento apiMemento ) {
+        api.getId();
+        apiMemento.getId();
+        api.getStateFromMemento(apiMemento);
+        apiRepository.save(api);
+        return new ModelAndView("redirect:api/" + api.getId());
     }
 
     @Transactional
