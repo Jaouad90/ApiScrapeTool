@@ -76,7 +76,12 @@ public class APIController {
     public ModelAndView submit(@Valid @ModelAttribute("api") API apiModel, BindingResult result) {
             if (result.hasErrors()) {
                 loggerChain.logMessage(1, "Niet alle velden correct ingevoerd");
-                return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
+                ModelAndView modelAndView = new ModelAndView();
+                modelAndView.setViewName("api/edit");
+                modelAndView.addObject("formErrors", result.getAllErrors());
+                modelAndView.addObject("scrapebehaviors", scrapeBehaviorRepository.findAll());
+                modelAndView.addObject("decorators", decoratorRepository.findAll());
+                return modelAndView;
             }
             API api;
             if (apiModel.getId() == null) {

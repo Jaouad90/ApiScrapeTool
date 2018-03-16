@@ -19,7 +19,7 @@ public class Endpoint {
     @GeneratedValue
     private Long id;
 
-    @NotEmpty(message = "FF iets invullen")
+    @NotEmpty(message = "Endpoints kan niet leeg zijn")
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL)

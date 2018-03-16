@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.*;
 
 @Entity
@@ -36,6 +37,7 @@ public class API {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private CareTaker careTaker = new CareTaker();
 
+    @Valid
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
