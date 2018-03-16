@@ -66,7 +66,7 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			userList.add(user);
 			role.setUsers(userList);
 			user.setRoles(roleList);
-			repositoryService.saveUser(user);
+			userService.save(user);
 //			Map<Long, Endpoint> endpoints = new HashMap<>();
 //			Endpoint endpoint = new Endpoint();
 //			endpoint.setName("/currentprice.json");

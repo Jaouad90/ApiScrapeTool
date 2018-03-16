@@ -28,7 +28,6 @@ public interface RepositoryServiceInterface {
     void saveAPIConfig(APIConfig apiConfig);
     void saveAPI(API api);
     void saveUser(User user);
-    void saveHashedUser(User user);
     void saveHyperMedia(HyperMedia hyperMedia);
     void saveResult(Result result);
     void saveEndpoint(Endpoint endpoint);

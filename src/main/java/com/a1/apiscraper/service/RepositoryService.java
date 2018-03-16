@@ -74,11 +74,7 @@ public class RepositoryService implements RepositoryServiceInterface {
     public void saveAPI(API api) {
         apiRepository.save(api);
     }
-    public void saveUser(User user){
-        //userRepository.save(user);
-        userService.save(user);
-    }
-    public void saveHashedUser(User user){
+    public void saveUser(User user) {
         userRepository.save(user);
     }
     public void saveHyperMedia(HyperMedia hyperMedia){
