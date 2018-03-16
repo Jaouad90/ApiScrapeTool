@@ -2,6 +2,7 @@ package com.a1.apiscraper.controller;
 
 import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.repository.*;
+import com.a1.apiscraper.service.APIServiceInterface;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,11 @@ public class APIController {
     DecoratorRepository decoratorRepository;
     DateTimeFormatter formatter;
 
-    public APIController(APIRepository apiRepository, EndpointRepository endpointRepository, CareTakerRepository careTakerRepository, DecoratorRepository decoratorRepository) {
+
+    //APIServiceInterface apiService;
+
+    public APIController(APIRepository apiRepository, EndpointRepository endpointRepository, CareTakerRepository careTakerRepository, DecoratorRepository decoratorRepository
+                         /*APIServiceInterface apiService*/) {
         this.apiRepository = apiRepository;
         this.endpointRepository = endpointRepository;
         this.careTakerRepository = careTakerRepository;
@@ -43,14 +48,16 @@ public class APIController {
         formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
                         .withLocale( Locale.ENGLISH)
                         .withZone( ZoneId.systemDefault() );
+
+        //Benodigd voor gescheiden service/controller
+        //this.apiService = apiService;
     }
-
-
 
     @RequestMapping(value = "/api/add", method = RequestMethod.GET)
     public String showForm(Model model) {
         model.addAttribute("scrapebehaviors", scrapeBehaviorRepository.findAll());
         model.addAttribute("api", new API());
+        model.addAttribute("decorators", decoratorRepository.findAll());
         return "api/edit";
     }
 
@@ -61,13 +68,18 @@ public class APIController {
                 return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
             }
             API api;
+
             if (apiModel.getId() == null) {
+                //Create API
                 APIConfig apiConfig = apiModel.getConfig();
+                //api.getConfig().setDecorators(apiModel.getConfig().getDecorators());
                 apiConfigRepository.save(apiConfig);
                 apiModel.setConfig(apiConfig);
+
                 apiRepository.save(apiModel);
                 api = apiModel;
             } else {
+                //Update API
                 api = apiRepository.findOne(apiModel.getId());
                 api.setEndpoints(apiModel.getEndpoints());
                 api.getConfig().setScrapeBehavior(apiModel.getConfig().getScrapeBehavior());
@@ -92,6 +104,7 @@ public class APIController {
     @Transactional
     @RequestMapping(value = "/api/restore/{apiid}/{mementoid}")
     public ModelAndView restoreState(@PathVariable("apiid") API api, @PathVariable("mementoid") APIMemento apiMemento ) {
+        //Restore Memento
         api.getId();
         apiMemento.getId();
         api.getStateFromMemento(apiMemento);
@@ -102,6 +115,7 @@ public class APIController {
     @Transactional
     @RequestMapping(value = "/api/edit/{id}")
     public ModelAndView edit(@PathVariable("id") API api) {
+        //create editView
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("api/edit");
         modelAndView.addObject("api", api);
@@ -111,5 +125,4 @@ public class APIController {
         System.out.println(api.getEndpoints().entrySet().size());
         return modelAndView;
     }
-
 }

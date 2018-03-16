@@ -19,7 +19,9 @@ public class APIConfig {
     private Long id;
 
     @ElementCollection
+
     @ManyToMany(cascade = CascadeType.ALL)
+
     private List<Decorator> decorators = new ArrayList<>();
 
     @OneToOne

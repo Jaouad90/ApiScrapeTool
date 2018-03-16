@@ -78,7 +78,7 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			API api = new API();
 			api.setName("Marktplaats API");
 			api.setBaseUrl("https://www.marktplaats.nl/kijkinuwwijk/");
-			api.setTimeInterval(1000);
+			//api.setTimeInterval(1000L);
 //			api.setEndpoints(endpoints);
 			apiRepository.save(api);
 			Decorator tweetDecorator = new Decorator();
