@@ -51,8 +51,6 @@ public class HomeController {
     @Transactional
     public ModelAndView home() {
         Iterable<API> apis = apiRepository.findAll();
-        APIManager apiManager = new APIManager(apiRepository, resultRepository, endpointRepository, hyperMediaRepository);
-        apiManager.doScrape();
         return new ModelAndView("home/home", "apis", apis);
     }
 

@@ -9,6 +9,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,17 +28,16 @@ public class TimeInterval {
     private List<API> apiList;
 
     @Transient
-    private List<LocalTime> timeList;
+    private List<LocalTime> timeList = new ArrayList<>();
 
     public List<LocalTime> getTimeList() {
         LocalDate date = LocalDate.of(2014, 1, 1); // arbitrary date
         LocalDateTime tsp = LocalDateTime.of(date, LocalTime.MIDNIGHT);
         System.out.println(intervalName);
         switch (intervalName) {
-            case "Half uur":
+            case "Halfuur":
                 do {
                     tsp = tsp.plus(Duration.ofHours(0).plusMinutes(30));
-                    System.out.println(tsp.toLocalTime().toString());
                     LocalTime localTime = tsp.toLocalTime();
                     timeList.add(localTime);
                 } while (date.equals(tsp.toLocalDate()));
@@ -46,7 +46,8 @@ public class TimeInterval {
                 do  {
                     tsp = tsp.plus(Duration.ofHours(0).plusMinutes(60));
                     System.out.println(tsp.toLocalTime().toString());
-                    LocalTime localTime = tsp.toLocalTime();
+                    LocalTime localTime =  LocalTime.now();
+                    localTime = tsp.toLocalTime();
                     timeList.add(localTime);
                 } while (date.equals(tsp.toLocalDate()));
                 return timeList;

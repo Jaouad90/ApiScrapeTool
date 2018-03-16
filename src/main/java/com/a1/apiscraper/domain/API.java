@@ -43,7 +43,7 @@ public class API {
     private CareTaker careTaker = new CareTaker();
 
     @Valid
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
     public void addEndpoint(Endpoint endpoint) {

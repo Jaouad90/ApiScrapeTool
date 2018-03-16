@@ -101,6 +101,7 @@ public class APIController {
                 api.getConfig().setScrapeBehavior(apiModel.getConfig().getScrapeBehavior());
                 api.getConfig().setDecorators(apiModel.getConfig().getDecorators());
                 api.setName(apiModel.getName());
+                api.setBaseUrl(apiModel.getBaseUrl());
                 String out = formatter.format(Instant.now());
                 api.setState("" + out);
                 api.setTimeInterval(apiModel.timeInterval);
