@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import javax.validation.constraints.Size;
+import javax.validation.Valid;
 import java.util.*;
 
 @Entity
@@ -36,12 +37,13 @@ public class API {
 
     private String state;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private APIConfig config;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private CareTaker careTaker = new CareTaker();
 
+    @Valid
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
@@ -62,8 +64,4 @@ public class API {
         endpoints = new HashMap<>(memento.getEndpoints());
         baseUrl = memento.getBaseUrl();
     }
-
-
-
-
 }

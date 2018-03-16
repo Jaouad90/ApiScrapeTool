@@ -3,6 +3,10 @@ package com.a1.apiscraper.controller;
 import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.repository.*;
 import com.a1.apiscraper.service.APIServiceInterface;
+import com.a1.apiscraper.service.AbstractLogger;
+import com.a1.apiscraper.service.ConsoleLogger;
+import com.a1.apiscraper.service.ErrorLogger;
+import com.a1.apiscraper.service.WarningLogger;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +39,7 @@ public class APIController {
     @Autowired
     DecoratorRepository decoratorRepository;
     DateTimeFormatter formatter;
+    AbstractLogger loggerChain;
 
 
     //APIServiceInterface apiService;
@@ -51,10 +56,24 @@ public class APIController {
 
         //Benodigd voor gescheiden service/controller
         //this.apiService = apiService;
+       this.loggerChain = getChainOfLoggers();
+    }
+
+    private static AbstractLogger getChainOfLoggers(){
+
+        AbstractLogger errorLogger = new ErrorLogger(AbstractLogger.ERROR);
+        AbstractLogger fileLogger = new WarningLogger(AbstractLogger.DEBUG);
+        AbstractLogger consoleLogger = new ConsoleLogger(AbstractLogger.INFO);
+
+        errorLogger.setNextLogger(fileLogger);
+        fileLogger.setNextLogger(consoleLogger);
+
+        return errorLogger;
     }
 
     @RequestMapping(value = "/api/add", method = RequestMethod.GET)
     public String showForm(Model model) {
+        model.addAttribute("decorators", decoratorRepository.findAll());
         model.addAttribute("scrapebehaviors", scrapeBehaviorRepository.findAll());
         model.addAttribute("api", new API());
         model.addAttribute("decorators", decoratorRepository.findAll());
@@ -65,7 +84,13 @@ public class APIController {
     @RequestMapping(value = "/api", method = RequestMethod.POST)
     public ModelAndView submit(@Valid @ModelAttribute("api") API apiModel, BindingResult result) {
             if (result.hasErrors()) {
-                return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
+                loggerChain.logMessage(1, "Niet alle velden correct ingevoerd");
+                ModelAndView modelAndView = new ModelAndView();
+                modelAndView.setViewName("api/edit");
+                modelAndView.addObject("formErrors", result.getAllErrors());
+                modelAndView.addObject("scrapebehaviors", scrapeBehaviorRepository.findAll());
+                modelAndView.addObject("decorators", decoratorRepository.findAll());
+                return modelAndView;
             }
             API api;
 

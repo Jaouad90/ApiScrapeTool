@@ -18,10 +18,7 @@ public class APIConfig {
     @GeneratedValue
     private Long id;
 
-    @ElementCollection
-
-    @ManyToMany(cascade = CascadeType.ALL)
-
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Decorator> decorators = new ArrayList<>();
 
     @OneToOne
