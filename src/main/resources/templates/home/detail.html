@@ -37,8 +37,7 @@
                         <td th:text="${endpoint.getValue().getName()}">endpoint name</td>
                         </tr>
                         </div>
-                        <div th:
-                    </div>
+                        </div>
                     </div>
                     </tbody>
                 </table>
@@ -57,7 +56,7 @@
                         <tr>
                             <th>Endpoint url</th>
                             <th>Details</th>
-                            <th>Actions</th>
+                            <th>Export</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -100,9 +99,6 @@
             responsive: true
 
         });
-      var table2 = $('#statestable').DataTable( {
-          responsive: true
-      });
         $('#endpointtable').on('click', 'td.details-control', function () {
             var tr = $(this).closest('tr');
             var row = table.row(tr);
