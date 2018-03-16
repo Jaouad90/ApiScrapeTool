@@ -30,7 +30,7 @@ public class API {
 
     private String state;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private APIConfig config;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
