@@ -7,6 +7,7 @@ import com.a1.apiscraper.repository.EndpointRepository;
 import com.a1.apiscraper.repository.HyperMediaRepository;
 import com.a1.apiscraper.repository.ResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -38,10 +39,13 @@ public class APIManager {
     }
 
     @Transactional
+    @Scheduled(cron = "0 0 6,19 * * *")
+    public void CheckScrape() {
+
+    }
     public void doScrape() {
         for(API api : apiArrayList) {
             APIScraper tempScraper = new SimpleAPIscraper(api);
-
             DecoratorFactory decoratorFactory = new DecoratorFactory();
             for(Decorator decorator : api.getConfig().getDecorators()){
                 tempScraper = decoratorFactory.getDecorator(decorator.getName(), tempScraper);

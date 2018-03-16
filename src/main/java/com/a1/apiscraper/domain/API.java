@@ -9,7 +9,9 @@ import org.hibernate.validator.constraints.URL;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.time.LocalTime;
 import java.util.*;
+
 
 @Entity
 @Getter
@@ -30,6 +32,9 @@ public class API {
     private String baseUrl;
 
     private String state;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    public TimeInterval timeInterval;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private APIConfig config;
