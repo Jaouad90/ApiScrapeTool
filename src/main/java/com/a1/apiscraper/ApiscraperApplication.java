@@ -62,7 +62,6 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			user.setUsername("Admin");
 			user.setPassword("Root");
 			repositoryService.saveRole(role);
-			//roleRepository.save(role);
 			roleList.add(role);
 			userList.add(user);
 			role.setUsers(userList);

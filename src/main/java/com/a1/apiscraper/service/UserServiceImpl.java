@@ -23,6 +23,6 @@ public class UserServiceImpl implements UserService {
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(new HashSet<>((Collection<? extends Role>) repositoryService.getAllRoles()));
-        repositoryService.saveUser(user);
+        repositoryService.saveHashedUser(user);
     }
 }
