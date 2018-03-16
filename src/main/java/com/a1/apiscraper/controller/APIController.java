@@ -2,6 +2,10 @@ package com.a1.apiscraper.controller;
 
 import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.repository.*;
+import com.a1.apiscraper.service.AbstractLogger;
+import com.a1.apiscraper.service.ConsoleLogger;
+import com.a1.apiscraper.service.ErrorLogger;
+import com.a1.apiscraper.service.WarningLogger;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +38,7 @@ public class APIController {
     @Autowired
     DecoratorRepository decoratorRepository;
     DateTimeFormatter formatter;
+    AbstractLogger loggerChain;
 
     public APIController(APIRepository apiRepository, EndpointRepository endpointRepository, CareTakerRepository careTakerRepository, DecoratorRepository decoratorRepository) {
         this.apiRepository = apiRepository;
@@ -43,12 +48,24 @@ public class APIController {
         formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
                         .withLocale( Locale.ENGLISH)
                         .withZone( ZoneId.systemDefault() );
+       this.loggerChain = getChainOfLoggers();
     }
 
+    private static AbstractLogger getChainOfLoggers(){
 
+        AbstractLogger errorLogger = new ErrorLogger(AbstractLogger.ERROR);
+        AbstractLogger fileLogger = new WarningLogger(AbstractLogger.DEBUG);
+        AbstractLogger consoleLogger = new ConsoleLogger(AbstractLogger.INFO);
+
+        errorLogger.setNextLogger(fileLogger);
+        fileLogger.setNextLogger(consoleLogger);
+
+        return errorLogger;
+    }
 
     @RequestMapping(value = "/api/add", method = RequestMethod.GET)
     public String showForm(Model model) {
+        model.addAttribute("decorators", decoratorRepository.findAll());
         model.addAttribute("scrapebehaviors", scrapeBehaviorRepository.findAll());
         model.addAttribute("api", new API());
         return "api/edit";
@@ -58,6 +75,7 @@ public class APIController {
     @RequestMapping(value = "/api", method = RequestMethod.POST)
     public ModelAndView submit(@Valid @ModelAttribute("api") API apiModel, BindingResult result) {
             if (result.hasErrors()) {
+                loggerChain.logMessage(1, "Niet alle velden correct ingevoerd");
                 return new ModelAndView("api/edit", "formErrors", result.getAllErrors());
             }
             API api;
