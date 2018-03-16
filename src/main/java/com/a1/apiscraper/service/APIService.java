@@ -17,25 +17,11 @@ import java.util.Locale;
 public class APIService implements APIServiceInterface{
 
     @Autowired
-    APIRepository apiRepository;
-    @Autowired
-    EndpointRepository endpointRepository;
-    @Autowired
-    ScrapeBehaviorRepository scrapeBehaviorRepository;
-    @Autowired
-    APIConfigRepository apiConfigRepository;
-    @Autowired
-    CareTakerRepository careTakerRepository;
-    @Autowired
-    DecoratorRepository decoratorRepository;
+    RepositoryService repositoryService;
     DateTimeFormatter formatter;
 
-    public APIService(APIRepository apiRepository, EndpointRepository endpointRepository, CareTakerRepository careTakerRepository, DecoratorRepository decoratorRepository)
+    public APIService()
     {
-        this.apiRepository = apiRepository;
-        this.endpointRepository = endpointRepository;
-        this.careTakerRepository = careTakerRepository;
-        this.decoratorRepository = decoratorRepository;
         formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
                 .withLocale( Locale.ENGLISH)
                 .withZone( ZoneId.systemDefault() );
@@ -50,12 +36,13 @@ public class APIService implements APIServiceInterface{
         if (api.getId() == null) {
             //Create API
             APIConfig apiConfig = api.getConfig();
-            apiConfigRepository.save(apiConfig);
+            repositoryService.saveAPIConfig(apiConfig);
             api.setConfig(apiConfig);
+            repositoryService.saveAPI(api);
             return api;
         } else {
             //Update API
-            api = apiRepository.findOne(api.getId());
+            api = repositoryService.getSingleAPI(api.getId());
             api.setEndpoints(api.getEndpoints());
             api.getConfig().setScrapeBehavior(api.getConfig().getScrapeBehavior());
             api.getConfig().setDecorators(api.getConfig().getDecorators());
@@ -64,7 +51,7 @@ public class APIService implements APIServiceInterface{
             api.setState("" + out);
             CareTaker careTaker = api.getCareTaker();
             careTaker.add(api.saveStateToMemente());
-            apiRepository.save(api);
+            repositoryService.saveAPI(api);
             return api;
         }
     }

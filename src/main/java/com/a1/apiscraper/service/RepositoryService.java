@@ -1,9 +1,6 @@
 package com.a1.apiscraper.service;
 
-import com.a1.apiscraper.domain.API;
-import com.a1.apiscraper.domain.APIConfig;
-import com.a1.apiscraper.domain.Decorator;
-import com.a1.apiscraper.domain.ScrapeBehavior;
+import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,24 +9,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class RepositoryService implements RepositoryServiceInterface {
     @Autowired
-    APIRepository apiRepository;
+    private APIRepository apiRepository;
     @Autowired
-    EndpointRepository endpointRepository;
+    private EndpointRepository endpointRepository;
     @Autowired
-    ScrapeBehaviorRepository scrapeBehaviorRepository;
+    private ScrapeBehaviorRepository scrapeBehaviorRepository;
     @Autowired
-    APIConfigRepository apiConfigRepository;
+    private APIConfigRepository apiConfigRepository;
     @Autowired
-    CareTakerRepository careTakerRepository;
+    private CareTakerRepository careTakerRepository;
     @Autowired
-    DecoratorRepository decoratorRepository;
+    private DecoratorRepository decoratorRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private HyperMediaRepository hyperMediaRepository;
+    @Autowired
+    private ResultRepository resultRepository;
 
-    public RepositoryService(APIRepository apiRepository, EndpointRepository endpointRepository, CareTakerRepository careTakerRepository, DecoratorRepository decoratorRepository) {
-        this.apiRepository = apiRepository;
-        this.endpointRepository = endpointRepository;
-        this.careTakerRepository = careTakerRepository;
-        this.decoratorRepository = decoratorRepository;
-    }
+    @Autowired
+    private UserServiceImpl userService;
 
 //<!--
 //All
@@ -42,6 +43,14 @@ public class RepositoryService implements RepositoryServiceInterface {
     public Iterable<ScrapeBehavior> getAllScrapeBehaviors(){
         return scrapeBehaviorRepository.findAll();
     }
+
+    public Iterable<Role> getAllRoles(){
+        return roleRepository.findAll();
+    }
+
+    public Iterable<API> getAllAPIs(){
+        return apiRepository.findAll();
+    }
     //-->
 //-->
 
@@ -52,6 +61,9 @@ public class RepositoryService implements RepositoryServiceInterface {
     public API getSingleAPI(Long id){
         return apiRepository.findOne(id);
     }
+    public User getUserByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
     //-->
 
     //<!--
@@ -59,8 +71,31 @@ public class RepositoryService implements RepositoryServiceInterface {
     public void saveAPIConfig(APIConfig apiConfig){
         apiConfigRepository.save(apiConfig);
     }
-
     public void saveAPI(API api) {
         apiRepository.save(api);
     }
+    public void saveUser(User user){
+        //userRepository.save(user);
+        userService.save(user);
+    }
+    public void saveHyperMedia(HyperMedia hyperMedia){
+        hyperMediaRepository.save(hyperMedia);
+    }
+    public void saveResult(Result result){
+        resultRepository.save(result);
+    }
+    public void saveEndpoint(Endpoint endpoint){
+        endpointRepository.save(endpoint);
+    }
+    public void saveRole(Role role){
+        roleRepository.save(role);
+    }
+    public void saveDecorator(Decorator decorator){
+        decoratorRepository.save(decorator);
+    }
+    public void saveScrapeBehavior(ScrapeBehavior scrapeBehavior){
+        scrapeBehaviorRepository.save(scrapeBehavior);
+    }
+    //-->
+//-->
 }

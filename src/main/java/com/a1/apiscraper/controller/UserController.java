@@ -23,22 +23,9 @@ import java.util.Set;
 
 @Controller
 public class UserController {
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private SecurityService securityService;
-
-    @Autowired
-    private UserValidator userValidator;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    public UserController(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
-
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @Transactional

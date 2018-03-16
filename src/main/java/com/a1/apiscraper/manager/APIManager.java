@@ -6,6 +6,7 @@ import com.a1.apiscraper.repository.APIRepository;
 import com.a1.apiscraper.repository.EndpointRepository;
 import com.a1.apiscraper.repository.HyperMediaRepository;
 import com.a1.apiscraper.repository.ResultRepository;
+import com.a1.apiscraper.service.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
@@ -14,27 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class APIManager {
+    @Autowired
+    private RepositoryService repositoryService;
     private ArrayList<API> apiArrayList;
 
 
-    @Autowired
-    private APIRepository apiRepository;
-
-    @Autowired
-    private ResultRepository resultRepository;
-
-    @Autowired
-    private EndpointRepository endpointRepository;
-
-    @Autowired
-    private HyperMediaRepository hyperMediaRepository;
-
-    public APIManager(APIRepository apiRepository, ResultRepository resultRepository, EndpointRepository endpointRepository, HyperMediaRepository hyperMediaRepository) {
-        this.apiRepository = apiRepository;
-        this.resultRepository = resultRepository;
-        this.endpointRepository = endpointRepository;
-        this.hyperMediaRepository = hyperMediaRepository;
-        apiArrayList = (ArrayList<API>) apiRepository.findAll();
+    public APIManager() {
+        apiArrayList = (ArrayList<API>) repositoryService.getAllAPIs();
     }
 
     @Transactional
@@ -51,11 +38,11 @@ public class APIManager {
             for (Endpoint endpoint: hash.keySet()) {
                 Map<Long, Result> results = new HashMap<>();
                 Result result = new Result();
-                resultRepository.save(result);
+                repositoryService.saveResult(result);
                 result.setResult(hash.get(endpoint));
                 results.put(result.getId(), result);
                 endpoint.setResults(results);
-                endpointRepository.save(endpoint);
+                repositoryService.saveEndpoint(endpoint);
             }
         }
     }

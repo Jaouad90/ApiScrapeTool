@@ -27,16 +27,16 @@ public class APIController {
 
 
     //APIServiceInterface apiService;
-    RepositoryServiceInterface repositoryService;
+    @Autowired
+    private RepositoryServiceInterface repositoryService;
 
-    public APIController(RepositoryService repositoryService) {
+    public APIController() {
         formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
                         .withLocale( Locale.ENGLISH)
                         .withZone( ZoneId.systemDefault() );
 
         //Benodigd voor gescheiden service/controller
         //this.apiService = apiService;
-        this.repositoryService = repositoryService;
 
         this.loggerChain = getChainOfLoggers();
     }
