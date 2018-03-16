@@ -73,7 +73,7 @@
             <p>
             <div th:if="${api.endpoints}">
                 <div th:each="endpoint, iter : ${api.endpoints}">
-                    <input type="text" class="form-control" th:field="*{endpoints[__${iter.index}__].name}" data-endpoint=""/>
+                    <input type="text"  th:class="${'form-control' + (#fields.hasErrors('name') ? ' is-invalid' : '')}" th:field="*{endpoints[__${iter.index}__].name}" data-endpoint=""/>
                     <input type="hidden" class="form-control" th:field="*{endpoints[__${iter.index}__].id}"/>
                 </div>
             </div>

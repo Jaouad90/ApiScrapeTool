@@ -13,7 +13,9 @@ import org.springframework.context.annotation.Bean;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootApplication
 public class ApiscraperApplication extends SpringBootServletInitializer{
@@ -78,7 +80,6 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			API api = new API();
 			api.setName("Marktplaats API");
 			api.setBaseUrl("https://www.marktplaats.nl/kijkinuwwijk/");
-//			api.setEndpoints(endpoints);
 			apiRepository.save(api);
 			Decorator tweetDecorator = new Decorator();
 			tweetDecorator.setName("TweetDecorator");
