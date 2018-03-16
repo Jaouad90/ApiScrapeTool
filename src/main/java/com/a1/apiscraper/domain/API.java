@@ -29,8 +29,6 @@ public class API {
     @URL(message = "Please insert a valid URL!")
     private String baseUrl;
 
-    @NotEmpty(message = "Interval cannot be empty!")
-    //@Size(min=6, max=30)
     private Integer timeInterval;
 
     private String state;
