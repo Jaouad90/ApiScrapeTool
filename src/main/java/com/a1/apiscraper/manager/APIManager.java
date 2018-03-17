@@ -36,7 +36,7 @@ public class APIManager {
         for (API api : apiArrayList) {
             List<LocalTime> timeList = api.getTimeInterval().getTimeList();
             int i = 0;
-            for (LocalTime locdalTime : timeList) {
+            for (LocalTime localTime : timeList) {
                 i++;
              if (i < timeList.size())  {
                if (timeList.get(i).isBefore(LocalTime.now().plusMinutes(30)) && timeList.get(i).isAfter(LocalTime.now())) {
