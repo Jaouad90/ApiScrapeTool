@@ -83,6 +83,7 @@ public class APIManager {
                 endpoint.setResults(results);
                 endpointRepository.save(endpoint);
             }
+            this.apiArrayList.clear();
         }
     }
 }
