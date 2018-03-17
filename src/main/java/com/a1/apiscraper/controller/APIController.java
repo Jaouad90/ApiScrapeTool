@@ -4,6 +4,8 @@ import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.repository.*;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.io.File;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -83,7 +86,6 @@ public class APIController {
         return new ModelAndView("redirect:/api/" + api.getId());
     }
 
-    @Transactional
     @RequestMapping(value = "/api/{id}")
     public ModelAndView view(@PathVariable("id") API api) {
         return new ModelAndView("home/detail", "api", api);
@@ -110,6 +112,13 @@ public class APIController {
         api.getEndpoints();
         System.out.println(api.getEndpoints().entrySet().size());
         return modelAndView;
+    }
+
+    @RequestMapping(value="/api/result/{id}", method=RequestMethod.GET)
+    @ResponseBody
+    public FileSystemResource downloadFile(@Param(value="id") Long id) {
+        Product product = productRepo.findOne(id);
+        return new FileSystemResource(new File(product.getFileUrl()));
     }
 
 }

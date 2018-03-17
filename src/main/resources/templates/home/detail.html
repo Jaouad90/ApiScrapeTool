@@ -35,6 +35,8 @@
                         <tr th:attr="data-child-value=${result.getValue().result}" >
                         <td class="details-control"></td>
                         <td th:text="${endpoint.getValue().getName()}">endpoint name</td>
+                            <button type="button" class="btn3d btn btn-default btn-lg"><span class="glyphicon glyphicon-download-alt"></span> Default</button>
+                        <td th:href="@{|/products/download?id=${product.id}|}"><span th:text="${product.name}"></span>
                         </tr>
                         </div>
                         </div>

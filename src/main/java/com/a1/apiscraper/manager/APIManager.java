@@ -29,6 +29,9 @@ public class APIManager {
     @Autowired
     private HyperMediaRepository hyperMediaRepository;
 
+    @Autowired
+    private APIExporter apiExporter;
+
     public APIManager(APIRepository apiRepository, ResultRepository resultRepository, EndpointRepository endpointRepository, HyperMediaRepository hyperMediaRepository) {
         this.apiRepository = apiRepository;
         this.resultRepository = resultRepository;
@@ -59,4 +62,9 @@ public class APIManager {
             }
         }
     }
+
+//    public void export()
+//    {
+//        apiExporter.convertedData();
+//    }
 }
