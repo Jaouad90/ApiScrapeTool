@@ -29,14 +29,14 @@ public class APIManager {
     private RepositoryService repositoryService;
 
     @org.springframework.transaction.annotation.Transactional
-    @Scheduled(cron = "*/3600 * * * * *")
+    @Scheduled(cron = "0 0/30 * * * ?")
     public void CheckScrape() {
         ArrayList<API> apiArrayList = (ArrayList<API>) repositoryService.getAllAPIs();
         ArrayList<API> apiArrayListToScrape = new ArrayList<>();
         for (API api : apiArrayList) {
             List<LocalTime> timeList = api.getTimeInterval().getTimeList();
             int i = 0;
-            for (LocalTime localTime : timeList) {
+            for (LocalTime locdalTime : timeList) {
                 i++;
              if (i < timeList.size())  {
                if (timeList.get(i).isBefore(LocalTime.now().plusMinutes(30)) && timeList.get(i).isAfter(LocalTime.now())) {
