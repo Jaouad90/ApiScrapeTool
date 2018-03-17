@@ -2,6 +2,7 @@ package com.a1.apiscraper;
 
 import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.repository.*;
+import com.a1.apiscraper.service.RepositoryService;
 import com.a1.apiscraper.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.util.*;
 
 @SpringBootApplication
 public class ApiscraperApplication extends SpringBootServletInitializer{
@@ -34,7 +37,11 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 	private CareTakerRepository careTakerRepository;
     @Autowired
     private ScrapeBehaviorRepository scrapeBehaviorRepository;
+    @Autowired
+	private TimeIntervalRepository intervalRepository;
 
+    @Autowired
+	private RepositoryService repositoryService;
 
 
 	@Override
@@ -56,7 +63,7 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			User user = new User();
 			user.setUsername("Admin");
 			user.setPassword("Root");
-			roleRepository.save(role);
+			repositoryService.saveRole(role);
 			roleList.add(role);
 			userList.add(user);
 			role.setUsers(userList);
@@ -78,34 +85,58 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			API api = new API();
 			api.setName("Marktplaats API");
 			api.setBaseUrl("https://www.marktplaats.nl/kijkinuwwijk/");
+			//api.setTimeInterval(1000L);
 //			api.setEndpoints(endpoints);
-			apiRepository.save(api);
+			repositoryService.saveAPI(api);
+			//apiRepository.save(api);
 			Decorator tweetDecorator = new Decorator();
 			tweetDecorator.setName("TweetDecorator");
-			decoratorRepository.save(tweetDecorator);
+			repositoryService.saveDecorator(tweetDecorator);
+			//decoratorRepository.save(tweetDecorator);
 
             Decorator mailDecorator = new Decorator();
 			mailDecorator.setName("MailDecorator");
-            decoratorRepository.save(mailDecorator);
+			repositoryService.saveDecorator(mailDecorator);
 
 			APIConfig apiConfig = new APIConfig();
-            apiConfigRepository.save(apiConfig);
+			repositoryService.saveAPIConfig(apiConfig);
+            //apiConfigRepository.save(apiConfig);
 
             api.setConfig(apiConfig);
-            apiRepository.save(api);
+            repositoryService.saveAPI(api);
+            //apiRepository.save(api);
 
             ScrapeBehavior normalScrapeBehavior = new ScrapeBehavior();
             normalScrapeBehavior.setName("NormalScrapeBehavior");
-            scrapeBehaviorRepository.save(normalScrapeBehavior);
+            repositoryService.saveScrapeBehavior(normalScrapeBehavior);
+            //scrapeBehaviorRepository.save(normalScrapeBehavior);
 
             ScrapeBehavior deepScrapeBehavior = new ScrapeBehavior();
             deepScrapeBehavior.setName("DeepScrapeBehavior");
-            scrapeBehaviorRepository.save(deepScrapeBehavior);
+			repositoryService.saveScrapeBehavior(deepScrapeBehavior);
+			//scrapeBehaviorRepository.save(deepScrapeBehavior);
 
             apiConfig.addDecorator(tweetDecorator);
             apiConfig.setScrapeBehavior(normalScrapeBehavior);
-            //apiConfig.addDecorator(mailDecorator);
-			apiConfigRepository.save(apiConfig);
+            apiConfig.addDecorator(mailDecorator);
+			repositoryService.saveAPIConfig(apiConfig);
+			//apiConfigRepository.save(apiConfig);
+
+			//Intervals
+			List<API> apiList = new ArrayList<>();
+			apiList.add(api);
+			TimeInterval interval1 = new TimeInterval();
+			interval1.setIntervalName("Halfuur");
+			TimeInterval interval2 = new TimeInterval();
+			interval2.setIntervalName("uur");
+			TimeInterval interval3 = new TimeInterval();
+			interval3.setIntervalName("6 uur");
+			interval3.setApiList(apiList);
+			repositoryService.saveTimeInterval(interval1);
+			repositoryService.saveTimeInterval(interval2);
+			repositoryService.saveTimeInterval(interval3);
+			api.setTimeInterval(interval3);
+			repositoryService.saveAPI(api);
 
 		};
 	}

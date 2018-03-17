@@ -5,15 +5,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import javax.validation.constraints.Size;
+import javax.validation.Valid;
+import java.time.LocalTime;
 import java.util.*;
+
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@EnableScheduling
 @Table(name = "api")
 public class API {
 
@@ -30,13 +37,17 @@ public class API {
 
     private String state;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    public TimeInterval timeInterval;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private APIConfig config;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private CareTaker careTaker = new CareTaker();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Valid
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
     public void addEndpoint(Endpoint endpoint) {
@@ -56,8 +67,4 @@ public class API {
         endpoints = new HashMap<>(memento.getEndpoints());
         baseUrl = memento.getBaseUrl();
     }
-
-
-
-
 }

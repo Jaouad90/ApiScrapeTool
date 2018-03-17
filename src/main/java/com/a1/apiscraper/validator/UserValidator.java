@@ -1,6 +1,7 @@
 package com.a1.apiscraper.validator;
 
 import com.a1.apiscraper.domain.User;
+import com.a1.apiscraper.service.RepositoryService;
 import com.a1.apiscraper.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ import org.springframework.validation.Validator;
 @Component
 public class UserValidator implements Validator {
     @Autowired
-    private UserService userService;
+    private RepositoryService repositoryService;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -26,7 +27,7 @@ public class UserValidator implements Validator {
         if (user.getUsername().length() < 6 || user.getUsername().length() > 32) {
             errors.rejectValue("username", "Size.userForm.username");
         }
-        if (userService.findByUsername(user.getUsername()) != null) {
+        if (repositoryService.getUserByUsername(user.getUsername()) != null) {
             errors.rejectValue("username", "Duplicate.userForm.username");
         }
 
@@ -34,7 +35,5 @@ public class UserValidator implements Validator {
         if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
             errors.rejectValue("password", "Size.userForm.password");
         }
-
-
     }
 }

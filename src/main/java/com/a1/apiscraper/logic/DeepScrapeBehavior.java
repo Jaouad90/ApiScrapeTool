@@ -4,6 +4,7 @@ import com.a1.apiscraper.domain.API;
 import com.a1.apiscraper.domain.Endpoint;
 import com.a1.apiscraper.domain.HyperMedia;
 import com.a1.apiscraper.repository.HyperMediaRepository;
+import com.a1.apiscraper.service.RepositoryService;
 import com.linkedin.urls.Url;
 import com.linkedin.urls.detection.UrlDetector;
 import com.linkedin.urls.detection.UrlDetectorOptions;
@@ -16,13 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DeepScrapeBehavior implements ScrapeBehavior {
-
     @Autowired
-    HyperMediaRepository hyperMediaRepository;
-
-    public DeepScrapeBehavior(HyperMediaRepository hyperMediaRepository) {
-        this.hyperMediaRepository = hyperMediaRepository;
-    }
+    private RepositoryService repositoryService;
 
     @Override
     public HashMap<Endpoint, String> scrape(API api) {
@@ -42,7 +38,7 @@ public class DeepScrapeBehavior implements ScrapeBehavior {
             for (Url url : parser.detect()) {
                 HyperMedia hyperMedia = new HyperMedia();
                 hyperMedia.setURL(url.getFullUrl());
-                hyperMediaRepository.save(hyperMedia);
+                repositoryService.saveHyperMedia(hyperMedia);
                 endpoint.getValue().addFoundHyperMedia(hyperMedia);
             }
 

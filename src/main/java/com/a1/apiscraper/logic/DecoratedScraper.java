@@ -11,14 +11,15 @@ import java.util.HashMap;
 
 
 public abstract class DecoratedScraper extends APIScraper {
+    private APIScraper apiScraper;
 
-    public DecoratedScraper(API api) {
+    public DecoratedScraper(API api, APIScraper apiScraper) {
         super(api);
+        this.apiScraper = apiScraper;
     }
 
     public HashMap<Endpoint, String> scrape() {
-        HashMap<Endpoint, String> results = super.scrape();
-        communicate();
+        HashMap<Endpoint, String> results = apiScraper.scrape();
         return results;
     }
 
