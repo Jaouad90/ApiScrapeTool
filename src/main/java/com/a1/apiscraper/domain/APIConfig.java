@@ -18,13 +18,11 @@ public class APIConfig {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name ="api_FK")
-    private API api;
-
-    @ElementCollection
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Decorator> decorators = new ArrayList<>();
+
+    @OneToOne
+    private ScrapeBehavior scrapeBehavior;
 
     public void addDecorator(Decorator decorator){
         this.decorators.add(decorator);

@@ -5,15 +5,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import javax.validation.constraints.Size;
+import javax.validation.Valid;
+import java.time.LocalTime;
 import java.util.*;
+
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@EnableScheduling
 @Table(name = "api")
 public class API {
 
@@ -30,30 +37,34 @@ public class API {
 
     private String state;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    public TimeInterval timeInterval;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private APIConfig config;
 
-    @OneToOne
-    private CareTaker careTaker;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CareTaker careTaker = new CareTaker();
 
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @Valid
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
-
 
     public void addEndpoint(Endpoint endpoint) {
         assert(endpoint.getId() != null);
-        endpoints.put(endpoint.getId(), endpoint );
+        endpoints.put(endpoint.getId(), endpoint);
     }
 
     public APIMemento saveStateToMemente() {
-        return new APIMemento(name, state, endpoints, baseUrl);
+        Map<Long, Endpoint> endpointMap = new HashMap<>();
+        endpointMap = endpoints;
+        return new APIMemento(name, state, endpointMap, baseUrl);
     }
 
     public void getStateFromMemento(APIMemento memento) {
         name = memento.getName();
         state = memento.getState();
-        endpoints = memento.getEndpoints();
+        endpoints = new HashMap<>(memento.getEndpoints());
         baseUrl = memento.getBaseUrl();
     }
-
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head th:replace="fragments :: head">
     <title>Edit Product Details</title>
 
@@ -34,6 +34,48 @@
                     <input type="text" th:class="${'form-control' + (#fields.hasErrors('baseUrl') ? ' is-invalid' : '')}" th:field="*{baseUrl}" />
                 </div>
             </div>
+            <div class="form-group">
+            <label class="col-sm-2 control-label">ScrapeBehavior:</label>
+            <div class="col-sm-5">
+                <div class="input-group">
+                    <!--<p>DeepScrape <input type="radio" th:value="*{config.normalScrape}"  th:name="ScrapeBehavior"/></p>-->
+                    <!--<p>NormalScrape <input type="radio" th:value="*{config.deepScrape}" th:name="ScrapeBehavior"/></p>-->
+                    <ul>
+                        <div th:each="radioValue: ${scrapebehaviors}">
+                            <p th:text="${radioValue.getName()}"></p><input type="radio"
+                                                                            th:field="*{config.scrapeBehavior}"
+                                                                            th:value="${radioValue.getId()}" />
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Selecteer scrape-interval</label>
+                <div class="col-sm-5">
+                    <div class="input-group">
+                        <select class="form-control" th:field="${api.timeInterval}"  id="dropOperator">
+                            <option th:each="interval : ${timeintervals}" th:value="${interval.id}" th:text="${interval.intervalName}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Communication add-ons:</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <!--<p>DeepScrape <input type="radio" th:value="*{config.normalScrape}"  th:name="ScrapeBehavior"/></p>-->
+                        <!--<p>NormalScrape <input type="radio" th:value="*{config.deepScrape}" th:name="ScrapeBehavior"/></p>-->
+                        <ul>
+                            <div th:each="decorator : ${decorators}">
+                                <p th:text="${decorator.getName()}"></p><input type="checkbox"
+                                                                                th:field="*{config.decorators}"
+                                                                                th:value="${decorator.getId()}" />
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">API endpoints:</label>
         <div id="p_scents">
@@ -41,7 +83,7 @@
             <p>
             <div th:if="${api.endpoints}">
                 <div th:each="endpoint, iter : ${api.endpoints}">
-                    <input type="text" class="form-control" th:field="*{endpoints[__${iter.index}__].name}" data-endpoint=""/>
+                    <input type="text"  th:class="${'form-control' + (#fields.hasErrors('name') ? ' is-invalid' : '')}" th:field="*{endpoints[__${iter.index}__].name}" data-endpoint=""/>
                     <input type="hidden" class="form-control" th:field="*{endpoints[__${iter.index}__].id}"/>
                 </div>
             </div>
@@ -50,6 +92,8 @@
 
             </p>
         </div>
+            <input type="hidden" class="form-control" th:field="*{config.id}"/>
+            <input type="hidden" class="form-control" th:field="*{careTaker.id}"/>
         </div>
     </div>
             <div class="form-group">

@@ -1,55 +1,70 @@
 package com.a1.apiscraper.manager;
 
-import com.a1.apiscraper.domain.API;
-import com.a1.apiscraper.domain.Decorator;
-import com.a1.apiscraper.domain.Endpoint;
-import com.a1.apiscraper.domain.Result;
+import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.logic.*;
 import com.a1.apiscraper.repository.APIRepository;
 import com.a1.apiscraper.repository.EndpointRepository;
+import com.a1.apiscraper.repository.HyperMediaRepository;
 import com.a1.apiscraper.repository.ResultRepository;
+import com.a1.apiscraper.service.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+@EnableScheduling
+@EnableAsync
+@Service
 public class APIManager {
-    private ArrayList<API> apiArrayList;
-
-
     @Autowired
-    private APIRepository apiRepository;
-    @Autowired
-    private ResultRepository resultRepository;
-    @Autowired
-    private EndpointRepository endpointRepository;
+    private RepositoryService repositoryService;
 
-    public APIManager(APIRepository apiRepository, ResultRepository resultRepository, EndpointRepository endpointRepository) {
-        this.apiRepository = apiRepository;
-        this.resultRepository = resultRepository;
-        this.endpointRepository = endpointRepository;
-        apiArrayList = (ArrayList<API>) apiRepository.findAll();
+    @org.springframework.transaction.annotation.Transactional
+    @Scheduled(cron = "*/30 * * * * *")
+    public void CheckScrape() {
+        ArrayList<API> apiArrayList = (ArrayList<API>) repositoryService.getAllAPIs();
+        ArrayList<API> apiArrayListToScrape = new ArrayList<>();
+        for (API api : apiArrayList) {
+            List<LocalTime> timeList = api.getTimeInterval().getTimeList();
+            int i = 0;
+            for (LocalTime localTime : timeList) {
+                i++;
+             if (i < timeList.size())  {
+               if (LocalTime.now().isAfter(localTime) &&  LocalTime.now().isBefore(timeList.get(i))) {
+                  apiArrayListToScrape.add(api);
+                 }
+               }
+            }
+        }
+        doScrape(apiArrayListToScrape);
     }
-
-    @Transactional
-    public void doScrape() {
+    @org.springframework.transaction.annotation.Transactional
+    public void doScrape(ArrayList<API> apiArrayList) {
         for(API api : apiArrayList) {
             APIScraper tempScraper = new SimpleAPIscraper(api);
             DecoratorFactory decoratorFactory = new DecoratorFactory();
             for(Decorator decorator : api.getConfig().getDecorators()){
                 tempScraper = decoratorFactory.getDecorator(decorator.getName(), tempScraper);
             }
+
             HashMap<Endpoint, String> hash = tempScraper.scrape();
             for (Endpoint endpoint: hash.keySet()) {
                 Map<Long, Result> results = new HashMap<>();
                 Result result = new Result();
-                resultRepository.save(result);
+                repositoryService.saveResult(result);
                 result.setResult(hash.get(endpoint));
                 results.put(result.getId(), result);
                 endpoint.setResults(results);
-                endpointRepository.save(endpoint);
+                repositoryService.saveEndpoint(endpoint);
             }
         }
     }

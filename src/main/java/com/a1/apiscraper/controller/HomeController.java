@@ -3,8 +3,10 @@ package com.a1.apiscraper.controller;
 import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.manager.APIManager;
 import com.a1.apiscraper.repository.*;
+import com.a1.apiscraper.service.RepositoryServiceInterface;
 import com.a1.apiscraper.service.UserService;
 import com.a1.apiscraper.service.UserServiceImpl;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,35 +24,14 @@ import java.util.List;
 public class HomeController {
 
     @Autowired
-    private APIRepository apiRepository;
-    @Autowired
-    private EndpointRepository endpointRepository;
-    @Autowired
-    private ResultRepository resultRepository;
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private UserServiceImpl userService;
-
+    private RepositoryServiceInterface repositoryService;
 
     private ArrayList<Endpoint> endpoints = new ArrayList<>();
-
-
-    public HomeController(APIRepository apiRepository, EndpointRepository endpointRepository, ResultRepository resultRepository, RoleRepository roleRepository, UserServiceImpl userService) {
-        this.apiRepository = apiRepository;
-        this.endpointRepository = endpointRepository;
-        this.resultRepository = resultRepository;
-        this.roleRepository = roleRepository;
-        this.userService = userService;
-
-    }
 
     @GetMapping
     @Transactional
     public ModelAndView home() {
-        Iterable<API> apis = apiRepository.findAll();
-        APIManager apiManager = new APIManager(apiRepository, resultRepository, endpointRepository);
-        apiManager.doScrape();
+        Iterable<API> apis = repositoryService.getAllAPIs();
         return new ModelAndView("home/home", "apis", apis);
     }
 
