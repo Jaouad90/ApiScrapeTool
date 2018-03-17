@@ -38,13 +38,11 @@ public class APIManager {
             int i = 0;
             for (LocalTime localTime : timeList) {
                 i++;
-             if (i < timeList.size())  {
-               if (timeList.get(i).isBefore(LocalTime.now().plusMinutes(30)) && timeList.get(i).isAfter(LocalTime.now())) {
-                  apiArrayListToScrape.add(api);
-                 } else {
-                   System.out.println( "Niet scrapen");
-               }
-               }
+                if (i < timeList.size()) {
+                    if (timeList.get(i).isBefore(LocalTime.now().plusMinutes(30)) && timeList.get(i).isAfter(LocalTime.now())) {
+                        apiArrayListToScrape.add(api);
+                    }
+                }
             }
         }
         doScrape(apiArrayListToScrape);
