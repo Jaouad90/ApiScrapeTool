@@ -1,16 +1,24 @@
 package com.a1.apiscraper.logic;
 
+import com.a1.apiscraper.domain.Endpoint;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 import java.time.Instant;
+import java.util.HashMap;
 
 public class TweetDecorator extends DecoratedScraper{
 
     public TweetDecorator(APIScraper apiScraper) {
-        super(apiScraper.getApi());
+        super(apiScraper.getApi(), apiScraper);
+    }
+
+    @Override
+    public HashMap<Endpoint, String> scrape() {
+        communicate();
+        return super.scrape();
     }
 
     public void communicate(){

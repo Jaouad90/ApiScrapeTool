@@ -30,6 +30,7 @@ public class APIManager {
 
     @org.springframework.transaction.annotation.Transactional
     @Scheduled(cron = "0 0/30 * * * ?")
+//    @Scheduled(cron = "0/30 * * * * ?")
     public void CheckScrape() {
         ArrayList<API> apiArrayList = (ArrayList<API>) repositoryService.getAllAPIs();
         ArrayList<API> apiArrayListToScrape = new ArrayList<>();

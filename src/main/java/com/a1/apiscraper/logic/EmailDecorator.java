@@ -9,7 +9,13 @@ import java.util.HashMap;
 public class EmailDecorator extends DecoratedScraper {
 
     public EmailDecorator(APIScraper apiScraper) {
-        super(apiScraper.getApi());
+        super(apiScraper.getApi(), apiScraper);
+    }
+
+    @Override
+    public HashMap<Endpoint, String> scrape() {
+        communicate();
+        return super.scrape();
     }
 
     public void communicate(){
