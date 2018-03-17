@@ -9,7 +9,9 @@ import org.hibernate.validator.constraints.URL;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.time.LocalTime;
 import java.util.*;
+
 
 @Entity
 @Getter
@@ -31,6 +33,9 @@ public class API {
 
     private String state;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    public TimeInterval timeInterval;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private APIConfig config;
 
@@ -38,7 +43,7 @@ public class API {
     private CareTaker careTaker = new CareTaker();
 
     @Valid
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
     public void addEndpoint(Endpoint endpoint) {

@@ -10,12 +10,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.util.*;
 
 @SpringBootApplication
 public class ApiscraperApplication extends SpringBootServletInitializer{
@@ -36,7 +36,8 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 	private CareTakerRepository careTakerRepository;
     @Autowired
     private ScrapeBehaviorRepository scrapeBehaviorRepository;
-
+    @Autowired
+	private TimeIntervalRepository intervalRepository;
 
 
 	@Override
@@ -80,6 +81,7 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			API api = new API();
 			api.setName("Marktplaats API");
 			api.setBaseUrl("https://www.marktplaats.nl/kijkinuwwijk/");
+//			LocalTime time = LocalTime.now();
 			apiRepository.save(api);
 			Decorator tweetDecorator = new Decorator();
 			tweetDecorator.setName("TweetDecorator");
@@ -107,6 +109,22 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
             apiConfig.setScrapeBehavior(normalScrapeBehavior);
             //apiConfig.addDecorator(mailDecorator);
 			apiConfigRepository.save(apiConfig);
+
+			//Intervals
+			List<API> apiList = new ArrayList<>();
+			apiList.add(api);
+			TimeInterval interval1 = new TimeInterval();
+			interval1.setIntervalName("Halfuur");
+			TimeInterval interval2 = new TimeInterval();
+			interval2.setIntervalName("uur");
+			TimeInterval interval3 = new TimeInterval();
+			interval3.setIntervalName("6 uur");
+			interval3.setApiList(apiList);
+			intervalRepository.save(interval1);
+			intervalRepository.save(interval2);
+			intervalRepository.save(interval3);
+			api.setTimeInterval(interval3);
+			apiRepository.save(api);
 
 		};
 	}

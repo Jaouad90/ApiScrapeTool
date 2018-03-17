@@ -37,14 +37,17 @@ public class APIController {
     CareTakerRepository careTakerRepository;
     @Autowired
     DecoratorRepository decoratorRepository;
+    @Autowired
+    TimeIntervalRepository timeIntervalRepository;
     DateTimeFormatter formatter;
     AbstractLogger loggerChain;
 
-    public APIController(APIRepository apiRepository, EndpointRepository endpointRepository, CareTakerRepository careTakerRepository, DecoratorRepository decoratorRepository) {
+    public APIController(APIRepository apiRepository, EndpointRepository endpointRepository, CareTakerRepository careTakerRepository, DecoratorRepository decoratorRepository, TimeIntervalRepository timeIntervalRepository) {
         this.apiRepository = apiRepository;
         this.endpointRepository = endpointRepository;
         this.careTakerRepository = careTakerRepository;
         this.decoratorRepository = decoratorRepository;
+        this.timeIntervalRepository = timeIntervalRepository;
         formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
                         .withLocale( Locale.ENGLISH)
                         .withZone( ZoneId.systemDefault() );
@@ -67,6 +70,7 @@ public class APIController {
     public String showForm(Model model) {
         model.addAttribute("decorators", decoratorRepository.findAll());
         model.addAttribute("scrapebehaviors", scrapeBehaviorRepository.findAll());
+        model.addAttribute("timeintervals", timeIntervalRepository.findAll());
         model.addAttribute("api", new API());
         return "api/edit";
     }
@@ -81,6 +85,7 @@ public class APIController {
                 modelAndView.addObject("formErrors", result.getAllErrors());
                 modelAndView.addObject("scrapebehaviors", scrapeBehaviorRepository.findAll());
                 modelAndView.addObject("decorators", decoratorRepository.findAll());
+                modelAndView.addObject("timeintervals", timeIntervalRepository.findAll());
                 return modelAndView;
             }
             API api;
@@ -96,8 +101,10 @@ public class APIController {
                 api.getConfig().setScrapeBehavior(apiModel.getConfig().getScrapeBehavior());
                 api.getConfig().setDecorators(apiModel.getConfig().getDecorators());
                 api.setName(apiModel.getName());
+                api.setBaseUrl(apiModel.getBaseUrl());
                 String out = formatter.format(Instant.now());
                 api.setState("" + out);
+                api.setTimeInterval(apiModel.timeInterval);
                 CareTaker careTaker = api.getCareTaker();
                 careTaker.add(api.saveStateToMemente());
                 apiRepository.save(api);
@@ -108,7 +115,8 @@ public class APIController {
 
     @Transactional
     @RequestMapping(value = "/api/{id}")
-    public ModelAndView view(@PathVariable("id") API api) {
+    public ModelAndView view(@PathVariable("id") API api) { ;
+        api.getTimeInterval().getTimeList();
         return new ModelAndView("home/detail", "api", api);
     }
 
@@ -127,6 +135,7 @@ public class APIController {
     public ModelAndView edit(@PathVariable("id") API api) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("api/edit");
+        modelAndView.addObject("timeintervals", timeIntervalRepository.findAll());
         modelAndView.addObject("api", api);
         modelAndView.addObject("scrapebehaviors", scrapeBehaviorRepository.findAll());
         modelAndView.addObject("decorators", decoratorRepository.findAll());
