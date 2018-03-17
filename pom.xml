@@ -5,6 +5,7 @@
 
 	<groupId>com.a1</groupId>
 	<artifactId>apiscraper</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>apiscraper</name>
@@ -117,6 +118,7 @@
 			<artifactId>unirest-java</artifactId>
 			<version>1.4.9</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
