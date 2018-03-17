@@ -5,9 +5,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import javax.validation.constraints.Size;
 import javax.validation.Valid;
 import java.time.LocalTime;
 import java.util.*;
@@ -17,6 +20,7 @@ import java.util.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@EnableScheduling
 @Table(name = "api")
 public class API {
 
@@ -63,8 +67,4 @@ public class API {
         endpoints = new HashMap<>(memento.getEndpoints());
         baseUrl = memento.getBaseUrl();
     }
-
-
-
-
 }

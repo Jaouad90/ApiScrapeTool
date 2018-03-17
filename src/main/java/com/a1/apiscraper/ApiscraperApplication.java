@@ -2,6 +2,7 @@ package com.a1.apiscraper;
 
 import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.repository.*;
+import com.a1.apiscraper.service.RepositoryService;
 import com.a1.apiscraper.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
     @Autowired
 	private TimeIntervalRepository intervalRepository;
 
+    @Autowired
+	private RepositoryService repositoryService;
+
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -59,7 +63,7 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			User user = new User();
 			user.setUsername("Admin");
 			user.setPassword("Root");
-			roleRepository.save(role);
+			repositoryService.saveRole(role);
 			roleList.add(role);
 			userList.add(user);
 			role.setUsers(userList);
@@ -81,34 +85,42 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			API api = new API();
 			api.setName("Marktplaats API");
 			api.setBaseUrl("https://www.marktplaats.nl/kijkinuwwijk/");
-//			LocalTime time = LocalTime.now();
-			apiRepository.save(api);
+			//api.setTimeInterval(1000L);
+//			api.setEndpoints(endpoints);
+			repositoryService.saveAPI(api);
+			//apiRepository.save(api);
 			Decorator tweetDecorator = new Decorator();
 			tweetDecorator.setName("TweetDecorator");
-			decoratorRepository.save(tweetDecorator);
+			repositoryService.saveDecorator(tweetDecorator);
+			//decoratorRepository.save(tweetDecorator);
 
             Decorator mailDecorator = new Decorator();
 			mailDecorator.setName("MailDecorator");
-            decoratorRepository.save(mailDecorator);
+			repositoryService.saveDecorator(mailDecorator);
 
 			APIConfig apiConfig = new APIConfig();
-            apiConfigRepository.save(apiConfig);
+			repositoryService.saveAPIConfig(apiConfig);
+            //apiConfigRepository.save(apiConfig);
 
             api.setConfig(apiConfig);
-            apiRepository.save(api);
+            repositoryService.saveAPI(api);
+            //apiRepository.save(api);
 
             ScrapeBehavior normalScrapeBehavior = new ScrapeBehavior();
             normalScrapeBehavior.setName("NormalScrapeBehavior");
-            scrapeBehaviorRepository.save(normalScrapeBehavior);
+            repositoryService.saveScrapeBehavior(normalScrapeBehavior);
+            //scrapeBehaviorRepository.save(normalScrapeBehavior);
 
             ScrapeBehavior deepScrapeBehavior = new ScrapeBehavior();
             deepScrapeBehavior.setName("DeepScrapeBehavior");
-            scrapeBehaviorRepository.save(deepScrapeBehavior);
+			repositoryService.saveScrapeBehavior(deepScrapeBehavior);
+			//scrapeBehaviorRepository.save(deepScrapeBehavior);
 
             apiConfig.addDecorator(tweetDecorator);
             apiConfig.setScrapeBehavior(normalScrapeBehavior);
             //apiConfig.addDecorator(mailDecorator);
-			apiConfigRepository.save(apiConfig);
+			repositoryService.saveAPIConfig(apiConfig);
+			//apiConfigRepository.save(apiConfig);
 
 			//Intervals
 			List<API> apiList = new ArrayList<>();
@@ -120,11 +132,11 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			TimeInterval interval3 = new TimeInterval();
 			interval3.setIntervalName("6 uur");
 			interval3.setApiList(apiList);
-			intervalRepository.save(interval1);
-			intervalRepository.save(interval2);
-			intervalRepository.save(interval3);
+			repositoryService.saveTimeInterval(interval1);
+			repositoryService.saveTimeInterval(interval2);
+			repositoryService.saveTimeInterval(interval3);
 			api.setTimeInterval(interval3);
-			apiRepository.save(api);
+			repositoryService.saveAPI(api);
 
 		};
 	}

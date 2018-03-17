@@ -2,10 +2,7 @@ package com.a1.apiscraper.controller;
 
 import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.repository.*;
-import com.a1.apiscraper.service.AbstractLogger;
-import com.a1.apiscraper.service.ConsoleLogger;
-import com.a1.apiscraper.service.ErrorLogger;
-import com.a1.apiscraper.service.WarningLogger;
+import com.a1.apiscraper.service.*;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,33 +22,21 @@ import java.util.*;
 @Controller
 public class APIController {
 
-    @Autowired
-    APIRepository apiRepository;
-    @Autowired
-    EndpointRepository endpointRepository;
-    @Autowired
-    ScrapeBehaviorRepository scrapeBehaviorRepository;
-    @Autowired
-    APIConfigRepository apiConfigRepository;
-    @Autowired
-    CareTakerRepository careTakerRepository;
-    @Autowired
-    DecoratorRepository decoratorRepository;
-    @Autowired
-    TimeIntervalRepository timeIntervalRepository;
     DateTimeFormatter formatter;
     AbstractLogger loggerChain;
 
-    public APIController(APIRepository apiRepository, EndpointRepository endpointRepository, CareTakerRepository careTakerRepository, DecoratorRepository decoratorRepository, TimeIntervalRepository timeIntervalRepository) {
-        this.apiRepository = apiRepository;
-        this.endpointRepository = endpointRepository;
-        this.careTakerRepository = careTakerRepository;
-        this.decoratorRepository = decoratorRepository;
-        this.timeIntervalRepository = timeIntervalRepository;
+    @Autowired
+    private RepositoryServiceInterface repositoryService;
+
+    public APIController() {
         formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
                         .withLocale( Locale.ENGLISH)
                         .withZone( ZoneId.systemDefault() );
-       this.loggerChain = getChainOfLoggers();
+
+        //Benodigd voor gescheiden service/controller
+        //this.apiService = apiService;
+
+        this.loggerChain = getChainOfLoggers();
     }
 
     private static AbstractLogger getChainOfLoggers(){
@@ -68,10 +53,10 @@ public class APIController {
 
     @RequestMapping(value = "/api/add", method = RequestMethod.GET)
     public String showForm(Model model) {
-        model.addAttribute("decorators", decoratorRepository.findAll());
-        model.addAttribute("scrapebehaviors", scrapeBehaviorRepository.findAll());
-        model.addAttribute("timeintervals", timeIntervalRepository.findAll());
+        model.addAttribute("decorators", repositoryService.getAllDecorators());
+        model.addAttribute("scrapebehaviors", repositoryService.getAllScrapeBehaviors());
         model.addAttribute("api", new API());
+        //model.addAttribute("decorators", decoratorRepository.findAll());
         return "api/edit";
     }
 
@@ -83,20 +68,25 @@ public class APIController {
                 ModelAndView modelAndView = new ModelAndView();
                 modelAndView.setViewName("api/edit");
                 modelAndView.addObject("formErrors", result.getAllErrors());
-                modelAndView.addObject("scrapebehaviors", scrapeBehaviorRepository.findAll());
-                modelAndView.addObject("decorators", decoratorRepository.findAll());
-                modelAndView.addObject("timeintervals", timeIntervalRepository.findAll());
+                modelAndView.addObject("scrapebehaviors", repositoryService.getAllScrapeBehaviors());
+                modelAndView.addObject("decorators", repositoryService.getAllDecorators());
+                modelAndView.addObject("timeintervals", repositoryService.getAllTimeIntervals());
                 return modelAndView;
             }
             API api;
+
             if (apiModel.getId() == null) {
+                //Create API
                 APIConfig apiConfig = apiModel.getConfig();
-                apiConfigRepository.save(apiConfig);
+                //api.getConfig().setDecorators(apiModel.getConfig().getDecorators());
+                repositoryService.saveAPIConfig(apiConfig);
                 apiModel.setConfig(apiConfig);
-                apiRepository.save(apiModel);
+
+                repositoryService.saveAPI(apiModel);
                 api = apiModel;
             } else {
-                api = apiRepository.findOne(apiModel.getId());
+                //Update API
+                api = repositoryService.getSingleAPI(apiModel.getId());
                 api.setEndpoints(apiModel.getEndpoints());
                 api.getConfig().setScrapeBehavior(apiModel.getConfig().getScrapeBehavior());
                 api.getConfig().setDecorators(apiModel.getConfig().getDecorators());
@@ -107,7 +97,7 @@ public class APIController {
                 api.setTimeInterval(apiModel.timeInterval);
                 CareTaker careTaker = api.getCareTaker();
                 careTaker.add(api.saveStateToMemente());
-                apiRepository.save(api);
+                repositoryService.saveAPI(api);
             }
 
         return new ModelAndView("redirect:/api/" + api.getId());
@@ -123,25 +113,26 @@ public class APIController {
     @Transactional
     @RequestMapping(value = "/api/restore/{apiid}/{mementoid}")
     public ModelAndView restoreState(@PathVariable("apiid") API api, @PathVariable("mementoid") APIMemento apiMemento ) {
+        //Restore Memento
         api.getId();
         apiMemento.getId();
         api.getStateFromMemento(apiMemento);
-        apiRepository.save(api);
+        repositoryService.saveAPI(api);
         return new ModelAndView("redirect:api/" + api.getId());
     }
 
     @Transactional
     @RequestMapping(value = "/api/edit/{id}")
     public ModelAndView edit(@PathVariable("id") API api) {
+        //create editView
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("api/edit");
-        modelAndView.addObject("timeintervals", timeIntervalRepository.findAll());
+        modelAndView.addObject("timeintervals", repositoryService.getAllTimeIntervals());
         modelAndView.addObject("api", api);
-        modelAndView.addObject("scrapebehaviors", scrapeBehaviorRepository.findAll());
-        modelAndView.addObject("decorators", decoratorRepository.findAll());
+        modelAndView.addObject("scrapebehaviors", repositoryService.getAllScrapeBehaviors());
+        modelAndView.addObject("decorators", repositoryService.getAllDecorators());
         api.getEndpoints();
         System.out.println(api.getEndpoints().entrySet().size());
         return modelAndView;
     }
-
 }
