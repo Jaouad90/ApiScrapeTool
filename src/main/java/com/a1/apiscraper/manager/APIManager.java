@@ -29,7 +29,7 @@ public class APIManager {
     private RepositoryService repositoryService;
 
     @org.springframework.transaction.annotation.Transactional
-    @Scheduled(cron = "*/30 * * * * *")
+    @Scheduled(cron = "*/3600 * * * * *")
     public void CheckScrape() {
         ArrayList<API> apiArrayList = (ArrayList<API>) repositoryService.getAllAPIs();
         ArrayList<API> apiArrayListToScrape = new ArrayList<>();
@@ -39,9 +39,11 @@ public class APIManager {
             for (LocalTime localTime : timeList) {
                 i++;
              if (i < timeList.size())  {
-               if (LocalTime.now().isAfter(localTime) &&  LocalTime.now().isBefore(timeList.get(i))) {
+               if (timeList.get(i).isBefore(LocalTime.now().plusMinutes(30)) && timeList.get(i).isAfter(LocalTime.now())) {
                   apiArrayListToScrape.add(api);
-                 }
+                 } else {
+                   System.out.println( "Niet scrapen");
+               }
                }
             }
         }
