@@ -152,7 +152,6 @@ public class APIController {
 
             apiExporter.setFormat(format);
             File file = apiExporter.convertedData(result);
-
             response.setContentType("application/" + format);
             response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
             response.setHeader("Content-Length", String.valueOf(file.length()));

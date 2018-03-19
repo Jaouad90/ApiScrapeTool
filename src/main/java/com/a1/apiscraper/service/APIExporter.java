@@ -3,12 +3,13 @@ package com.a1.apiscraper.service;
 import com.a1.apiscraper.domain.Result;
 import com.a1.apiscraper.domain.ResultExport;
 import com.a1.apiscraper.service.Converter.*;
+import com.sun.istack.internal.Nullable;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.io.*;
 
 @Service
@@ -18,13 +19,15 @@ public class APIExporter
     @Autowired
     RepositoryServiceInterface repositoryServiceInterface;
 
-    private ConvertService convertService;
-    private String XML_FORMAT = ".xml";
-    private String JSON_FORMAT = ".json";
-    private String VARIABLE_PATH;
-    private String DEFAULT_PATH = "/Users/Expl0rer/Dropbox/Avans/VH11/Proftaak/APIscrapeTool/src/main/resources/exportFile/result";
-    private File file;
-    private String format;
+    private static ConvertService convertService;
+    private static String XML_FORMAT = ".xml";
+    private static String JSON_FORMAT = ".json";
+    private static String VARIABLE_PATH;
+    private static String DEFAULT_PATH = "/Users/Expl0rer/Dropbox/Avans/VH11/Proftaak/APIscrapeTool/src/main/resources/exportFile/result";
+    private static File file;
+    private static String format;
+    private static JSONObject jsonObj;
+    private static Writer writer;
 
     public File convertedData(Result result)
     {
@@ -41,7 +44,7 @@ public class APIExporter
         }
         ResultExport resultExport = convertService.convertData(resultModel.getResult());
         removeIfFileExists();
-        saveFileAsFormat(resultExport);
+        convertToObject(resultExport);
         return file;
     }
 
@@ -49,7 +52,7 @@ public class APIExporter
         this.format = format;
     }
 
-    public void removeIfFileExists()
+    private void removeIfFileExists()
     {
         if(file.exists())
         {
@@ -62,38 +65,47 @@ public class APIExporter
         }
     }
 
-    public void saveFileAsFormat(ResultExport resultExport)
+    private void convertToObject(ResultExport resultExport)
     {
         String convertedData;
         JSONParser parser = new JSONParser();
-        JSONObject jsonObj;
-        Writer writer;
+
+        convertedData = resultExport.getResult();
 
         if(resultExport.getDataFormat().equals("JSON"))
         {
-            convertedData = resultExport.getResult();
-
             try {
                 jsonObj = (JSONObject) parser.parse(convertedData);
-                writer = new BufferedWriter(new FileWriter(VARIABLE_PATH));
-                writer.write(jsonObj.toJSONString());
-                writer.close();
+                saveFile(jsonObj, null);
 
-            } catch (IOException e) {
-                e.printStackTrace();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
         else if(resultExport.getDataFormat().equals("XML"))
         {
-            try {
-                FileWriter fileWriter = new FileWriter(VARIABLE_PATH);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                org.jsoup.nodes.Document xmlDoc = Jsoup.parse(convertedData);
+                saveFile(null, xmlDoc);
 
         }
 
+    }
+
+    private void saveFile(@Nullable JSONObject jsonObj, @Nullable org.jsoup.nodes.Document xmlDoc)
+    {
+        try {
+            writer = new BufferedWriter(new FileWriter(VARIABLE_PATH));
+            if(jsonObj != null)
+            {
+                writer.write(jsonObj.toJSONString());
+            }
+            else
+            {
+                writer.write(xmlDoc.toString());
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

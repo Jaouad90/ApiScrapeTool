@@ -35,8 +35,8 @@
                         <tr th:attr="data-child-value=${result.getValue().result}" >
                         <td class="details-control"></td>
                         <td th:text="${endpoint.getValue().getName()}">endpoint name</td>
-                            <td><a th:href="@{'/result/' + ${api.id} + '?format=json' }">json</a>
-                            <a th:href="@{'/result/' + ${api.id} + '?format=xml' }">xml</a></td>
+                            <td><a th:href="@{'/result/' + ${result.getKey()} + '?format=json' }">json</a>
+                            <a th:href="@{'/result/' + ${result.getKey()} + '?format=xml' }">xml</a></td>
                         </tr>
                         </div>
                         </div>

@@ -1,0 +1,31 @@
+<html>
+ <head></head>
+ <body>
+  <valid>
+   true
+  </valid>
+  <callback>
+   null
+  </callback>
+  <messages>
+   null
+  </messages>
+  <value>
+   <ads>
+    <vipurl>
+     https://link.marktplaats.nl/m1262177404
+    </vipurl>
+    <price>
+     Bieden
+    </price>
+    <imageurl>
+     //i.ebayimg.com/00/s/MTAyNFg3NjQ=/z/FXoAAOSwmXlansGj/$_82.JPG
+    </imageurl>
+    <title>Trui van het merk Soliver maat M/L</title>
+   </ads>
+  </value>
+  <errors>
+   null
+  </errors>
+ </body>
+</html>
