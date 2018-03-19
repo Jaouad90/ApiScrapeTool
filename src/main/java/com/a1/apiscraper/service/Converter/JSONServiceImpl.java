@@ -50,8 +50,6 @@ public class JSONServiceImpl
                 try {
                         new JSONObject(data);
                 } catch (JSONException ex) {
-                        // edited, to include @Arthur's comment
-                        // e.g. in case JSONArray is valid as well...
                         try {
                                 new JSONArray(data);
                         } catch (JSONException ex1) {

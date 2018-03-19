@@ -67,16 +67,18 @@ public class APIExporter
         String convertedData;
         JSONParser parser = new JSONParser();
         JSONObject jsonObj;
+        Writer writer;
 
         if(resultExport.getDataFormat().equals("JSON"))
         {
             convertedData = resultExport.getResult();
 
-            FileWriter fileWriter;
             try {
                 jsonObj = (JSONObject) parser.parse(convertedData);
-                fileWriter = new FileWriter(VARIABLE_PATH);
-                fileWriter.write(jsonObj.toJSONString());
+                writer = new BufferedWriter(new FileWriter(VARIABLE_PATH));
+                writer.write(jsonObj.toJSONString());
+                writer.close();
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ParseException e) {
