@@ -1,25 +1,31 @@
 package com.a1.apiscraper.service.Converter;
 
+import com.a1.apiscraper.domain.ResultExport;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class JSONServiceImpl
 {
-        public String convertData(String data)
+        public ResultExport convertData(String data)
         {
                 return  convertXMLToJSON(data);
         }
 
-        private static String convertXMLToJSON(String data)
+        private static ResultExport convertXMLToJSON(String data)
         {
+                ResultExport resultExport = new ResultExport();
+
                 if(checkIfJSON(data))
                 {
-                        return data;
+                        resultExport.setDataFormat("JSON");
+                        resultExport.setResult(data);
+                        return resultExport;
                 }
                 else
                 {
@@ -28,9 +34,9 @@ public class JSONServiceImpl
                         //Convert to JSON
                         try {
                                 JSONObject xmlJSONObj = XML.toJSONObject(data);
-                                String jsonData = xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR);
-
-                                return jsonData;
+                                resultExport.setResult(xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR));
+                                resultExport.setDataFormat("JSON");
+                                return resultExport;
 
                         } catch (JSONException je) {
                                 System.out.println(je.toString());

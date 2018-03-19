@@ -118,7 +118,7 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 
             apiConfig.addDecorator(tweetDecorator);
             apiConfig.setScrapeBehavior(normalScrapeBehavior);
-            apiConfig.addDecorator(mailDecorator);
+//            apiConfig.addDecorator(mailDecorator);
 			repositoryService.saveAPIConfig(apiConfig);
 			//apiConfigRepository.save(apiConfig);
 

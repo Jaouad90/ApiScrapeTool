@@ -1,8 +1,8 @@
 package com.a1.apiscraper.service.Converter;
 
-import org.w3c.dom.Document;
+import com.a1.apiscraper.domain.ResultExport;
 
 public interface ConvertService {
 
-    String convertData(String data);
+    ResultExport convertData(String data);
 }

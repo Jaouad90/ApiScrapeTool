@@ -1,7 +1,9 @@
 package com.a1.apiscraper.service;
 
 import com.a1.apiscraper.domain.*;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface RepositoryServiceInterface {
 
 //<!--
@@ -22,6 +24,7 @@ public interface RepositoryServiceInterface {
     //Find Single
     API getSingleAPI(Long id);
     User getUserByUsername(String username);
+    Result getResultByID(Long id);
     //-->
 
     //<!--

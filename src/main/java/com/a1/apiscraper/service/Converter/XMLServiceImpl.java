@@ -1,5 +1,6 @@
 package com.a1.apiscraper.service.Converter;
 
+import com.a1.apiscraper.domain.ResultExport;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.stereotype.Service;
@@ -9,22 +10,28 @@ import java.util.regex.Pattern;
 @Service
 public class XMLServiceImpl {
 
-    public String convertData(String data) {
+    public ResultExport convertData(String data) {
         return convertJSONToXML(data);
     }
 
-    private static String convertJSONToXML(String data) {
+    private static ResultExport convertJSONToXML(String data) {
+
+        ResultExport resultExport = new ResultExport();
+
         if (checkStringIfXML(data))
         {
-            return data;
+            resultExport.setDataFormat("XML");
+            resultExport.setResult(data);
+            return resultExport;
         }
         else
         {
             //Convert JSON to XML
             JSONObject json = new JSONObject(data);
-            String xmlData = XML.toString(json);
+            resultExport.setResult(XML.toString(json));
+            resultExport.setDataFormat("XML");
 
-            return xmlData;
+            return resultExport;
         }
     }
 

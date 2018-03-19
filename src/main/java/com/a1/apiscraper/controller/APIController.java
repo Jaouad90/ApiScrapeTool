@@ -1,21 +1,23 @@
 package com.a1.apiscraper.controller;
 
 import com.a1.apiscraper.domain.*;
-import com.a1.apiscraper.repository.*;
+import com.a1.apiscraper.service.APIExporter;
 import com.a1.apiscraper.service.*;
-import org.hibernate.Session;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.json.simple.JSONObject;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.io.File;
+import java.io.*;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -28,10 +30,13 @@ public class APIController {
     DateTimeFormatter formatter;
     AbstractLogger loggerChain;
 
+
     @Autowired
     private RepositoryServiceInterface repositoryService;
+    @Autowired
+    private APIExporter apiExporter;
 
-    public APIController() {
+    public APIController(APIExporter apiExporter) {
         formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
                         .withLocale( Locale.ENGLISH)
                         .withZone( ZoneId.systemDefault() );
@@ -40,6 +45,7 @@ public class APIController {
         //this.apiService = apiService;
 
         this.loggerChain = getChainOfLoggers();
+        this.apiExporter = apiExporter;
     }
 
     private static AbstractLogger getChainOfLoggers(){
@@ -58,6 +64,7 @@ public class APIController {
     public String showForm(Model model) {
         model.addAttribute("decorators", repositoryService.getAllDecorators());
         model.addAttribute("scrapebehaviors", repositoryService.getAllScrapeBehaviors());
+        model.addAttribute("timeintervals", repositoryService.getAllTimeIntervals());
         model.addAttribute("api", new API());
         //model.addAttribute("decorators", decoratorRepository.findAll());
         return "api/edit";
@@ -138,11 +145,23 @@ public class APIController {
         return modelAndView;
     }
 
-//    @RequestMapping(value="/api/result/{id}", method=RequestMethod.GET)
-//    @ResponseBody
-//    public FileSystemResource downloadFile(@Param(value="id") Long id) {
-//        Product product = productRepo.findOne(id);
-//        return new FileSystemResource(new File(product.getFileUrl()));
-//    }
+        @RequestMapping(value="/result/{resultid}", method=RequestMethod.GET)
+        @ResponseBody
+        public void downloadFile(@PathVariable(value="resultid") Result result, @RequestParam String format, HttpServletResponse response) {
+
+
+            apiExporter.setFormat(format);
+            File file = apiExporter.convertedData(result);
+
+            response.setContentType("application/" + format);
+            response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+            response.setHeader("Content-Length", String.valueOf(file.length()));
+            try {
+                InputStream inputStream = new FileInputStream(file);
+                FileCopyUtils.copy(inputStream, response.getOutputStream());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
 
 }
