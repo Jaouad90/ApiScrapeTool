@@ -42,9 +42,10 @@ public class XMLServiceImpl {
 
         // REGULAR EXPRESSION TO SEE IF IT AT LEAST STARTS AND ENDS
         // WITH THE SAME ELEMENT
-        final String XML_PATTERN_STR = "<(\\S+?)(.*?)>(.*?)</\\1>";
+        final String XML_PATTERN_STR = "(?s).*(<(\\w+)[^>]*>.*</\\2>|<(\\w+)[^>]*/>).*";
 
-
+//        "(?<=<).*?(?=</)"
+//        "(?s).*(<(\\w+)[^>]*>.*</\\2>|<(\\w+)[^>]*/>).*"
 
         // IF WE HAVE A STRING
         if (data != null && data.trim().length() > 0) {
