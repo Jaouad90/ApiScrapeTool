@@ -3,13 +3,14 @@ package com.a1.apiscraper.service;
 import com.a1.apiscraper.domain.Result;
 import com.a1.apiscraper.domain.ResultExport;
 import com.a1.apiscraper.service.Converter.*;
-import com.sun.istack.internal.Nullable;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Nullable;
 import java.io.*;
 
 @Service
