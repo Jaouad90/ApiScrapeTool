@@ -28,9 +28,12 @@ public class APIManager {
     @Autowired
     private RepositoryService repositoryService;
 
+    @Autowired
+    private HyperMediaRepository hyperMediaRepository;
+
     @org.springframework.transaction.annotation.Transactional
-    @Scheduled(cron = "0 0/30 * * * ?")
-//    @Scheduled(cron = "0/30 * * * * ?") 30 seconds
+//    @Scheduled(cron = "0 0/30 * * * ?")
+    @Scheduled(cron = "0/30 * * * * ?")
     public void CheckScrape() {
         ArrayList<API> apiArrayList = (ArrayList<API>) repositoryService.getAllAPIs();
         ArrayList<API> apiArrayListToScrape = new ArrayList<>();
@@ -48,6 +51,7 @@ public class APIManager {
         }
         doScrape(apiArrayListToScrape);
     }
+
     @org.springframework.transaction.annotation.Transactional
     public void doScrape(ArrayList<API> apiArrayList) {
         for(API api : apiArrayList) {

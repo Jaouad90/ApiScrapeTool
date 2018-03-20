@@ -27,5 +27,4 @@ public class APIConfig {
     public void addDecorator(Decorator decorator){
         this.decorators.add(decorator);
     }
-
 }

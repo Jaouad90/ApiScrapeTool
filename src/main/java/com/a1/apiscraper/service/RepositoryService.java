@@ -70,6 +70,11 @@ public class RepositoryService implements RepositoryServiceInterface {
     public User getUserByUsername(String username){
         return userRepository.findByUsername(username);
     }
+
+    @Override
+    public Result getResultByID(Long id) {
+        return resultRepository.findOne(id);
+    }
     //-->
 
     //<!--
