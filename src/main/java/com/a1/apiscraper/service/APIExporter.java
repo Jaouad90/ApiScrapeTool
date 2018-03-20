@@ -24,7 +24,7 @@ public class APIExporter
     private static String XML_FORMAT = ".xml";
     private static String JSON_FORMAT = ".json";
     private static String VARIABLE_PATH;
-    private static String DEFAULT_PATH = "/C:/";
+    private static String DEFAULT_PATH = "src/main/resources/exportFile/result";
     private static File file;
     private static String format;
     private static JSONObject jsonObj;
