@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/api/config")
+@RequestMapping("/v1/config")
 public class ConfigRestController {
     @Autowired
     private RepositoryServiceInterface repositoryService;

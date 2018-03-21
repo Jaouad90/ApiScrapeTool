@@ -17,7 +17,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.a1.apiscraper.controller"))
-                .paths(regex("/v1/api.*"))
+                .paths(regex("/v1.*"))
                 .build();
     }
 }
