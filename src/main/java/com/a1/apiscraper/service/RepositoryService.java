@@ -70,6 +70,8 @@ public class RepositoryService implements RepositoryServiceInterface {
     public User getUserByUsername(String username){
         return userRepository.findByUsername(username);
     }
+    public ScrapeBehavior getScrapeBehavior(Long id) { return scrapeBehaviorRepository.findOne(id);}
+    public APIConfig getAPIConfig(Long id) {return apiConfigRepository.findOne(id);}
 
     @Override
     public Result getResultByID(Long id) {

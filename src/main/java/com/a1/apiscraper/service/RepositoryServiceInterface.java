@@ -25,6 +25,8 @@ public interface RepositoryServiceInterface {
     API getSingleAPI(Long id);
     User getUserByUsername(String username);
     Result getResultByID(Long id);
+    ScrapeBehavior getScrapeBehavior(Long id);
+    APIConfig getAPIConfig(Long id );
     //-->
 
     //<!--
