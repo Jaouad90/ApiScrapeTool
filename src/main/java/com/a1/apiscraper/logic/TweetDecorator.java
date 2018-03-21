@@ -26,8 +26,8 @@ public class TweetDecorator extends DecoratedScraper{
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey("gpJXTPM4hsGhZ3OtEcSG9CrDp")
                 .setOAuthConsumerSecret("m7ocphlYC3seo77NanukWAxnQlFgbmbRM2AbKGuwC66d1Wud4n")
-                .setOAuthAccessToken("971714885636841472-YBGfTYMJOE8Ok1B4X9LUoZSbavIa1ge")
-                .setOAuthAccessTokenSecret("ioYiSI7cn9lxhwJ3N7j7FM1e3VfxUKbgHqGbVTv5aDse0");
+                .setOAuthAccessToken("971714885636841472-cSbAcxFOxWIgWxJonOednmANzv8TED2")
+                .setOAuthAccessTokenSecret("YiXwj7sEWTq7jkmdDww5kYb9zq26Sd0SL5oZyF5iC7Tet");
         TwitterFactory tf = new TwitterFactory(cb.build());
         Twitter twitter = tf.getInstance();
         try {

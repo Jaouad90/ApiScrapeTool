@@ -3,6 +3,9 @@ package com.a1.apiscraper.service;
 import com.a1.apiscraper.domain.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.List;
+
 @Repository
 public interface RepositoryServiceInterface {
 
@@ -14,6 +17,7 @@ public interface RepositoryServiceInterface {
     Iterable<ScrapeBehavior> getAllScrapeBehaviors();
     Iterable<Role> getAllRoles();
     Iterable<API> getAllAPIs();
+    List getAllResultsForApiBetween(Long id, Date from, Date till);
     Iterable<TimeInterval> getAllTimeIntervals();
     //-->
 //-->

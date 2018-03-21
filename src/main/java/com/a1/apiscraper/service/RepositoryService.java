@@ -6,8 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+
 @Service
 public class RepositoryService implements RepositoryServiceInterface {
+
+    @PersistenceContext
+    private EntityManager em;
     @Autowired
     private APIRepository apiRepository;
     @Autowired
@@ -52,6 +59,14 @@ public class RepositoryService implements RepositoryServiceInterface {
 
     public Iterable<API> getAllAPIs(){
         return apiRepository.findAll();
+    }
+
+    public List getAllResultsForApiBetween(Long id, Date fromDate, Date tillDate) {
+        return em.createQuery("SELECT r FROM API a JOIN a.endpoints e JOIN e.results r WHERE a.id = :id AND r.dateTimeStamp BETWEEN :fromDate AND :tillDate ")
+                .setParameter("fromDate", fromDate, TemporalType.TIMESTAMP)
+                .setParameter("tillDate", tillDate, TemporalType.TIMESTAMP)
+                .setParameter("id", id)
+                .getResultList();
     }
 
     public Iterable<TimeInterval> getAllTimeIntervals() {
