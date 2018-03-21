@@ -18,6 +18,11 @@ public class ConfigRestController {
         this.repositoryService = repositoryService;
     }
 
+    @RequestMapping(value = "/{id}", method= RequestMethod.GET)
+    public APIConfig showAPIConfig(@PathVariable Long id){
+        return repositoryService.getAPIConfig(id);
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public @ResponseBody APIConfig updateAPIConfig (@PathVariable("id") Long id, @RequestParam Long scrapeId) {
         APIConfig config = repositoryService.getAPIConfig(id);

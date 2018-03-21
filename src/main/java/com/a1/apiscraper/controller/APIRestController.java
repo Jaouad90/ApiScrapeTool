@@ -1,12 +1,8 @@
 package com.a1.apiscraper.controller;
 
 import com.a1.apiscraper.domain.API;
-import com.a1.apiscraper.domain.APIConfig;
-import com.a1.apiscraper.domain.Decorator;
-import com.a1.apiscraper.domain.ScrapeBehavior;
 import com.a1.apiscraper.service.RepositoryService;
 import com.a1.apiscraper.service.RepositoryServiceInterface;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
