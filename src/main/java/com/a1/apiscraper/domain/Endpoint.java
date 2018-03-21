@@ -31,4 +31,8 @@ public class Endpoint {
     public void addFoundHyperMedia(HyperMedia hyperMedia) {
         foundHypermedia.put(hyperMedia.getId(), hyperMedia);
     }
+
+    public void addResult(Result result) {
+        results.put(result.getId(), result);
+    }
 }

@@ -24,9 +24,6 @@ public class TimeInterval {
 
     private String intervalName;
 
-    @OneToMany
-    private List<API> apiList;
-
     @Transient
     private List<LocalTime> timeList = new ArrayList<>();
 
