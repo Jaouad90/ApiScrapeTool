@@ -19,14 +19,14 @@ public class APIRestController {
     }
 
     @RequestMapping(value = "/list", method= RequestMethod.GET)
-    public Iterable list(Model model){
+    public Iterable list(){
         Iterable apiList = repositoryService.getAllAPIs();
         return apiList;
     }
 
     @RequestMapping(value = "/{id}", method= RequestMethod.GET)
-    public API showAPI(@PathVariable Integer id){
-        API api = repositoryService.getSingleAPI(Long.valueOf(id));
+    public API showAPI(@PathVariable Long id){
+        API api = repositoryService.getSingleAPI(id);
         return api;
     }
 
