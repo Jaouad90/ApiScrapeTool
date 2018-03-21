@@ -131,7 +131,6 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			interval2.setIntervalName("uur");
 			TimeInterval interval3 = new TimeInterval();
 			interval3.setIntervalName("6 uur");
-			interval3.setApiList(apiList);
 			repositoryService.saveTimeInterval(interval1);
 			repositoryService.saveTimeInterval(interval2);
 			repositoryService.saveTimeInterval(interval3);
