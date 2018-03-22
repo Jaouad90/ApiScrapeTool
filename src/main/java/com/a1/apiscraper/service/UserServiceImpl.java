@@ -1,11 +1,9 @@
 package com.a1.apiscraper.service;
 
 import com.a1.apiscraper.domain.Role;
-import com.a1.apiscraper.repository.RoleRepository;
-import com.a1.apiscraper.repository.UserRepository;
+import com.a1.apiscraper.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import com.a1.apiscraper.domain.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
