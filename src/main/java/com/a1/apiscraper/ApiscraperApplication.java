@@ -2,7 +2,7 @@ package com.a1.apiscraper;
 
 import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.repository.*;
-import com.a1.apiscraper.service.RepositoryService;
+import com.a1.apiscraper.service.RepositoryServiceImpl;
 import com.a1.apiscraper.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.transaction.Transactional;
-import java.sql.Time;
-import java.time.LocalTime;
 import java.util.*;
 
 @SpringBootApplication
@@ -41,7 +38,7 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 	private TimeIntervalRepository intervalRepository;
 
     @Autowired
-	private RepositoryService repositoryService;
+	private RepositoryServiceImpl repositoryService;
 
 
 	@Override

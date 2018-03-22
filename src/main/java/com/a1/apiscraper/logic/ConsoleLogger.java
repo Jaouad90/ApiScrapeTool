@@ -1,4 +1,4 @@
-package com.a1.apiscraper.service;
+package com.a1.apiscraper.logic;
 
 public class ConsoleLogger extends AbstractLogger {
 

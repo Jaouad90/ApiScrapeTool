@@ -2,7 +2,6 @@ package com.a1.apiscraper.service;
 
 import com.a1.apiscraper.domain.Role;
 import com.a1.apiscraper.domain.User;
-import com.a1.apiscraper.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,7 +18,7 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private RepositoryService repositoryService;
+    private RepositoryServiceImpl repositoryService;
 
     @Override
     @Transactional

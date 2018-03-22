@@ -1,8 +1,7 @@
 package com.a1.apiscraper.validator;
 
 import com.a1.apiscraper.domain.User;
-import com.a1.apiscraper.service.RepositoryService;
-import com.a1.apiscraper.service.UserService;
+import com.a1.apiscraper.service.RepositoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -12,7 +11,7 @@ import org.springframework.validation.Validator;
 @Component
 public class UserValidator implements Validator {
     @Autowired
-    private RepositoryService repositoryService;
+    private RepositoryServiceImpl repositoryService;
 
     @Override
     public boolean supports(Class<?> aClass) {

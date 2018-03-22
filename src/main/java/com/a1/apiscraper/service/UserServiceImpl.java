@@ -1,8 +1,6 @@
 package com.a1.apiscraper.service;
 
 import com.a1.apiscraper.domain.Role;
-import com.a1.apiscraper.repository.RoleRepository;
-import com.a1.apiscraper.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.a1.apiscraper.domain.User;
@@ -17,7 +15,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    private RepositoryServiceInterface repositoryService;
+    private RepositoryService repositoryService;
 
     @Override
     public void save(User user) {

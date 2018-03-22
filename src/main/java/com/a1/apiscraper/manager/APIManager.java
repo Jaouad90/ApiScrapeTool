@@ -8,8 +8,7 @@ import com.a1.apiscraper.logic.APIScraper;
 import com.a1.apiscraper.logic.DecoratorFactory;
 import com.a1.apiscraper.logic.SimpleAPIscraper;
 import com.a1.apiscraper.repository.HyperMediaRepository;
-import com.a1.apiscraper.service.RepositoryService;
-import io.swagger.models.auth.In;
+import com.a1.apiscraper.service.RepositoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -17,7 +16,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -26,7 +24,7 @@ import java.util.*;
 @Service
 public class APIManager {
     @Autowired
-    private RepositoryService repositoryService;
+    private RepositoryServiceImpl repositoryService;
 
     @Autowired
     private HyperMediaRepository hyperMediaRepository;

@@ -18,7 +18,7 @@ public class APIExporter
 {
 
     @Autowired
-    RepositoryServiceInterface repositoryServiceInterface;
+    RepositoryService repositoryService;
 
     private static ConvertService convertService;
     private static String XML_FORMAT = ".xml";
@@ -33,7 +33,7 @@ public class APIExporter
     public File convertedData(Result result)
     {
         VARIABLE_PATH = DEFAULT_PATH;
-        Result resultModel = repositoryServiceInterface.getResultByID(result.getId());
+        Result resultModel = repositoryService.getResultByID(result.getId());
         if(format.equals("json")) {
             VARIABLE_PATH = VARIABLE_PATH + JSON_FORMAT;
             file = new File(VARIABLE_PATH);
