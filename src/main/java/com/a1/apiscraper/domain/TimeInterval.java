@@ -33,7 +33,6 @@ public class TimeInterval {
     public List<LocalTime> getTimeList() {
         LocalDate date = LocalDate.of(2014, 1, 1); // arbitrary date
         LocalDateTime tsp = LocalDateTime.of(date, LocalTime.MIDNIGHT);
-        System.out.println(intervalName);
         switch (intervalName) {
             case "Halfuur":
                 do {
@@ -45,16 +44,13 @@ public class TimeInterval {
             case "uur":
                 do  {
                     tsp = tsp.plus(Duration.ofHours(0).plusMinutes(60));
-                    System.out.println(tsp.toLocalTime().toString());
-                    LocalTime localTime =  LocalTime.now();
-                    localTime = tsp.toLocalTime();
+                    LocalTime localTime = tsp.toLocalTime();
                     timeList.add(localTime);
                 } while (date.equals(tsp.toLocalDate()));
                 return timeList;
             case "6 uur":
                 do  {
                     tsp = tsp.plus(Duration.ofHours(0).plusMinutes(360));
-                    System.out.println(tsp.toLocalTime().toString());
                     LocalTime localTime = tsp.toLocalTime();
                     timeList.add(localTime);
                 } while (date.equals(tsp.toLocalDate()));

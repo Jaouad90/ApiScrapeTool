@@ -34,8 +34,17 @@ public class APIManager {
     @Scheduled(cron = "0 0/30 * * * ?")
 //    @Scheduled(cron = "0/30 * * * * ?")
     public void scrapeTask() {
-        ArrayList<API> apiArrayList = (ArrayList<API>) repositoryService.getAllAPIs();
-        doScrape(getApisToScrape(apiArrayList));
+        ArrayList<API> allAPIs = (ArrayList<API>) repositoryService.getAllAPIs();
+
+        ArrayList<API> apiArrayListToScrape = new ArrayList<>();
+
+        for (API api : allAPIs){
+            if (checkAPIHasToBeScraped(api)) {
+                apiArrayListToScrape.add(api);
+            }
+        }
+
+        doScrape(apiArrayListToScrape);
     }
 
     @Transactional
@@ -60,20 +69,18 @@ public class APIManager {
         }
     }
 
-    private ArrayList<API> getApisToScrape(ArrayList<API> apis) {
-        ArrayList<API> apiArrayListToScrape = new ArrayList<>();
-        for (API api : apis) {
-            List<LocalTime> timeList = api.getTimeInterval().getTimeList();
-            int i = 0;
-            for (LocalTime localTime : timeList) {
-                i++;
-                if (i < timeList.size()) {
-                    if (timeList.get(i).isBefore(LocalTime.now().plusMinutes(30)) && timeList.get(i).isAfter(LocalTime.now())) {
-                        apiArrayListToScrape.add(api);
-                    }
-                }
+    private boolean checkAPIHasToBeScraped(API api) {
+
+        Iterator<LocalTime> timeList = api.getTimeInterval().getTimeList().iterator();
+
+        while(timeList.hasNext()) {
+            LocalTime localTime = timeList.next();
+
+            if (localTime.isBefore(LocalTime.now().plusMinutes(30)) && localTime.isAfter(LocalTime.now())) {
+                return true;
             }
         }
-        return apiArrayListToScrape;
+
+        return  false;
     }
 }
