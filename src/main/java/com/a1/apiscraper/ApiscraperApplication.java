@@ -2,7 +2,7 @@ package com.a1.apiscraper;
 
 import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.repository.*;
-import com.a1.apiscraper.service.RepositoryServiceImpl;
+import com.a1.apiscraper.service.RepositoryService;
 import com.a1.apiscraper.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 	private TimeIntervalRepository intervalRepository;
 
     @Autowired
-	private RepositoryServiceImpl repositoryService;
+	private RepositoryService repositoryService;
 
 
 	@Override

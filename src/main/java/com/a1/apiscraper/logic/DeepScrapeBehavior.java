@@ -3,7 +3,7 @@ package com.a1.apiscraper.logic;
 import com.a1.apiscraper.domain.API;
 import com.a1.apiscraper.domain.Endpoint;
 import com.a1.apiscraper.domain.HyperMedia;
-import com.a1.apiscraper.service.RepositoryServiceImpl;
+import com.a1.apiscraper.service.RepositoryService;
 import com.linkedin.urls.Url;
 import com.linkedin.urls.detection.UrlDetector;
 import com.linkedin.urls.detection.UrlDetectorOptions;
@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class DeepScrapeBehavior implements ScrapeBehavior {
     @Autowired
-    private RepositoryServiceImpl repositoryService;
+    private RepositoryService repositoryService;
 
     @Override
     public HashMap<Endpoint, String> scrape(API api) {

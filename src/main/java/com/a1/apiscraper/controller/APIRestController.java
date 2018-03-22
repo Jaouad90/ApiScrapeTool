@@ -1,7 +1,6 @@
 package com.a1.apiscraper.controller;
 
 import com.a1.apiscraper.domain.API;
-import com.a1.apiscraper.service.RepositoryServiceImpl;
 import com.a1.apiscraper.service.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +14,6 @@ public class APIRestController {
 
     @Autowired
     private RepositoryService repositoryService;
-
-    public APIRestController(RepositoryServiceImpl repositoryService) {
-        this.repositoryService = repositoryService;
-    }
 
     @RequestMapping(value = "/list", method= RequestMethod.GET)
     public Iterable APIList(){

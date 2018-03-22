@@ -16,7 +16,7 @@ import java.util.Locale;
 public class APIServiceImpl implements APIService {
 
     @Autowired
-    RepositoryServiceImpl repositoryService;
+    RepositoryService repositoryService;
     DateTimeFormatter formatter;
 
     public APIServiceImpl()

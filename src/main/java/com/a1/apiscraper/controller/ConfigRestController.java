@@ -2,7 +2,6 @@ package com.a1.apiscraper.controller;
 
 import com.a1.apiscraper.domain.APIConfig;
 import com.a1.apiscraper.domain.ScrapeBehavior;
-import com.a1.apiscraper.service.RepositoryServiceImpl;
 import com.a1.apiscraper.service.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +11,6 @@ import org.springframework.web.bind.annotation.*;
 public class ConfigRestController {
     @Autowired
     private RepositoryService repositoryService;
-
-    public ConfigRestController(RepositoryServiceImpl repositoryService) {
-        this.repositoryService = repositoryService;
-    }
 
     @RequestMapping(value = "/{id}", method= RequestMethod.GET)
     public APIConfig showAPIConfig(@PathVariable Long id){

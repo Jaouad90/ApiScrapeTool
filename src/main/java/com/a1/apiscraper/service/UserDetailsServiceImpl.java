@@ -18,7 +18,7 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private RepositoryServiceImpl repositoryService;
+    private RepositoryService repositoryService;
 
     @Override
     @Transactional
