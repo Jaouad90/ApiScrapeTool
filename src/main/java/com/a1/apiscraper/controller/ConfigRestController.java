@@ -1,6 +1,5 @@
 package com.a1.apiscraper.controller;
 
-import com.a1.apiscraper.domain.API;
 import com.a1.apiscraper.domain.APIConfig;
 import com.a1.apiscraper.domain.ScrapeBehavior;
 import com.a1.apiscraper.service.RepositoryService;
