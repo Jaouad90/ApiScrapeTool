@@ -2,6 +2,7 @@ package com.a1.apiscraper.service;
 
 import com.a1.apiscraper.domain.API;
 import com.a1.apiscraper.domain.APIConfig;
+import com.a1.apiscraper.domain.APIMemento;
 import com.a1.apiscraper.domain.CareTaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class APIServiceImpl implements APIService {
      * @param apiModel
      * @return saved api
      */
-    public API saveAPI(API apiModel){
+    public API saveAPIModel(API apiModel){
         API api = null;
         if (apiModel.getId() == null) {
             //Create API
@@ -57,6 +58,15 @@ public class APIServiceImpl implements APIService {
             careTaker.add(api.saveStateToMemente());
             repositoryService.saveAPI(api);
         }
+        return api;
+    }
+
+    public API restoreAPIFromMemento(API api, APIMemento apiMemento){
+        //Restore Memento
+        api.getId();
+        apiMemento.getId();
+        api.getStateFromMemento(apiMemento);
+        repositoryService.saveAPI(api);
         return api;
     }
 
