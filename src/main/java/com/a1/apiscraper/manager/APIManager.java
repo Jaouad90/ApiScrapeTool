@@ -5,7 +5,7 @@ import com.a1.apiscraper.domain.Decorator;
 import com.a1.apiscraper.domain.Endpoint;
 import com.a1.apiscraper.domain.Result;
 import com.a1.apiscraper.logic.APIScraper;
-import com.a1.apiscraper.logic.DecoratorFactory;
+import com.a1.apiscraper.logic.SimpleFactory;
 import com.a1.apiscraper.logic.SimpleAPIscraper;
 import com.a1.apiscraper.repository.HyperMediaRepository;
 import com.a1.apiscraper.service.RepositoryService;
@@ -27,12 +27,9 @@ public class APIManager {
     @Autowired
     private RepositoryService repositoryService;
 
-    @Autowired
-    private HyperMediaRepository hyperMediaRepository;
-
     @Transactional
-    @Scheduled(cron = "0 0/30 * * * ?")
-//    @Scheduled(cron = "0/30 * * * * ?")
+//    @Scheduled(cron = "0 0/30 * * * ?")
+    @Scheduled(cron = "0/30 * * * * ?")
     public void scrapeTask() {
         ArrayList<API> allAPIs = (ArrayList<API>) repositoryService.getAllAPIs();
 
@@ -49,11 +46,12 @@ public class APIManager {
 
     @Transactional
     public void doScrape(ArrayList<API> apiArrayList) {
+        SimpleFactory simpleFactory = new SimpleFactory();
         for(API api : apiArrayList) {
             APIScraper tempScraper = new SimpleAPIscraper(api);
-            DecoratorFactory decoratorFactory = new DecoratorFactory();
+            tempScraper.setScrapeBehavior(simpleFactory.getScrapeBehavior(api.getConfig().getScrapeBehavior().getName()));
             for(Decorator decorator : api.getConfig().getDecorators()){
-                tempScraper = decoratorFactory.getDecorator(decorator.getName(), tempScraper);
+                tempScraper = simpleFactory.getDecorator(decorator.getName(), tempScraper);
             }
 
             HashMap<Endpoint, String> hash = tempScraper.scrape();
