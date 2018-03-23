@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    private RepositoryServiceInterface repositoryService;
+    private RepositoryService repositoryService;
 
     @Override
     public void save(User user) {

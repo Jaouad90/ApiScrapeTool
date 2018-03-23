@@ -1,6 +1,11 @@
 package com.a1.apiscraper.controller;
 
 import com.a1.apiscraper.domain.*;
+import com.a1.apiscraper.logic.AbstractLogger;
+import com.a1.apiscraper.logic.ConsoleLogger;
+import com.a1.apiscraper.logic.ErrorLogger;
+import com.a1.apiscraper.logic.WarningLogger;
+import com.a1.apiscraper.service.APIExporter;
 import com.a1.apiscraper.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +36,7 @@ public class APIController {
 
 
     @Autowired
-    private RepositoryServiceInterface repositoryService;
+    private RepositoryService repositoryService;
     @Autowired
     private APIExporter apiExporter;
 
