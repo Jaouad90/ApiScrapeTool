@@ -1,7 +1,8 @@
 package com.a1.apiscraper.controller;
 
-import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.service.RepositoryService;
+import com.a1.apiscraper.domain.API;
+import com.a1.apiscraper.domain.Endpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

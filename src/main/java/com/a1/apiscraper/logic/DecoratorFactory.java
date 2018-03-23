@@ -1,8 +1,5 @@
 package com.a1.apiscraper.logic;
 
-import com.a1.apiscraper.domain.API;
-import com.a1.apiscraper.domain.Decorator;
-
 public class DecoratorFactory {
 
     public APIScraper getDecorator(String decoratorType, APIScraper scraper){
