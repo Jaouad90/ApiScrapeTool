@@ -1,6 +1,7 @@
 package com.a1.apiscraper.logic;
 
 import com.a1.apiscraper.domain.Endpoint;
+import com.a1.apiscraper.domain.Result;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -16,7 +17,7 @@ public class TweetDecorator extends DecoratedScraper{
     }
 
     @Override
-    public HashMap<Endpoint, String> scrape() {
+    public HashMap<Endpoint, Result> scrape() {
         communicate();
         return super.scrape();
     }

@@ -2,13 +2,6 @@ package com.a1.apiscraper.service;
 
 import com.a1.apiscraper.domain.*;
 import org.springframework.stereotype.Repository;
-import com.a1.apiscraper.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.List;
 

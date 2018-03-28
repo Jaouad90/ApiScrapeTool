@@ -25,13 +25,6 @@ public class Endpoint {
     @OneToMany(cascade = CascadeType.ALL)
     private Map<Long, Result> results = new HashMap<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Map<Long, HyperMedia> foundHypermedia = new HashMap<>();
-
-    public void addFoundHyperMedia(HyperMedia hyperMedia) {
-        foundHypermedia.put(hyperMedia.getId(), hyperMedia);
-    }
-
     public void addResult(Result result) {
         results.put(result.getId(), result);
     }
