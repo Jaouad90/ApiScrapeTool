@@ -1,10 +1,9 @@
 package com.a1.apiscraper.manager;
 
-import com.a1.apiscraper.domain.API;
-import com.a1.apiscraper.domain.Decorator;
-import com.a1.apiscraper.domain.Endpoint;
-import com.a1.apiscraper.domain.Result;
+import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.logic.APIScraper;
+import com.a1.apiscraper.logic.DeepScrapeBehavior;
+import com.a1.apiscraper.logic.ScrapeBehavior;
 import com.a1.apiscraper.logic.SimpleFactory;
 import com.a1.apiscraper.logic.SimpleAPIscraper;
 import com.a1.apiscraper.repository.HyperMediaRepository;
@@ -49,20 +48,42 @@ public class APIManager {
         SimpleFactory simpleFactory = new SimpleFactory();
         for(API api : apiArrayList) {
             APIScraper tempScraper = new SimpleAPIscraper(api);
+
             tempScraper.setScrapeBehavior(simpleFactory.getScrapeBehavior(api.getConfig().getScrapeBehavior().getName()));
+
             for(Decorator decorator : api.getConfig().getDecorators()){
                 tempScraper = simpleFactory.getDecorator(decorator.getName(), tempScraper);
             }
 
-            HashMap<Endpoint, String> hash = tempScraper.scrape();
-            Date date = Date.from(Instant.now());
-            for (Endpoint endpoint: hash.keySet()) {
-                Map<Long, Result> results = new HashMap<>();
-                Result result = new Result();
-                result.setDateTimeStamp(date);
-                result.setResult(hash.get(endpoint));
-                repositoryService.saveResult(result);
-                endpoint.addResult(result);
+            HashMap<Endpoint, Result> results = tempScraper.scrape();
+            if (api.getConfig().getScrapeBehavior().getName().equals("DeepScrapeBehavior")) {
+                for (Map.Entry<Endpoint, Result> endpointResultEntry: results.entrySet()) {
+                    Map<Long, HyperMedia> hyperMedia = endpointResultEntry.getValue().getFoundHypermedia();
+                    Map<Long, HyperMedia> persistentHyperMedia = new HashMap<>();
+
+                    Result result = endpointResultEntry.getValue();
+                    for (HyperMedia hyperMedia1: hyperMedia.values()) {
+                        repositoryService.saveHyperMedia(hyperMedia1);
+                        persistentHyperMedia.put(hyperMedia1.getId(), hyperMedia1);
+                    }
+                    result.setFoundHypermedia(persistentHyperMedia);
+
+                    repositoryService.saveResult(result);
+
+                    Endpoint endpoint = endpointResultEntry.getKey();
+                    endpoint.addResult(result);
+                    repositoryService.saveEndpoint(endpoint);
+                }
+            } else {
+                for (Map.Entry<Endpoint, Result> endpointResultEntry: results.entrySet()) {
+                    Result result = endpointResultEntry.getValue();
+
+                    repositoryService.saveResult(result);
+
+                    Endpoint endpoint = endpointResultEntry.getKey();
+                    endpoint.addResult(result);
+                    repositoryService.saveEndpoint(endpoint);
+                }
             }
         }
     }

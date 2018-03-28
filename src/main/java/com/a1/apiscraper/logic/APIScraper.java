@@ -2,6 +2,7 @@ package com.a1.apiscraper.logic;
 
 import com.a1.apiscraper.domain.API;
 import com.a1.apiscraper.domain.Endpoint;
+import com.a1.apiscraper.domain.Result;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +21,7 @@ public abstract class APIScraper  {
         this.scrapeBehavior = new NormalScrapeBehavior();
     }
 
-    public HashMap<Endpoint, String> scrape() {
+    public HashMap<Endpoint, Result> scrape() {
         if (scrapeBehavior != null) {
             return scrapeBehavior.scrape(api);
         } else {
