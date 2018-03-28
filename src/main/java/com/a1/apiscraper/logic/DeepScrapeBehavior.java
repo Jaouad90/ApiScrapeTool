@@ -3,7 +3,6 @@ package com.a1.apiscraper.logic;
 import com.a1.apiscraper.domain.API;
 import com.a1.apiscraper.domain.Endpoint;
 import com.a1.apiscraper.domain.HyperMedia;
-import com.a1.apiscraper.repository.HyperMediaRepository;
 import com.a1.apiscraper.service.RepositoryService;
 import com.linkedin.urls.Url;
 import com.linkedin.urls.detection.UrlDetector;

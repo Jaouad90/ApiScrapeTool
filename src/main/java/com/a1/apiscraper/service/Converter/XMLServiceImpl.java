@@ -4,6 +4,7 @@ import com.a1.apiscraper.domain.ResultExport;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.stereotype.Service;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

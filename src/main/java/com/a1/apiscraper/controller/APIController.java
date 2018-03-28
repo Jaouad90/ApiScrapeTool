@@ -1,10 +1,12 @@
 package com.a1.apiscraper.controller;
 
 import com.a1.apiscraper.domain.*;
+import com.a1.apiscraper.logic.AbstractLogger;
+import com.a1.apiscraper.logic.ConsoleLogger;
+import com.a1.apiscraper.logic.ErrorLogger;
+import com.a1.apiscraper.logic.WarningLogger;
 import com.a1.apiscraper.service.APIExporter;
 import com.a1.apiscraper.service.*;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,17 +14,19 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.json.simple.JSONObject;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.*;
+import java.util.Locale;
 
 @Controller
 public class APIController {
@@ -32,7 +36,7 @@ public class APIController {
 
 
     @Autowired
-    private RepositoryServiceInterface repositoryService;
+    private RepositoryService repositoryService;
     @Autowired
     private APIExporter apiExporter;
 

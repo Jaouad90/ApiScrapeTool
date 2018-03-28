@@ -11,12 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.transaction.Transactional;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class ApiscraperApplication extends SpringBootServletInitializer{
@@ -131,7 +129,6 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 			interval2.setIntervalName("uur");
 			TimeInterval interval3 = new TimeInterval();
 			interval3.setIntervalName("6 uur");
-			interval3.setApiList(apiList);
 			repositoryService.saveTimeInterval(interval1);
 			repositoryService.saveTimeInterval(interval2);
 			repositoryService.saveTimeInterval(interval3);

@@ -3,13 +3,14 @@ package com.a1.apiscraper.service;
 import com.a1.apiscraper.domain.Result;
 import com.a1.apiscraper.domain.ResultExport;
 import com.a1.apiscraper.service.Converter.*;
-import com.sun.istack.internal.Nullable;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Nullable;
 import java.io.*;
 
 @Service
@@ -17,7 +18,7 @@ public class APIExporter
 {
 
     @Autowired
-    RepositoryServiceInterface repositoryServiceInterface;
+    RepositoryService repositoryService;
 
     private static ConvertService convertService;
     private static String XML_FORMAT = ".xml";
@@ -32,7 +33,7 @@ public class APIExporter
     public File convertedData(Result result)
     {
         VARIABLE_PATH = DEFAULT_PATH;
-        Result resultModel = repositoryServiceInterface.getResultByID(result.getId());
+        Result resultModel = repositoryService.getResultByID(result.getId());
         if(format.equals("json")) {
             VARIABLE_PATH = VARIABLE_PATH + JSON_FORMAT;
             file = new File(VARIABLE_PATH);

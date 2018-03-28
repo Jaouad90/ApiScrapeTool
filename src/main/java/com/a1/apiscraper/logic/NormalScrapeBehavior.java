@@ -22,7 +22,7 @@ public class NormalScrapeBehavior implements ScrapeBehavior {
                 e.printStackTrace();
             }
             String output = result.getBody();
-            endpointResults.put(endpoint.getValue(), output );
+            endpointResults.put(endpoint.getValue(), output);
         }
         return endpointResults;
     }

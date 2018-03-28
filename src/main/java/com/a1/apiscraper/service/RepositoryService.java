@@ -1,62 +1,30 @@
 package com.a1.apiscraper.service;
 
 import com.a1.apiscraper.domain.*;
+import org.springframework.stereotype.Repository;
 import com.a1.apiscraper.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
-@Service
-public class RepositoryService implements RepositoryServiceInterface {
-    @Autowired
-    private APIRepository apiRepository;
-    @Autowired
-    private EndpointRepository endpointRepository;
-    @Autowired
-    private ScrapeBehaviorRepository scrapeBehaviorRepository;
-    @Autowired
-    private APIConfigRepository apiConfigRepository;
-    @Autowired
-    private CareTakerRepository careTakerRepository;
-    @Autowired
-    private DecoratorRepository decoratorRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private HyperMediaRepository hyperMediaRepository;
-    @Autowired
-    private ResultRepository resultRepository;
-    @Autowired
-    private TimeIntervalRepository timeIntervalRepository;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
+import java.util.Date;
+import java.util.List;
 
-    @Autowired
-    private UserServiceImpl userService;
+@Repository
+public interface RepositoryService {
 
 //<!--
 //All
     //<!--
     //Find All
-    public Iterable<Decorator> getAllDecorators(){
-        return decoratorRepository.findAll();
-    }
-
-    public Iterable<ScrapeBehavior> getAllScrapeBehaviors(){
-        return scrapeBehaviorRepository.findAll();
-    }
-
-    public Iterable<Role> getAllRoles(){
-        return roleRepository.findAll();
-    }
-
-    public Iterable<API> getAllAPIs(){
-        return apiRepository.findAll();
-    }
-
-    public Iterable<TimeInterval> getAllTimeIntervals() {
-        return timeIntervalRepository.findAll();
-    }
+    Iterable<Decorator> getAllDecorators();
+    Iterable<ScrapeBehavior> getAllScrapeBehaviors();
+    Iterable<Role> getAllRoles();
+    Iterable<API> getAllAPIs();
+    List getAllResultsForApiBetween(Long id, Date from, Date till);
+    Iterable<TimeInterval> getAllTimeIntervals();
     //-->
 //-->
 
@@ -64,51 +32,26 @@ public class RepositoryService implements RepositoryServiceInterface {
 //Single
     //<!--
     //Find Single
-    public API getSingleAPI(Long id){
-        return apiRepository.findOne(id);
-    }
-    public User getUserByUsername(String username){
-        return userRepository.findByUsername(username);
-    }
-
-    @Override
-    public Result getResultByID(Long id) {
-        return resultRepository.findOne(id);
-    }
+    API getSingleAPI(Long id);
+    User getUserByUsername(String username);
+    Result getResultByID(Long id);
+    ScrapeBehavior getScrapeBehavior(Long id);
+    APIConfig getAPIConfig(Long id );
     //-->
 
     //<!--
     // Save single entity
-    public void saveAPIConfig(APIConfig apiConfig){
-        apiConfigRepository.save(apiConfig);
-    }
-    public void saveAPI(API api) {
-        apiRepository.save(api);
-    }
-    public void saveUser(User user) {
-        userRepository.save(user);
-    }
-    public void saveHyperMedia(HyperMedia hyperMedia){
-        hyperMediaRepository.save(hyperMedia);
-    }
-    public void saveResult(Result result){
-        resultRepository.save(result);
-    }
-    public void saveEndpoint(Endpoint endpoint){
-        endpointRepository.save(endpoint);
-    }
-    public void saveRole(Role role){
-        roleRepository.save(role);
-    }
-    public void saveDecorator(Decorator decorator){
-        decoratorRepository.save(decorator);
-    }
-    public void saveScrapeBehavior(ScrapeBehavior scrapeBehavior){
-        scrapeBehaviorRepository.save(scrapeBehavior);
-    }
-    public void saveTimeInterval(TimeInterval timeInterval) {
-        timeIntervalRepository.save(timeInterval);
-    }
+    void saveAPIConfig(APIConfig apiConfig);
+    void saveAPI(API api);
+    void saveUser(User user);
+    void saveHyperMedia(HyperMedia hyperMedia);
+    void saveResult(Result result);
+    void saveEndpoint(Endpoint endpoint);
+    void saveRole(Role role);
+    void saveDecorator(Decorator decorator);
+    void saveScrapeBehavior(ScrapeBehavior scrapeBehavior);
+    void saveTimeInterval(TimeInterval timeInterval);
+
     //-->
 //-->
 }

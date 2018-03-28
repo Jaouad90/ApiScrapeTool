@@ -6,14 +6,11 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
-import javax.validation.constraints.Size;
 import javax.validation.Valid;
-import java.time.LocalTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Entity
@@ -47,7 +44,7 @@ public class API {
     private CareTaker careTaker = new CareTaker();
 
     @Valid
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Map<Long, Endpoint> endpoints = new HashMap<>();
 
     public void addEndpoint(Endpoint endpoint) {

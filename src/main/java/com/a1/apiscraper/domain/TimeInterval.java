@@ -4,7 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,16 +27,12 @@ public class TimeInterval {
 
     private String intervalName;
 
-    @OneToMany
-    private List<API> apiList;
-
     @Transient
     private List<LocalTime> timeList = new ArrayList<>();
 
     public List<LocalTime> getTimeList() {
         LocalDate date = LocalDate.of(2014, 1, 1); // arbitrary date
         LocalDateTime tsp = LocalDateTime.of(date, LocalTime.MIDNIGHT);
-        System.out.println(intervalName);
         switch (intervalName) {
             case "Halfuur":
                 do {
@@ -45,16 +44,13 @@ public class TimeInterval {
             case "uur":
                 do  {
                     tsp = tsp.plus(Duration.ofHours(0).plusMinutes(60));
-                    System.out.println(tsp.toLocalTime().toString());
-                    LocalTime localTime =  LocalTime.now();
-                    localTime = tsp.toLocalTime();
+                    LocalTime localTime = tsp.toLocalTime();
                     timeList.add(localTime);
                 } while (date.equals(tsp.toLocalDate()));
                 return timeList;
             case "6 uur":
                 do  {
                     tsp = tsp.plus(Duration.ofHours(0).plusMinutes(360));
-                    System.out.println(tsp.toLocalTime().toString());
                     LocalTime localTime = tsp.toLocalTime();
                     timeList.add(localTime);
                 } while (date.equals(tsp.toLocalDate()));
