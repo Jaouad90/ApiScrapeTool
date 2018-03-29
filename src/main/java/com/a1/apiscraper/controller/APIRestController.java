@@ -1,12 +1,17 @@
 package com.a1.apiscraper.controller;
 
 import com.a1.apiscraper.domain.API;
+import com.a1.apiscraper.domain.Endpoint;
+import com.a1.apiscraper.domain.Result;
 import com.a1.apiscraper.service.RepositoryService;
+import com.a1.apiscraper.service.RestFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/api")
@@ -14,6 +19,8 @@ public class APIRestController {
 
     @Autowired
     private RepositoryService repositoryService;
+    @Autowired
+    private RestFacade facade;
 
     @RequestMapping(value = "/list", method= RequestMethod.GET)
     public Iterable APIList(){
@@ -27,8 +34,8 @@ public class APIRestController {
 
     @RequestMapping(value = "/{id}/results", method= RequestMethod.GET)
     public Iterable showAPIResults(@RequestParam(value = "from", required = false) Long fromTS,
-                              @RequestParam(value = "till", required = false) Long tillTS,
-                              @PathVariable Long id) {
+            @RequestParam(value = "till", required = false) Long tillTS,
+            @PathVariable Long id) {
         Date fromDate;
         Date tillDate;
 
@@ -47,4 +54,10 @@ public class APIRestController {
         return repositoryService.getAllResultsForApiBetween(id, fromDate, tillDate);
 
     }
+
+    @RequestMapping(value = "/{id}/scrape", method= RequestMethod.GET)
+    public HashMap<Endpoint, Result> scrapeApi(@PathVariable Long id) {
+        return facade.scrapeSingleApi(id);
+    }
+
 }

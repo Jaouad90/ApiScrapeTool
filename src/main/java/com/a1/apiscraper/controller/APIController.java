@@ -132,8 +132,6 @@ public class APIController {
     @RequestMapping(value="/result/{resultid}", method=RequestMethod.GET)
     @ResponseBody
     public void downloadFile(@PathVariable(value="resultid") Result result, @RequestParam String format, HttpServletResponse response) {
-
-
         apiExporter.setFormat(format);
         File file = apiExporter.convertedData(result);
         response.setContentType("application/" + format);
