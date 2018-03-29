@@ -2,6 +2,8 @@ package com.a1.apiscraper.logic;
 
 import com.a1.apiscraper.domain.API;
 import com.a1.apiscraper.domain.Endpoint;
+import com.a1.apiscraper.domain.Result;
+import com.a1.apiscraper.service.RepositoryService;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +22,12 @@ public abstract class APIScraper  {
         this.scrapeBehavior = new NormalScrapeBehavior();
     }
 
-    public HashMap<Endpoint, String> scrape() {
+    APIScraper(API api, ScrapeBehavior scrapeBehavior) {
+        this.api = api;
+        this.scrapeBehavior = scrapeBehavior;
+    }
+
+    public HashMap<Endpoint, Result> scrape() {
         if (scrapeBehavior != null) {
             return scrapeBehavior.scrape(api);
         } else {
@@ -29,6 +36,18 @@ public abstract class APIScraper  {
             } catch (Exception e) {
                 e.printStackTrace();
                 return new HashMap<>();
+            }
+        }
+    }
+
+    public void saveResults(HashMap<Endpoint, Result> results, RepositoryService repositoryService) {
+        if (scrapeBehavior != null) {
+            scrapeBehavior.saveResults(results, repositoryService);
+        } else {
+            try {
+                throw new Exception("ScrapeBehavior is not set");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
