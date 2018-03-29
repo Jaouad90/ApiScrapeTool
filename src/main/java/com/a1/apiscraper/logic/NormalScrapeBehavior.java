@@ -3,9 +3,11 @@ package com.a1.apiscraper.logic;
 import com.a1.apiscraper.domain.API;
 import com.a1.apiscraper.domain.Endpoint;
 import com.a1.apiscraper.domain.Result;
+import com.a1.apiscraper.service.RepositoryService;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
 import java.util.Date;
@@ -13,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NormalScrapeBehavior implements ScrapeBehavior {
+
     @Override
     public HashMap<Endpoint, Result> scrape(API api) {
         HashMap<Endpoint, Result> endpointResults = new HashMap<>();
@@ -36,5 +39,18 @@ public class NormalScrapeBehavior implements ScrapeBehavior {
             endpointResults.put(endpoint.getValue(), result);
         }
         return endpointResults;
+    }
+
+    @Override
+    public void saveResults(HashMap<Endpoint, Result> results, RepositoryService repositoryService) {
+        for (Map.Entry<Endpoint, Result> endpointResultEntry: results.entrySet()) {
+            Result result = endpointResultEntry.getValue();
+
+            repositoryService.saveResult(result);
+
+            Endpoint endpoint = endpointResultEntry.getKey();
+            endpoint.addResult(result);
+            repositoryService.saveEndpoint(endpoint);
+        }
     }
 }

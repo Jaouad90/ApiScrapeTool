@@ -11,7 +11,7 @@ public abstract class DecoratedScraper extends APIScraper {
     private APIScraper apiScraper;
 
     public DecoratedScraper(API api, APIScraper apiScraper) {
-        super(api);
+        super(api, apiScraper.getScrapeBehavior());
         this.apiScraper = apiScraper;
     }
 
