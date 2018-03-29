@@ -27,8 +27,8 @@ public class APIManager {
     private RepositoryService repositoryService;
 
     @Transactional
-//    @Scheduled(cron = "0 0/30 * * * ?")
-    @Scheduled(cron = "0/30 * * * * ?")
+    @Scheduled(cron = "0 0/30 * * * ?")
+//    @Scheduled(cron = "0/30 * * * * ?")
     public void scrapeTask() {
         ArrayList<API> allAPIs = (ArrayList<API>) repositoryService.getAllAPIs();
 
@@ -56,35 +56,7 @@ public class APIManager {
             }
 
             HashMap<Endpoint, Result> results = tempScraper.scrape();
-            if (api.getConfig().getScrapeBehavior().getName().equals("DeepScrapeBehavior")) {
-                for (Map.Entry<Endpoint, Result> endpointResultEntry: results.entrySet()) {
-                    Map<Long, HyperMedia> hyperMedia = endpointResultEntry.getValue().getFoundHypermedia();
-                    Map<Long, HyperMedia> persistentHyperMedia = new HashMap<>();
-
-                    Result result = endpointResultEntry.getValue();
-                    for (HyperMedia hyperMedia1: hyperMedia.values()) {
-                        repositoryService.saveHyperMedia(hyperMedia1);
-                        persistentHyperMedia.put(hyperMedia1.getId(), hyperMedia1);
-                    }
-                    result.setFoundHypermedia(persistentHyperMedia);
-
-                    repositoryService.saveResult(result);
-
-                    Endpoint endpoint = endpointResultEntry.getKey();
-                    endpoint.addResult(result);
-                    repositoryService.saveEndpoint(endpoint);
-                }
-            } else {
-                for (Map.Entry<Endpoint, Result> endpointResultEntry: results.entrySet()) {
-                    Result result = endpointResultEntry.getValue();
-
-                    repositoryService.saveResult(result);
-
-                    Endpoint endpoint = endpointResultEntry.getKey();
-                    endpoint.addResult(result);
-                    repositoryService.saveEndpoint(endpoint);
-                }
-            }
+            tempScraper.saveResults(results, repositoryService);
         }
     }
 
