@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @NoArgsConstructor
@@ -22,5 +24,12 @@ public class Result {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateTimeStamp;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Map<Long, HyperMedia> foundHypermedia = new HashMap<>();
+
+    public void addFoundHyperMedia(HyperMedia hyperMedia) {
+        foundHypermedia.put(hyperMedia.getId(), hyperMedia);
+    }
 
 }

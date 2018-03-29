@@ -1,6 +1,7 @@
 package com.a1.apiscraper.logic;
 
 import com.a1.apiscraper.domain.Endpoint;
+import com.a1.apiscraper.domain.Result;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -13,7 +14,7 @@ public class EmailDecorator extends DecoratedScraper {
     }
 
     @Override
-    public HashMap<Endpoint, String> scrape() {
+    public HashMap<Endpoint, Result> scrape() {
         communicate();
         return super.scrape();
     }
