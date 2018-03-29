@@ -52,4 +52,25 @@ public class DeepScrapeBehavior implements ScrapeBehavior {
         }
         return endpointResults;
     }
+
+    @Override
+    public void saveResults(HashMap<Endpoint, Result> results, RepositoryService repositoryService) {
+        for (Map.Entry<Endpoint, Result> endpointResultEntry: results.entrySet()) {
+            Map<Long, HyperMedia> hyperMedia = endpointResultEntry.getValue().getFoundHypermedia();
+            Map<Long, HyperMedia> persistentHyperMedia = new HashMap<>();
+
+            Result result = endpointResultEntry.getValue();
+            for (HyperMedia hyperMedia1: hyperMedia.values()) {
+                repositoryService.saveHyperMedia(hyperMedia1);
+                persistentHyperMedia.put(hyperMedia1.getId(), hyperMedia1);
+            }
+            result.setFoundHypermedia(persistentHyperMedia);
+
+            repositoryService.saveResult(result);
+
+            Endpoint endpoint = endpointResultEntry.getKey();
+            endpoint.addResult(result);
+            repositoryService.saveEndpoint(endpoint);
+        }
+    }
 }
