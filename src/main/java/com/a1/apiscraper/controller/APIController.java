@@ -38,6 +38,8 @@ public class APIController {
     @Autowired
     private RepositoryService repositoryService;
     @Autowired
+    private APIService apiService;
+    @Autowired
     private APIExporter apiExporter;
 
     public APIController(APIExporter apiExporter) {
@@ -87,32 +89,8 @@ public class APIController {
                 modelAndView.addObject("timeintervals", repositoryService.getAllTimeIntervals());
                 return modelAndView;
             }
-            API api;
 
-            if (apiModel.getId() == null) {
-                //Create API
-                APIConfig apiConfig = apiModel.getConfig();
-                //api.getConfig().setDecorators(apiModel.getConfig().getDecorators());
-                repositoryService.saveAPIConfig(apiConfig);
-                apiModel.setConfig(apiConfig);
-
-                repositoryService.saveAPI(apiModel);
-                api = apiModel;
-            } else {
-                //Update API
-                api = repositoryService.getSingleAPI(apiModel.getId());
-                api.setEndpoints(apiModel.getEndpoints());
-                api.getConfig().setScrapeBehavior(apiModel.getConfig().getScrapeBehavior());
-                api.getConfig().setDecorators(apiModel.getConfig().getDecorators());
-                api.setName(apiModel.getName());
-                api.setBaseUrl(apiModel.getBaseUrl());
-                String out = formatter.format(Instant.now());
-                api.setState("" + out);
-                api.setTimeInterval(apiModel.timeInterval);
-                CareTaker careTaker = api.getCareTaker();
-                careTaker.add(api.saveStateToMemente());
-                repositoryService.saveAPI(api);
-            }
+            API api = apiService.saveAPIModel(apiModel);
 
         return new ModelAndView("redirect:/api/" + api.getId());
     }
@@ -126,11 +104,13 @@ public class APIController {
     @Transactional
     @RequestMapping(value = "/api/restore/{apiid}/{mementoid}")
     public ModelAndView restoreState(@PathVariable("apiid") API api, @PathVariable("mementoid") APIMemento apiMemento ) {
-        //Restore Memento
-        api.getId();
-        apiMemento.getId();
-        api.getStateFromMemento(apiMemento);
-        repositoryService.saveAPI(api);
+//
+//        //Restore Memento
+//        api.getId();
+//        apiMemento.getId();
+//        api.getStateFromMemento(apiMemento);
+//        repositoryService.saveAPI(api);
+        api = apiService.restoreAPIFromMemento(api, apiMemento);
         return new ModelAndView("redirect:api/" + api.getId());
     }
 
@@ -145,26 +125,26 @@ public class APIController {
         modelAndView.addObject("scrapebehaviors", repositoryService.getAllScrapeBehaviors());
         modelAndView.addObject("decorators", repositoryService.getAllDecorators());
         api.getEndpoints();
-        System.out.println(api.getEndpoints().entrySet().size());
+        //System.out.println(api.getEndpoints().entrySet().size());
         return modelAndView;
     }
 
-        @RequestMapping(value="/result/{resultid}", method=RequestMethod.GET)
-        @ResponseBody
-        public void downloadFile(@PathVariable(value="resultid") Result result, @RequestParam String format, HttpServletResponse response) {
+    @RequestMapping(value="/result/{resultid}", method=RequestMethod.GET)
+    @ResponseBody
+    public void downloadFile(@PathVariable(value="resultid") Result result, @RequestParam String format, HttpServletResponse response) {
 
 
-            apiExporter.setFormat(format);
-            File file = apiExporter.convertedData(result);
-            response.setContentType("application/" + format);
-            response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
-            response.setHeader("Content-Length", String.valueOf(file.length()));
-            try {
-                InputStream inputStream = new FileInputStream(file);
-                FileCopyUtils.copy(inputStream, response.getOutputStream());
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+        apiExporter.setFormat(format);
+        File file = apiExporter.convertedData(result);
+        response.setContentType("application/" + format);
+        response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+        response.setHeader("Content-Length", String.valueOf(file.length()));
+        try {
+            InputStream inputStream = new FileInputStream(file);
+            FileCopyUtils.copy(inputStream, response.getOutputStream());
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
+    }
 
 }
