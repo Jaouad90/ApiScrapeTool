@@ -38,7 +38,7 @@ import static org.mockito.Mockito.mock;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApiscraperApplication.class)
 @WebAppConfiguration
-@ActiveProfiles("production")
+@ActiveProfiles("test")
 public class ApiRestControllerTests {
 
     private MockMvc mockMvc;
