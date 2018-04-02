@@ -29,9 +29,6 @@
                 </div>
                 <div class="content">
                     <form th:action="@{/login}" method="post">
-                        <input type="hidden"
-                               th:name="${_csrf.parameterName}"
-                               th:value="${_csrf.token}" />
 
                         <div><label> User Name : <input class="form-control" type="text" name="username"/> </label></div>
                         <div><label> Password: <input type="password" name="password" class="form-control"/> </label></div>
