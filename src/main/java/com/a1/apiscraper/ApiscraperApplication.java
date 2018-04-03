@@ -121,4 +121,27 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
                 repositoryService.saveAPI(api);
         }
     }
+
+        @Configuration
+        @Transactional
+        @Profile("test")
+        public class sendDatabaseTest implements InitializingBean {
+
+                @Override
+                public void afterPropertiesSet() throws Exception {
+                        List<User> userList = new ArrayList<>();
+                        List<Role> roleList = new ArrayList<>();
+                        Role role = new Role();
+                        role.setName("Admin");
+                        User user = new User();
+                        user.setUsername("Admin");
+                        user.setPassword("Root");
+                        repositoryService.saveRole(role);
+                        roleList.add(role);
+                        userList.add(user);
+                        role.setUsers(userList);
+                        user.setRoles(roleList);
+                        userService.save(user);
+                }
+        }
 }
