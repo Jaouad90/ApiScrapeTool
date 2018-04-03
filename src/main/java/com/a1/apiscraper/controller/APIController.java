@@ -111,7 +111,7 @@ public class APIController {
 //        api.getStateFromMemento(apiMemento);
 //        repositoryService.saveAPI(api);
         api = apiService.restoreAPIFromMemento(api, apiMemento);
-        return new ModelAndView("redirect:api/" + api.getId());
+        return new ModelAndView("redirect:/api/" + api.getId());
     }
 
     @Transactional
