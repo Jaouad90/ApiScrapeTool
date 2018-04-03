@@ -52,7 +52,7 @@ public class ApiRestControllerTests {
 
     API api1 = new API();
     API api2 = new API();
-
+    List<Result> results = new ArrayList<>();
 
     @Before
     public void setup(){
@@ -81,6 +81,10 @@ public class ApiRestControllerTests {
         result2.setResult("{\"valid\":true,\"callback\":null,\"value\":{\"ads\":[{\"title\":\"Trui van het merk Soliver maat M/L\",\"imageUrl\":\"//i.ebayimg.com/00/s/MTAyNFg3NjQ=/z/FXoAAOSwmXlansGj/$_82.JPG\",\"vipUrl\":\"https://link.marktplaats.nl/m1262177404\",\"price\":\"Bieden\"}]},\"errors\":null,\"messages\":null}");
         result2.setDateTimeStamp(Date.from(Instant.now().plusSeconds(172800L)));
 
+        results.add(result1);
+        results.add(result2);
+
+
         mockMvc = MockMvcBuilders.standaloneSetup(apiRestController)
                 .build();
     }
@@ -103,7 +107,25 @@ public class ApiRestControllerTests {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.content().string(containsString("Coindesk")))
-                .andExpect(MockMvcResultMatchers.content().string(containsString("Coinmarketcap")));
+                .andExpect(MockMvcResultMatchers.content().string(containsString("Marktplaats")));
+    }
+
+    @Test
+    public void succeedingFindAllResultsForAPI() throws Exception {
+        Mockito.when(repositoryService.getAllResultsForApiBetween(2L, Date.from(Instant.ofEpochSecond(1514764800)), Date.from(Instant.now()))).thenReturn(results);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/api/2/results"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect((MockMvcResultMatchers.content()).string(containsString("Trui van het merk Soliver maat M/L")));
+    }
+
+    @Test
+    public void succeedingFindAllResultsForAPIThatDoesNotExist() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/api/3/results"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
 }
