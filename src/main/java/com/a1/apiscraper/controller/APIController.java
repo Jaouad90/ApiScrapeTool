@@ -129,7 +129,9 @@ public class APIController {
         } catch (IOException e1) {
             loggerChain.logMessage(AbstractLogger.WARNING, "IOexception : " + e1.getMessage());
         } finally {
-            inputStream.close();
+            if (inputStream !=null) {
+                inputStream.close();
+            }
         }
     }
 }

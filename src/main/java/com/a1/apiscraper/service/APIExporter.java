@@ -107,7 +107,9 @@ public class APIExporter
             }
             else
             {
-                writer.write(xmlDoc.toString());
+                if (xmlDoc != null) {
+                    writer.write(xmlDoc.toString());
+                }
             }
             writer.close();
         } catch (IOException e) {
