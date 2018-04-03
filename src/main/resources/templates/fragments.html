@@ -36,12 +36,6 @@
                         </a>
                     </li>
                     </div>
-                    <li sec:authorize="hasAuthority('Admin')">
-                        <a th:href="@{'/detail'}">
-
-                            <span sec:authentication="name">"name"</span>
-                        </a>
-                    </li>
                     <div  class="col-lg-12 row">
                     <li>
                         <a th:href="@{'/api/add'}">

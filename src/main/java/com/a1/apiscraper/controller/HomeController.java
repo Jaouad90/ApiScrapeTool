@@ -1,5 +1,6 @@
 package com.a1.apiscraper.controller;
 
+import com.a1.apiscraper.crosscutting.MyExecutionTime;
 import com.a1.apiscraper.service.RepositoryService;
 import com.a1.apiscraper.domain.API;
 import com.a1.apiscraper.domain.Endpoint;
@@ -21,6 +22,8 @@ public class HomeController {
 
     private ArrayList<Endpoint> endpoints = new ArrayList<>();
 
+
+    @MyExecutionTime
     @GetMapping
     @Transactional
     public ModelAndView home() {

@@ -1,5 +1,6 @@
 package com.a1.apiscraper.controller;
 
+import com.a1.apiscraper.crosscutting.MyExecutionTime;
 import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.logic.AbstractLogger;
 import com.a1.apiscraper.logic.ConsoleLogger;
@@ -92,6 +93,7 @@ public class APIController {
         return new ModelAndView("redirect:/api/" + api.getId());
     }
 
+    @MyExecutionTime
     @RequestMapping(value = "/api/{id}")
     public ModelAndView view(@PathVariable("id") API api) { ;
         api.getTimeInterval().getTimeList();

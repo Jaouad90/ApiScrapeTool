@@ -1,163 +1,450 @@
-<html>
- <head></head>
- <body>
-  <alive_rigs>
-   1
-  </alive_rigs>
-  <avg_temp>
-   39
-  </avg_temp>
-  <rigs>
-   &lt;43d7cb&gt;
-   <server_time>
-    1522747810
-   </server_time>
-   <miner_hashes>
-    29.76 30.02 29.57 30.02
-   </miner_hashes>
-   <flags />
-   <rx_kbps>
-    0.13
-   </rx_kbps>
-   <drive_name>
-    KingDian S100 16GB 2017122500600
-   </drive_name>
-   <miner>
-    claymore
-   </miner>
-   <meminfo>
-    GPU0:02.00.0:Radeon RX 580:115-D000PIL-100:SK Hynix H5GQ8H24MJR:GDDR5:Polaris10 GPU1:03.00.0:Radeon RX 580:115-D000PIL-100:SK Hynix H5GQ8H24MJR:GDDR5:Polaris10 GPU2:04.00.0:Radeon RX 580:115-D000PIL-100:SK Hynix H5GQ8H24MJR:GDDR5:Polaris10 GPU3:05.00.0:Radeon RX 580:115-D000PIL-100:SK Hynix H5GQ8H24MJR:GDDR5:Polaris10
-   </meminfo>
-   <powertune>
-    4 4 4 4
-   </powertune>
-   <watts>
-    null
-   </watts>
-   <load>
-    1.27
-   </load>
-   <mem>
-    2150 2150 2150 2150
-   </mem>
-   <connected_displays />
-   <rack_loc />
-   <freespace>
-    1.3
-   </freespace>
-   <mobo>
-    H81 Pro BTC R2.0
-   </mobo>
-   <ram>
-    4
-   </ram>
-   <temp>
-    35.00 40.00 41.00 40.00
-   </temp>
-   <vramsize>
-    8 8 8 8
-   </vramsize>
-   <miner_secs>
-    2508841
-   </miner_secs>
-   <fanrpm>
-    3776 3776 3776 3776
-   </fanrpm>
-   <ip>
-    192.168.2.10
-   </ip>
-   <pool>
-    pool-eu.ethosdistro.com:5001
-   </pool>
-   <lan_chip>
-    Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 11)
-   </lan_chip>
-   <version>
-    1.3.0
-   </version>
-   <cpu_temp>
-    47
-   </cpu_temp>
-   <bioses>
-    115-D000PIL-100 115-D000PIL-100 115-D000PIL-100 115-D000PIL-100
-   </bioses>
-   <uptime>
-    2508894
-   </uptime>
-   <voltage>
-    1.087 1.081 1.100 1.131
-   </voltage>
-   <tx_kbps>
-    0.11
-   </tx_kbps>
-   <core>
-    1170 1170 1170 1170
-   </core>
-   <condition>
-    mining
-   </condition>
-   <driver>
-    amdgpu
-   </driver>
-   <gpus>
-    4
-   </gpus>
-   <miner_instance>
-    4
-   </miner_instance>
-   <biosversion>
-    P1.20
-   </biosversion>
-   <hash>
-    119.37
-   </hash>
-   <!--43d7cb-->
-  </rigs>
-  <total_hash>
-   119.37
-  </total_hash>
-  <current_version>
-   1.3.0
-  </current_version>
-  <alive_gpus>
-   4
-  </alive_gpus>
-  <total_gpus>
-   4
-  </total_gpus>
-  <total_rigs>
-   1
-  </total_rigs>
-  <per_info>
-   <claymore>
-    <per_hash-rig>
-     119.0
-    </per_hash-rig>
-    <per_total_gpus>
-     4
-    </per_total_gpus>
-    <per_total_rigs>
-     1
-    </per_total_rigs>
-    <per_alive_rigs>
-     1
-    </per_alive_rigs>
-    <hash>
-     119
-    </hash>
-    <per_alive_gpus>
-     4
-    </per_alive_gpus>
-    <current_time>
-     1522747818
-    </current_time>
-    <per_hash-gpu>
-     29.8
-    </per_hash-gpu>
-   </claymore>
-  </per_info>
-  <capacity>
-   100.0
-  </capacity>
+<!doctype html>
+<html lang="nl">
+ <head> 
+  <meta charset="utf-8"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+  <title>? Helaas pagina niet gevonden</title> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+  <meta http-equiv="Content-Language" content="nl"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <meta name="description" content="De grootste advertentiesite van Nederland. Nieuwe en tweedehands goederen en diensten, koop en verkoop je op Marktplaats.nl."> 
+  <link rel="shortcut icon" href="//s.marktplaats.com/z/res/images/mp-favicons/favicon.ico"> 
+  <link rel="apple-touch-icon" sizes="57x57" href="//s.marktplaats.com/z/res/images/mp-favicons/apple-touch-icon-57x57v3.png"> 
+  <link rel="apple-touch-icon" sizes="114x114" href="//s.marktplaats.com/z/res/images/mp-favicons/apple-touch-icon-114x114v3.png"> 
+  <link rel="apple-touch-icon" sizes="72x72" href="//s.marktplaats.com/z/res/images/mp-favicons/apple-touch-icon-72x72v3.png"> 
+  <link rel="apple-touch-icon" sizes="144x144" href="//s.marktplaats.com/z/res/images/mp-favicons/apple-touch-icon-144x144v3.png"> 
+  <link rel="apple-touch-icon" sizes="60x60" href="//s.marktplaats.com/z/res/images/mp-favicons/apple-touch-icon-60x60v3.png"> 
+  <link rel="apple-touch-icon" sizes="120x120" href="//s.marktplaats.com/z/res/images/mp-favicons/apple-touch-icon-120x120v3.png"> 
+  <link rel="apple-touch-icon" sizes="76x76" href="//s.marktplaats.com/z/res/images/mp-favicons/apple-touch-icon-76x76v3.png"> 
+  <link rel="apple-touch-icon" sizes="152x152" href="//s.marktplaats.com/z/res/images/mp-favicons/apple-touch-icon-152x152v3.png"> 
+  <link rel="apple-touch-icon" sizes="180x180" href="//s.marktplaats.com/z/res/images/mp-favicons/apple-touch-icon-180x180v3.png"> 
+  <link rel="icon" type="image/png" sizes="192x192" href="//s.marktplaats.com/z/res/images/mp-favicons/favicon-192x192.png?v=2"> 
+  <link rel="icon" type="image/png" sizes="160x160" href="//s.marktplaats.com/z/res/images/mp-favicons/favicon-160x160.png?v=2"> 
+  <link rel="icon" type="image/png" sizes="96x96" href="//s.marktplaats.com/z/res/images/mp-favicons/favicon-96x96.png?v=2"> 
+  <link rel="icon" type="image/png" sizes="16x16" href="//s.marktplaats.com/z/res/images/mp-favicons/favicon-16x16.png?v=2"> 
+  <link rel="icon" type="image/png" sizes="32x32" href="//s.marktplaats.com/z/res/images/mp-favicons/favicon-32x32.png?v=2"> 
+  <meta name="theme-color" content="#eda566"> 
+  <meta name="msapplication-TileColor" content="#eda566"> 
+  <meta name="msapplication-TileImage" content="//s.marktplaats.com/z/res/images/mp-favicons/mstile-144x144.png"> 
+  <meta name="msapplication-config" content="//s.marktplaats.com/z/res/images/mp-favicons/browserconfig.xml"> 
+  <meta name="generation-time-millis" content="1522797120208"> 
+  <meta name="user-logged-in" content="false"> 
+  <script>
+    dataLayer = [ {
+  "p" : {
+    "t" : "Error_404"
+  },
+  "d" : {
+    "ua" : "unirest\u002Djava\u002F1.3.11"
+  }
+} ];
+</script> 
+  <link rel="preload" as="font" crossorigin="crossorigin" type="font/woff2" href="//s.marktplaats.com/z/dist/bower_components/marktplaats-design-sdk/fonts/Roboto/Roboto-Regular-webfont.68b2890f.woff2"> 
+  <link rel="preload" as="font" crossorigin="crossorigin" type="font/woff2" href="//s.marktplaats.com/z/dist/bower_components/marktplaats-design-sdk/fonts/Roboto/Roboto-Light-webfont.389d78da.woff2"> 
+  <link rel="stylesheet" href="//s.marktplaats.com/z/dist/bower_components/marktplaats-design-sdk/styles/Marktplaats.5565c27e.css"> 
+  <link rel="stylesheet" href="//s.marktplaats.com/z/dist/css/404.a9b3a6d5.css"> 
+  <script src="//s.marktplaats.com/z/dist/bower_components/marktplaats-design-sdk/polyfills.707ef0ba.js"></script> 
+  <script src="//s.marktplaats.com/z/dist/bower_components/marktplaats-design-sdk/components/polymer.3f77726f.js"></script> 
+  <link rel="import" href="//s.marktplaats.com/z/dist/bower_components/marktplaats-design-sdk/organisms/header.c0e1f21b.html"> 
+  <script type="text/javascript">
+    window.onload = function () {
+        if ( ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch ) {
+            document.documentElement.className += ' ' + 'touch';
+        } else {
+            document.documentElement.className += ' ' + 'no-touch';
+        }
+    };
+</script> 
+  <script type="text/javascript">
+    function checkForAdditionalMetrics(action) {
+        switch (action) {
+            case 'R2SEmailSuccess':
+                return {
+                    key: 'metric' + 4,
+                    value: 1
+                };
+            case 'R2SBidSuccess':
+                return {
+                    key: 'metric' + 5,
+                    value: 1
+                };
+            case 'R2SPhoneBegin':
+                return {
+                    key: 'metric' + 7,
+                    value: 1
+                };
+            case 'R2SSMSBegin':
+                return {
+                    key: 'metric' + 8,
+                    value: 1
+                };
+            case 'R2SExternalBegin':
+                return {
+                    key: 'metric' + 9,
+                    value: 1
+                };
+            case 'PostAdPaidSuccess':
+                return {
+                    key: 'metric' + 2,
+                    value: 1
+                };
+            case 'FeatureAdSuccess':
+                return {
+                    key: 'metric' + 10,
+                    value: 1
+                };
+            case 'PostAdFreeSuccess':
+                return {
+                    key: 'metric' + 11,
+                    value: 1
+                };
+            default:
+                break;
+        }
+    }
+
+    function trackPageEvents(events) {
+        events.forEach(function(event) {
+            if (event) {
+                var eventData = event.split(',');
+                var action = eventData[1];
+                var label = eventData[2];
+                var customMetric = checkForAdditionalMetrics(action);
+                var gaEvent = {
+                    eventAction: action,
+                    eventLabel: label
+                };
+
+                if (customMetric) {
+                    gaEvent[ customMetric.key ] = customMetric.value;
+                }
+
+                window.ecGaEventsOnLoad.push(gaEvent);
+            }
+        });
+    }
+
+    window.ecGaEventsOnLoad = window.ecGaEventsOnLoad || [];
+    var attributeValue = '';
+    var pageEvents = attributeValue.split('&');
+    trackPageEvents(pageEvents);
+</script> 
+  <script type="text/javascript">
+    window.ecGa=window.ecGa||{init:function(){(ecGa.q = ecGa.q||[]).push(arguments)}};
+    ecGa.init('UA-4684363-31');
+    
+</script> 
+  <script async src="//s.marktplaats.com/z/dist/bower_components/ecg-js-ga-tracking/index.6159ebaf.js"></script> 
+  <script async src="//www.google-analytics.com/analytics.js"></script> 
+  <script type="text/javascript">
+    window.sitespeedBootstrap = {
+        loaded: false
+    };
+
+    function metricsHandler() {
+        if (window.sitespeedBootstrap.loaded) {
+            AURORA.Metrics.collect();
+        } else {
+            setTimeout(metricsHandler, 0);
+        }
+    }
+
+    if (window.addEventListener) {
+        window.addEventListener('load', metricsHandler, false);
+    } else if(window.attachEvent) {
+        window.attachEvent('onload', metricsHandler);
+    }
+</script> 
+ </head> 
+ <body data-adsense-js="www.google.com/afsonline/show_afs_ads.js" data-sel-js="//marktplaats.emsecure.net/optiext/webtracker.dll" data-ga-page-view-url="/404"> 
+  <mp-header with-user-links="{&quot;profile&quot;: true, &quot;messaging&quot;: true,  &quot;notifications&quot;: true , &quot;placeAd&quot;: true}" user-logged-in="" xsrf-token="1522797120203.f5010b0408596af0769a7d10e0f0604" user-links="{&quot;ssoLoginUrl&quot;: &quot;https://www.marktplaats.nl/account/login.html&quot;, &quot;ssoLogoutUrl&quot;: &quot;https://auth.marktplaats.nl/accounts/authentication/logout&quot;, &quot;myAdsUrl&quot;: &quot;https://www.marktplaats.nl/mymp/verkopen/index.html&quot;}" notification-count-url="https://www.marktplaats.nl/meldingen/api/notification-center/v1/notifications?limit=0" place-ad-url="https://link.marktplaats.nl/link/plaatsadvertentie/start" with-search-bar search-action="https://www.marktplaats.nl/z.html" search-query="" search-query-suggestion-query-url="https://www.marktplaats.nl/autocomplete.json" search-query-suggestion-clear-url="/recentSearches/delete.json" search-category="0" search-category-options="
+[
+    { &quot;value&quot;: &quot;0&quot;, &quot;name&quot;: &quot;Alle groepen…&quot; },
+    { &quot;value&quot;: &quot;1&quot;, &quot;name&quot;: &quot;Antiek en Kunst&quot; },
+    { &quot;value&quot;: &quot;31&quot;, &quot;name&quot;: &quot;Audio, Tv en Foto&quot; },
+    { &quot;value&quot;: &quot;91&quot;, &quot;name&quot;: &quot;Auto's&quot; },
+    { &quot;value&quot;: &quot;2600&quot;, &quot;name&quot;: &quot;Auto-onderdelen&quot; },
+    { &quot;value&quot;: &quot;48&quot;, &quot;name&quot;: &quot;Auto diversen&quot; },
+    { &quot;value&quot;: &quot;201&quot;, &quot;name&quot;: &quot;Boeken&quot; },
+    { &quot;value&quot;: &quot;289&quot;, &quot;name&quot;: &quot;Caravans en Kamperen&quot; },
+    { &quot;value&quot;: &quot;1744&quot;, &quot;name&quot;: &quot;Cd's en Dvd's&quot; },
+    { &quot;value&quot;: &quot;322&quot;, &quot;name&quot;: &quot;Computers en Software&quot; },
+    { &quot;value&quot;: &quot;378&quot;, &quot;name&quot;: &quot;Contacten en Berichten&quot; },
+    { &quot;value&quot;: &quot;1098&quot;, &quot;name&quot;: &quot;Diensten en Vakmensen&quot; },
+    { &quot;value&quot;: &quot;395&quot;, &quot;name&quot;: &quot;Dieren en Toebehoren&quot; },
+    { &quot;value&quot;: &quot;239&quot;, &quot;name&quot;: &quot;Doe-het-zelf en Verbouw&quot; },
+    { &quot;value&quot;: &quot;445&quot;, &quot;name&quot;: &quot;Fietsen en Brommers&quot; },
+    { &quot;value&quot;: &quot;1099&quot;, &quot;name&quot;: &quot;Hobby en Vrije tijd&quot; },
+    { &quot;value&quot;: &quot;504&quot;, &quot;name&quot;: &quot;Huis en Inrichting&quot; },
+    { &quot;value&quot;: &quot;1032&quot;, &quot;name&quot;: &quot;Huizen en Kamers&quot; },
+    { &quot;value&quot;: &quot;565&quot;, &quot;name&quot;: &quot;Kinderen en Baby's&quot; },
+    { &quot;value&quot;: &quot;621&quot;, &quot;name&quot;: &quot;Kleding | Dames&quot; },
+    { &quot;value&quot;: &quot;1776&quot;, &quot;name&quot;: &quot;Kleding | Heren&quot; },
+    { &quot;value&quot;: &quot;678&quot;, &quot;name&quot;: &quot;Motoren&quot; },
+    { &quot;value&quot;: &quot;728&quot;, &quot;name&quot;: &quot;Muziek en Instrumenten&quot; },
+    { &quot;value&quot;: &quot;1784&quot;, &quot;name&quot;: &quot;Postzegels en Munten&quot; },
+    { &quot;value&quot;: &quot;1826&quot;, &quot;name&quot;: &quot;Sieraden, Tassen en Uiterlijk&quot; },
+    { &quot;value&quot;: &quot;356&quot;, &quot;name&quot;: &quot;Spelcomputers en Games&quot; },
+    { &quot;value&quot;: &quot;784&quot;, &quot;name&quot;: &quot;Sport en Fitness&quot; },
+    { &quot;value&quot;: &quot;820&quot;, &quot;name&quot;: &quot;Telecommunicatie&quot; },
+    { &quot;value&quot;: &quot;1984&quot;, &quot;name&quot;: &quot;Tickets en Kaartjes&quot; },
+    { &quot;value&quot;: &quot;1847&quot;, &quot;name&quot;: &quot;Tuin en Terras&quot; },
+    { &quot;value&quot;: &quot;167&quot;, &quot;name&quot;: &quot;Vacatures&quot; },
+    { &quot;value&quot;: &quot;856&quot;, &quot;name&quot;: &quot;Vakantie&quot; },
+    { &quot;value&quot;: &quot;895&quot;, &quot;name&quot;: &quot;Verzamelen&quot; },
+    { &quot;value&quot;: &quot;976&quot;, &quot;name&quot;: &quot;Watersport en Boten&quot; },
+    { &quot;value&quot;: &quot;537&quot;, &quot;name&quot;: &quot;Witgoed en Apparatuur&quot; },
+    { &quot;value&quot;: &quot;1085&quot;, &quot;name&quot;: &quot;Zakelijke goederen&quot; },
+    { &quot;value&quot;: &quot;428&quot;, &quot;name&quot;: &quot;Diversen&quot; }]
+" search-postcode="" search-distance="0" search-distance-options="
+[
+    { &quot;value&quot;: &quot;0&quot;, &quot;name&quot;: &quot;Alle afstanden…&quot; },
+    { &quot;value&quot;: &quot;3000&quot;, &quot;name&quot;: &quot;< 3 km&quot; },
+    { &quot;value&quot;: &quot;5000&quot;, &quot;name&quot;: &quot;< 5 km&quot; },
+    { &quot;value&quot;: &quot;10000&quot;, &quot;name&quot;: &quot;< 10 km&quot; },
+    { &quot;value&quot;: &quot;15000&quot;, &quot;name&quot;: &quot;< 15 km&quot; },
+    { &quot;value&quot;: &quot;25000&quot;, &quot;name&quot;: &quot;< 25 km&quot; },
+    { &quot;value&quot;: &quot;50000&quot;, &quot;name&quot;: &quot;< 50 km&quot; },
+    { &quot;value&quot;: &quot;75000&quot;, &quot;name&quot;: &quot;< 75 km&quot; }]
+" search-filter-options="
+[]
+" search-on-title-and-description="0" class="mp-cloak"> 
+   <div class="mp-Header-logo"> 
+    <a href="https://www.marktplaats.nl/">Marktplaats</a> 
+   </div> 
+   <ul class="mp-Header-links"> 
+    <li><a href="http://www.marktplaats.nl/i/help/" rel="nofollow" target="_blank">Help en info</a></li> 
+    <li><a href="http://www.marktplaats.nl/i/help/veilig-en-succesvol/" rel="nofollow" target="_blank">Veilig handelen</a></li> 
+   </ul> 
+  </mp-header> 
+  <input type="hidden" name="nl.marktplaats.xsrf.token" value="1522797120203.f5010b0408596af0769a7d10e0f0604"> 
+  <div id="page-wrapper"> 
+   <div id="content" class="l-page"> 
+    <section> 
+     <div class="page-404-error-text">
+       We hebben overal gezocht, maar deze pagina konden we niet vinden. 
+      <div>
+        Niet getreurd, er is nog veel te ontdekken. Ga ervoor! 
+      </div> 
+     </div> 
+    </section> 
+    <section> 
+     <div class="page-404-images"> 
+      <img class="page-404-atari" src="//s.marktplaats.com/z/res/images/404/atari.png"> 
+      <img class="page-404-books" src="//s.marktplaats.com/z/res/images/404/books.png"> 
+      <div class="page-404-image-container"> 
+       <img class="page-404-postcard" src="//s.marktplaats.com/z/res/images/404/postcard.png"> 
+       <a href="https://www.marktplaats.nl/a/verzamelen/ansichtkaarten-nederland/m1270873980-ansichtkaart-almelo.html?c=247435c3b916bc7aa24a04225b153d87&amp;previousPage=home"> <img class="page-404-postcard-image" height="147" width="205" src="//i.ebayimg.com/00/s/MTAyNFg2NzM=/z/63MAAOSwAwFawKou/$_83.JPG"> </a> 
+      </div> 
+      <img class="page-404-ipad" src="//s.marktplaats.com/z/res/images/404/ipad.png"> 
+      <img class="page-404-keys" src="//s.marktplaats.com/z/res/images/404/keys.png"> 
+      <img class="page-404-lego" src="//s.marktplaats.com/z/res/images/404/lego.png"> 
+     </div> 
+    </section> 
+   </div> 
+  </div> 
+  <footer id="footer"> 
+   <div id="footer-content" class="l-footer"> 
+    <div class="footer-nav six-columns"> 
+     <span id="show-more-categories" class="juiceless-link" data-url="#show-more-categories"> <span>Andere groepen</span> </span> 
+     <span aria-hidden="true" class="expand-categories-icon mp-Icon mp-svg-arrow-down"></span> 
+     <div id="footer-navigation" class="footer-categories"> 
+      <ul class="navigation-categories"> 
+       <li><a class="Antiek en Kunst" href="https://www.marktplaats.nl/c/antiek-en-kunst/c1.html">Antiek en Kunst</a></li> 
+       <li><a class="Audio, Tv en Foto" href="https://www.marktplaats.nl/c/audio-tv-en-foto/c31.html">Audio, Tv en Foto</a></li> 
+       <li><a class="Auto's" href="https://www.marktplaats.nl/c/auto-s/c91.html">Auto's</a></li> 
+       <li><a class="Auto-onderdelen" href="https://www.marktplaats.nl/c/auto-onderdelen/c2600.html">Auto-onderdelen</a></li> 
+       <li><a class="Auto diversen" href="https://www.marktplaats.nl/c/auto-diversen/c48.html">Auto diversen</a></li> 
+       <li><a class="Boeken" href="https://www.marktplaats.nl/c/boeken/c201.html">Boeken</a></li> 
+      </ul> 
+      <ul class="navigation-categories"> 
+       <li><a href="https://www.marktplaats.nl/c/caravans-en-kamperen/c289.html">Caravans en Kamperen</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/cd-s-en-dvd-s/c1744.html">Cd's en Dvd's</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/computers-en-software/c322.html">Computers en Software</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/contacten-en-berichten/c378.html">Contacten en Berichten</a></li> 
+       <li><a href="http://diensten-vakmensen.marktplaats.nl/c/diensten-en-vakmensen/c1098.html">Diensten en Vakmensen</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/dieren-en-toebehoren/c395.html">Dieren en Toebehoren</a></li> 
+      </ul> 
+      <ul class="navigation-categories"> 
+       <li><a href="https://www.marktplaats.nl/c/doe-het-zelf-en-verbouw/c239.html">Doe-het-zelf en Verbouw</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/fietsen-en-brommers/c445.html">Fietsen en Brommers</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/hobby-en-vrije-tijd/c1099.html">Hobby en Vrije tijd</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/huis-en-inrichting/c504.html">Huis en Inrichting</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/huizen-en-kamers/c1032.html">Huizen en Kamers</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/kinderen-en-baby-s/c565.html">Kinderen en Baby's</a></li> 
+      </ul> 
+      <ul class="navigation-categories"> 
+       <li><a href="https://www.marktplaats.nl/c/kleding-dames/c621.html">Kleding | Dames</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/kleding-heren/c1776.html">Kleding | Heren</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/motoren/c678.html">Motoren</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/muziek-en-instrumenten/c728.html">Muziek en Instrumenten</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/postzegels-en-munten/c1784.html">Postzegels en Munten</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/sieraden-tassen-en-uiterlijk/c1826.html">Sieraden en Tassen</a></li> 
+      </ul> 
+      <ul class="navigation-categories"> 
+       <li><a href="https://www.marktplaats.nl/c/spelcomputers-en-games/c356.html">Spelcomputers, Games</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/sport-en-fitness/c784.html">Sport en Fitness</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/telecommunicatie/c820.html">Telecommunicatie</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/tickets-en-kaartjes/c1984.html">Tickets en Kaartjes</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/tuin-en-terras/c1847.html">Tuin en Terras</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/vacatures/c167.html">Vacatures</a></li> 
+      </ul> 
+      <ul class="navigation-categories"> 
+       <li><a href="https://www.marktplaats.nl/c/vakantie/c856.html">Vakantie</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/verzamelen/c895.html">Verzamelen</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/watersport-en-boten/c976.html">Watersport en Boten</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/witgoed-en-apparatuur/c537.html">Witgoed en Apparatuur</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/zakelijke-goederen/c1085.html">Zakelijke goederen</a></li> 
+       <li><a href="https://www.marktplaats.nl/c/diversen/c428.html">Diversen</a></li> 
+      </ul> 
+     </div> 
+    </div> 
+    <ul class="footer-links"> 
+     <li><a href="https://aanbieding.marktplaats.nl/">Aanbieding</a></li> 
+     <li><a href="https://www.marktplaatsjournaal.nl/">Blog</a></li> 
+     <li class="quartair"><a href="https://www.marktplaats.nl/m/mobiele-app/">Marktplaats Mobiel</a></li> 
+     <li class="tertair"><a href="https://www.marktplaatszakelijk.nl/">Marktplaats Zakelijk</a></li> 
+     <li class="tertair"><a href="https://www.marktplaats.nl/i/help/veilig-en-succesvol/index.dot">Veilig en Succesvol</a></li> 
+     <li class="secundair"><a href="https://www.marktplaats.nl/i/help/">Help en Info</a></li> 
+     <li><span class="juiceless-link" data-url="http://www.marktplaats.nl/i/help/over-marktplaats/voorwaarden-en-privacybeleid/algemene-gebruiksvoorwaarden.dot">Voorwaarden</span></li> 
+     <li><span class="juiceless-link" data-url="http://www.marktplaats.nl/i/help/over-marktplaats/voorwaarden-en-privacybeleid/privacybeleid_okt_2013.dot.html">Privacybeleid</span></li> 
+    </ul> 
+    <ul class="footer-links"> 
+     <li><a href="https://www.marktplaats.nl/i/help/over-marktplaats/index.dot">Over Marktplaats</a></li> 
+     <li><a href="https://www.marktplaats.nl/i/help/over-marktplaats/werk-bij.dot">Werken bij</a></li> 
+     <li><a href="https://perskamer.marktplaats.nl/">Perskamer</a></li> 
+     <li class="quartair"><a href="http://www.ebay.nl/?clk_rvr_id=405103145410">eBay</a></li> 
+     <li class="secundair"><a href="http://www.ebayclassifiedsgroup.com/">eBay Classifieds</a></li> 
+     <li class="tertair"><a href="https://www.marktplaats.nl/i/partners/paypal/index.dot">PayPal</a></li> 
+     <li class="quartair"><a href="https://www.marktplaats.nl/i/help/sitemap/sitemap_buitenland.dot">Marktplaats in het buitenland</a></li> 
+     <li class="tertair"><a href="https://www.marktplaats.nl/i/help/sitemap/sitemap.dot">Sitemap</a></li> 
+     <li class="tertair last"><a href="https://plus.google.com/112608680414175494172" rel="publisher">Google+</a></li> 
+    </ul> 
+    <p id="footer-disclaimer"> Marktplaats is niet aansprakelijk voor (gevolg)schade die voortkomt uit het gebruik van deze site, dan wel uit fouten of ontbrekende functionaliteiten op deze site.<br> Copyright © 2018 Marktplaats B.V. Alle rechten voorbehouden. </p> 
+    <p id="footer-ebay"> <span>een</span> <span aria-hidden="true" class="mp-Icon mp-Icon--lg mp-svg-ebay"></span> <span>onderneming</span> </p> 
+   </div> 
+  </footer> 
+  <div id="unsupported-browser-warning" class="mp-Dialog-content mp-Alert mp-Alert--info" style="display: none"> 
+   <span aria-hidden="true" class="mp-Alert-icon mp-svg-alert"></span> 
+   <span> Je internetbrowser wordt niet (meer) ondersteund. <strong>Marktplaats kan daardoor minder goed werken.</strong><br> Gebruik een nieuwere versie of een andere browser. <a href="http://help.marktplaats.nl/help/beleid_regels/adverteren/adverteren_algemeen/i/marktplaats-browser-ondersteuning" target="_blank" rel="noopener">Meer informatie?</a> </span> 
+   <button class="mp-Button mp-Button--primary mp-Button--sm" data-action="close">Ik heb het begrepen</button> 
+  </div> 
+  <!-- uniqueId: 8e3a0935-e93d-495d-bf80-1f94759fb04c --> 
+  <script type="text/javascript">
+    (function(d, s, u) {
+        var a = d.createElement(s), m = d.getElementsByTagName(s)[0];
+        a.async = 1;
+        a.src = u;
+        m.parentNode.insertBefore(a, m)
+    })(document, 'script', '//p.marktplaats.net/aurora/res/js/gp/mid.js');
+</script> 
+  <script crossorigin="anonymous" src="//s.marktplaats.com/z/dist/bower_components/requirejs/require.min.73f65c38.js"></script> 
+  <script>
+    AURORA = {
+        staticPrefix: 's.marktplaats.com',
+        staticResourceDir: '//s.marktplaats.com/z/res/',
+        createNode: requirejs.createNode
+    };
+
+    
+    requirejs.createNode = function(config, moduleName, url) {
+        var node = AURORA.createNode(config, moduleName, url);
+        node.setAttribute('crossorigin', 'anonymous');
+
+        return node;
+    };
+
+    requirejs.config({
+        waitSeconds: 0,
+        config: {
+            
+            'other/Metrics': {
+                gaPageViewUrl: '',
+                xsrfToken: '1522797120203.f5010b0408596af0769a7d10e0f0604',
+                sitespeedEndpointUrl: '//www.marktplaats.nl/metrics/sitespeed',
+                blockerMetricsUrl: '//www.marktplaats.nl/metrics/adblocker',
+                metricsTest: 'NONE'
+            },
+
+            'widgets/View': {
+                xsrfToken: '1522797120203.f5010b0408596af0769a7d10e0f0604',
+                userId: ''
+            },
+
+            'other/ApiAuthenticatedSync': {
+                xsrfToken: '1522797120203.f5010b0408596af0769a7d10e0f0604'
+                , apiUrl: 'api.marktplaats.nl'
+                , authUrl: 'https://www.marktplaats.nl/account/exchange/cookie.json'
+                
+            },
+
+            'pages/Page': {
+                loggedIn: '',
+                apiUrl: 'api.marktplaats.nl',
+                authUrl: 'https://www.marktplaats.nl/account/exchange/cookie.json',
+                gaPageViewUrl: '',
+                gaCustomVars: '',
+                requestId: '8e3a0935-e93d-495d-bf80-1f94759fb04c',
+                comscoreUrl: '',
+                stirUrl: ''
+            }
+        }
+    });
+</script> 
+  <script type="text/javascript">
+    requirejs.config({
+        config: {
+            'pages/404': {
+                requestId: "8e3a0935-e93d-495d-bf80-1f94759fb04c"
+            }
+        }
+    });
+</script> 
+  <script src="//s.marktplaats.com/z/dist/javascript/pages/common.adfcfd87.js"></script> 
+  <script>
+    require(['//s.marktplaats.com/z/dist/javascript/pages/PageWithGoogleAnalytics.80761450.js'], function(Page) {
+        // intermediate hack to support es6 modules export
+        if (Page.default) {
+            Page = Page.default;
+        }
+        new Page({
+            name: 'PageWithGoogleAnalytics',
+            el: document.getElementById('page-wrapper')
+        });
+    });
+</script> 
+  <script type="text/javascript">
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-TFG7LW');
+</script> 
+  <script>
+    window.gptMetricsEndpointUrl = "//www.marktplaats.nl/metrics/banner";
+    window.phoneUpperRangeViewportSize = "";
+    window.tabletUpperRangeViewportSize = "";
+</script> 
+  <script type="text/javascript">
+    (function(d, s, u) {
+        var a = d.createElement(s), m = d.getElementsByTagName(s)[0];
+        a.async = 1;
+        a.src = u;
+        m.parentNode.insertBefore(a, m)
+    })(document, 'script', '//s.marktplaats.com/z/dist/javascript/other/sponsors/ads/ads.d40d6579.js');
+
+    // Starting signal for some GTM tags
+    dataLayer.push({'uaStatus':'tracked','event':'uaEvent'});
+</script> 
+  <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                     navigator.serviceWorker.register('/aurora-service-worker-v3.js');
+                });
+            }
+        </script>   
  </body>
 </html>
