@@ -3,6 +3,7 @@ package com.a1.apiscraper.controller;
 import com.a1.apiscraper.domain.API;
 import com.a1.apiscraper.domain.Endpoint;
 import com.a1.apiscraper.domain.Result;
+import com.a1.apiscraper.service.Proxy;
 import com.a1.apiscraper.service.RepositoryService;
 import com.a1.apiscraper.service.RestFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class APIRestController {
     @Autowired
     private RepositoryService repositoryService;
     @Autowired
-    private RestFacade facade;
+    private Proxy proxyService;
 
     @RequestMapping(value = "/list", method= RequestMethod.GET)
     public Iterable APIList(){
@@ -57,7 +58,7 @@ public class APIRestController {
 
     @RequestMapping(value = "/{id}/scrape", method= RequestMethod.GET)
     public HashMap<Endpoint, Result> scrapeApi(@PathVariable Long id) {
-        return facade.scrapeSingleApi(id);
+        return proxyService.proxyScrapeSingleAPI(id);
     }
 
 }

@@ -32,13 +32,12 @@ import java.util.Locale;
 public class APIController {
 
     DateTimeFormatter formatter;
-    AbstractLogger loggerChain;
 
 
     @Autowired
     private RepositoryService repositoryService;
     @Autowired
-    private APIService apiService;
+    private Proxy proxyService;
     @Autowired
     private APIExporter apiExporter;
 
@@ -46,25 +45,9 @@ public class APIController {
         formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
                         .withLocale( Locale.ENGLISH)
                         .withZone( ZoneId.systemDefault() );
-
-        //Benodigd voor gescheiden service/controller
-        //this.apiService = apiService;
-
-        this.loggerChain = getChainOfLoggers();
         this.apiExporter = apiExporter;
     }
 
-    private static AbstractLogger getChainOfLoggers(){
-
-        AbstractLogger errorLogger = new ErrorLogger(AbstractLogger.ERROR);
-        AbstractLogger fileLogger = new WarningLogger(AbstractLogger.DEBUG);
-        AbstractLogger consoleLogger = new ConsoleLogger(AbstractLogger.INFO);
-
-        errorLogger.setNextLogger(fileLogger);
-        fileLogger.setNextLogger(consoleLogger);
-
-        return errorLogger;
-    }
 
     @RequestMapping(value = "/api/add", method = RequestMethod.GET)
     public String showForm(Model model) {
@@ -80,7 +63,7 @@ public class APIController {
     @RequestMapping(value = "/api", method = RequestMethod.POST)
     public ModelAndView submit(@Valid @ModelAttribute("api") API apiModel, BindingResult result) {
             if (result.hasErrors()) {
-                loggerChain.logMessage(1, "Niet alle velden correct ingevoerd");
+                //loggerChain.logMessage(1, "Niet alle velden correct ingevoerd");
                 ModelAndView modelAndView = new ModelAndView();
                 modelAndView.setViewName("api/edit");
                 modelAndView.addObject("formErrors", result.getAllErrors());
@@ -90,7 +73,7 @@ public class APIController {
                 return modelAndView;
             }
 
-            API api = apiService.saveAPIModel(apiModel);
+            API api = proxyService.proxySaveAPIModel(apiModel);
 
         return new ModelAndView("redirect:/api/" + api.getId());
     }
@@ -104,13 +87,7 @@ public class APIController {
     @Transactional
     @RequestMapping(value = "/api/restore/{apiid}/{mementoid}")
     public ModelAndView restoreState(@PathVariable("apiid") API api, @PathVariable("mementoid") APIMemento apiMemento ) {
-//
-//        //Restore Memento
-//        api.getId();
-//        apiMemento.getId();
-//        api.getStateFromMemento(apiMemento);
-//        repositoryService.saveAPI(api);
-        api = apiService.restoreAPIFromMemento(api, apiMemento);
+        api = proxyService.proxyRestoreAPIFromMemento(api, apiMemento);
         return new ModelAndView("redirect:api/" + api.getId());
     }
 
