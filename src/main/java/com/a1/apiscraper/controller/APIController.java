@@ -93,9 +93,10 @@ public class APIController {
     }
 
     @RequestMapping(value = "/api/{id}")
-    public ModelAndView view(@PathVariable("id") API api) { ;
+    public ModelAndView view(@PathVariable("id") long id) {
+        API api = repositoryService.getSingleAPI(id);
         api.getTimeInterval().getTimeList();
-        return new ModelAndView("home/detail", "api", api);
+        return new ModelAndView("api/detail", "api", api);
     }
 
     @Transactional

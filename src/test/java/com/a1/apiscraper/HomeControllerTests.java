@@ -63,13 +63,12 @@ public class HomeControllerTests {
 
 
     @Test
-    public void getHomePage() throws Exception {
+    public void testGetHomePage() throws Exception {
         Mockito.when(repositoryService.getAllAPIs()).thenReturn(Arrays.asList(api1, api2));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("home/home"))
-                .andDo(MockMvcResultHandlers.print());
+                .andExpect(MockMvcResultMatchers.view().name("home/home"));
     }
 
 }
