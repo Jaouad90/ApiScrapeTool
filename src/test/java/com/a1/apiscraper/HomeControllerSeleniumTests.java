@@ -1,7 +1,6 @@
 package com.a1.apiscraper;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +43,7 @@ public class HomeControllerSeleniumTests {
     }
 
     @Test
-    public void authorizeRequestSucces() {
+    public void succeedingAuthorizeRequest() {
         String baseUrl = "http://localhost:" + serverPort + "/api/add";
         browser.get(baseUrl);
         assertTrue(browser.getTitle().contains("Login"));
@@ -74,4 +73,5 @@ public class HomeControllerSeleniumTests {
         assertEquals(message, successMsg);
         assertTrue(browser.getTitle().contains("Login"));
     }
+
 }
