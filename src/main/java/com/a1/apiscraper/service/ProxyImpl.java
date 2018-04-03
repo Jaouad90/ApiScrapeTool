@@ -53,7 +53,7 @@ public class ProxyImpl implements Proxy{
 
     private static AbstractLogger getChainOfLoggers(){
         AbstractLogger errorLogger = new ErrorLogger(AbstractLogger.ERROR);
-        AbstractLogger fileLogger = new WarningLogger(AbstractLogger.DEBUG);
+        AbstractLogger fileLogger = new WarningLogger(AbstractLogger.WARNING);
         AbstractLogger consoleLogger = new ConsoleLogger(AbstractLogger.INFO);
 
         errorLogger.setNextLogger(fileLogger);
