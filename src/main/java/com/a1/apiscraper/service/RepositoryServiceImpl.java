@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class RepositoryServiceImpl implements RepositoryService {
@@ -87,11 +86,17 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
     public ScrapeBehavior getScrapeBehavior(Long id) { return scrapeBehaviorRepository.findOne(id);}
     public APIConfig getAPIConfig(Long id) {return apiConfigRepository.findOne(id);}
-
-    @Override
     public Result getResultByID(Long id) {
         return resultRepository.findOne(id);
     }
+    public List getLastResultsByAPI(API api){
+
+
+        return em.createQuery("SELECT MAX(r.dateTimeStamp) FROM API a JOIN a.endpoints e JOIN e.results r WHERE a.id = :id")
+                .setParameter("id", api.getId())
+                .getResultList();
+    }
+
     //-->
 
     //<!--
@@ -125,6 +130,13 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
     public void saveTimeInterval(TimeInterval timeInterval) {
         timeIntervalRepository.save(timeInterval);
+    }
+
+    public Result getLatestResultForEndpoint(Long id) {
+        return (Result) em.createQuery("SELECT r FROM Endpoint e JOIN e.results r WHERE e.id = :id ORDER BY r.dateTimeStamp DESC")
+                .setParameter("id", id)
+                .setMaxResults(1)
+                .getSingleResult();
     }
     //-->
 //-->

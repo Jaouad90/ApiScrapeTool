@@ -2,6 +2,7 @@ package com.a1.apiscraper.controller;
 
 
 import com.a1.apiscraper.domain.User;
+import com.a1.apiscraper.service.Proxy;
 import com.a1.apiscraper.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ import javax.transaction.Transactional;
 public class UserController {
 
     @Autowired
-    private SecurityService securityService;
+    private Proxy proxyService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @Transactional
@@ -35,7 +36,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
 
-        securityService.autologin(userForm.getUsername(), userForm.getPassword());
+        proxyService.proxyAutoLogin(userForm.getUsername(), userForm.getPassword());
         return "/";
     }
 

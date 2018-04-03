@@ -2,7 +2,6 @@ package com.a1.apiscraper.logic;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -11,12 +10,14 @@ import java.util.Properties;
 @Getter
 @Setter
 public class Mailer {
-    final String username = "apiscrapetool@gmail.com";
-    final String password = "apiscrapetoola1";
+
+    private String username = "apiscrapetool@gmail.com";
+    private String pword = "apiscrapetoola1";
 
     private String message = null;
     private String receivers = null;
     private String subject = null;
+
 
     public boolean sendMail() {
         if (this.checkInfo()) {
@@ -25,11 +26,10 @@ public class Mailer {
             props.put("mail.smtp.starttls.enable", "true");
             props.put("mail.smtp.host", "smtp.gmail.com");
             props.put("mail.smtp.port", "587");
-
             Session session = Session.getInstance(props,
                     new javax.mail.Authenticator() {
                         protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(username, password);
+                            return new PasswordAuthentication(username, pword);
                         }
                     });
             try {
@@ -52,4 +52,5 @@ public class Mailer {
     private boolean checkInfo() {
         return message != null && receivers != null && subject != null;
     }
+
 }

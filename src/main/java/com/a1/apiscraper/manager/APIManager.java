@@ -60,6 +60,23 @@ public class APIManager {
         }
     }
 
+    @Transactional
+    public HashMap<Endpoint, Result> scrapeSingleAPI(API api){
+        SimpleFactory simpleFactory = new SimpleFactory();
+
+        APIScraper tempScraper = new SimpleAPIscraper(api);
+
+        tempScraper.setScrapeBehavior(simpleFactory.getScrapeBehavior(api.getConfig().getScrapeBehavior().getName()));
+
+        for(Decorator decorator : api.getConfig().getDecorators()){
+            tempScraper = simpleFactory.getDecorator(decorator.getName(), tempScraper);
+        }
+
+        HashMap<Endpoint, Result> results = tempScraper.scrape();
+        tempScraper.saveResults(results, repositoryService);
+        return results;
+    }
+
     private boolean checkAPIHasToBeScraped(API api) {
 
         Iterator<LocalTime> timeList = api.getTimeInterval().getTimeList().iterator();
