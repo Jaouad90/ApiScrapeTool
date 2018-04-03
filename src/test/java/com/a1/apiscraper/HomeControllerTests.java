@@ -23,6 +23,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApiscraperApplication.class)
 @WebAppConfiguration
@@ -63,13 +67,15 @@ public class HomeControllerTests {
 
 
     @Test
-    public void getHomePage() throws Exception {
+    public void testGetHomePage() throws Exception {
         Mockito.when(repositoryService.getAllAPIs()).thenReturn(Arrays.asList(api1, api2));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("home/home"))
-                .andDo(MockMvcResultHandlers.print());
+                .andExpect(MockMvcResultMatchers.view().name("home/home"));
+
+        verify(repositoryService, times(1)).getAllAPIs();
+        verifyNoMoreInteractions(repositoryService);
     }
 
 }

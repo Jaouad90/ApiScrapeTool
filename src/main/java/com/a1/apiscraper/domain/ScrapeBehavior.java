@@ -18,5 +18,5 @@ public class ScrapeBehavior {
     @GeneratedValue
     private Long id;
 
-    public String name;
+    private String name;
 }

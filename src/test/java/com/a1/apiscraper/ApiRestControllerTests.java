@@ -1,30 +1,27 @@
 package com.a1.apiscraper;
 
 import com.a1.apiscraper.controller.APIRestController;
-import com.a1.apiscraper.domain.*;
-import com.a1.apiscraper.repository.APIRepository;
+import com.a1.apiscraper.domain.API;
+import com.a1.apiscraper.domain.APIConfig;
+import com.a1.apiscraper.domain.Endpoint;
+import com.a1.apiscraper.domain.Result;
 import com.a1.apiscraper.service.RepositoryService;
-import io.swagger.annotations.Api;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.sql.Date;
 import java.time.Instant;
@@ -33,8 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.mockito.Mockito.CALLS_REAL_METHODS;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApiscraperApplication.class)
@@ -52,7 +48,8 @@ public class ApiRestControllerTests {
 
     API api1 = new API();
     API api2 = new API();
-
+    List<Result> results = new ArrayList<>();
+    java.util.Date now = Date.from(Instant.now());
 
     @Before
     public void setup(){
@@ -81,6 +78,11 @@ public class ApiRestControllerTests {
         result2.setResult("{\"valid\":true,\"callback\":null,\"value\":{\"ads\":[{\"title\":\"Trui van het merk Soliver maat M/L\",\"imageUrl\":\"//i.ebayimg.com/00/s/MTAyNFg3NjQ=/z/FXoAAOSwmXlansGj/$_82.JPG\",\"vipUrl\":\"https://link.marktplaats.nl/m1262177404\",\"price\":\"Bieden\"}]},\"errors\":null,\"messages\":null}");
         result2.setDateTimeStamp(Date.from(Instant.now().plusSeconds(172800L)));
 
+        results.add(result1);
+        results.add(result2);
+
+        MockitoAnnotations.initMocks(this);
+
         mockMvc = MockMvcBuilders.standaloneSetup(apiRestController)
                 .build();
     }
@@ -93,6 +95,9 @@ public class ApiRestControllerTests {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.content().string(containsString("Coindesk")));
+
+        verify(repositoryService, times(1)).getSingleAPI(1L);
+        verifyNoMoreInteractions(repositoryService);
     }
 
     @Test
@@ -103,7 +108,31 @@ public class ApiRestControllerTests {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.content().string(containsString("Coindesk")))
-                .andExpect(MockMvcResultMatchers.content().string(containsString("Coinmarketcap")));
+                .andExpect(MockMvcResultMatchers.content().string(containsString("Marktplaats")));
+
+        verify(repositoryService, times(1)).getAllAPIs();
+        verifyNoMoreInteractions(repositoryService);
+    }
+
+//    @Test
+//    public void succeedingFindAllResultsForAPI() throws Exception {
+//        Mockito.when(repositoryService.getAllResultsForApiBetween(2L, Date.from(Instant.ofEpochSecond(1514764800)), now)).thenReturn(results);
+//
+//        mockMvc.perform(MockMvcRequestBuilders.get("/v1/api/2/results").param("till", String.valueOf(now.getTime() / 1000)))
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+//                .andExpect((MockMvcResultMatchers.content()).string(containsString("Trui van het merk Soliver maat M/L")));
+//
+//        verify(repositoryService, times(1)).getAllResultsForApiBetween(2L, Date.from(Instant.ofEpochSecond(1514764800)), now);
+//        verifyNoMoreInteractions(repositoryService);
+//    }
+
+    @Test
+    public void succeedingFindAllResultsForAPIThatDoesNotExist() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/api/3/results"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
 }

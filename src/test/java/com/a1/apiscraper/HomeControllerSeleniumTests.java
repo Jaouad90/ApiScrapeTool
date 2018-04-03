@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApiscraperApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test")
+@ActiveProfiles("production")
 public class HomeControllerSeleniumTests {
 
     @LocalServerPort
@@ -51,7 +51,7 @@ public class HomeControllerSeleniumTests {
 
     @Test
     public void failingAuthentication() {
-        String baseUrl = "http://localhost:" + serverPort + "/api/add";
+        String baseUrl = "http://localhost:" + serverPort + "/";
         browser.get(baseUrl);
 
         WebElement usernameInput =  browser.findElementById("username");
@@ -74,4 +74,22 @@ public class HomeControllerSeleniumTests {
         assertTrue(browser.getTitle().contains("Login"));
     }
 
+    @Test
+    public void succeedingAuthentication() {
+        String baseUrl = "http://localhost:" + serverPort + "/";
+        browser.get(baseUrl);
+
+        WebElement usernameInput =  browser.findElementById("username");
+        usernameInput.sendKeys("Admin");
+        WebElement passwordInput =  browser.findElementById("password");
+        passwordInput.sendKeys("Root");
+        WebElement loginButton = browser.findElementById("loginButton");
+
+        loginButton.click();
+
+        WebDriverWait wait = new WebDriverWait(browser, 15);
+        wait.until(ExpectedConditions.titleContains("Dashboard"));
+
+        assertTrue(browser.getTitle().contains("Dashboard"));
+    }
 }

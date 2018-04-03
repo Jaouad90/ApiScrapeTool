@@ -1,6 +1,10 @@
 package com.a1.apiscraper;
 
 import com.a1.apiscraper.domain.*;
+import com.a1.apiscraper.logic.AbstractLogger;
+import com.a1.apiscraper.logic.ConsoleLogger;
+import com.a1.apiscraper.logic.ErrorLogger;
+import com.a1.apiscraper.logic.WarningLogger;
 import com.a1.apiscraper.service.RepositoryService;
 import com.a1.apiscraper.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
@@ -23,6 +27,15 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
 	private UserService userService;
     @Autowired
 	private RepositoryService repositoryService;
+
+    public static AbstractLogger getChainOfLoggers(){
+        AbstractLogger errorLogger = new ErrorLogger(AbstractLogger.ERROR);
+        AbstractLogger fileLogger = new WarningLogger(AbstractLogger.WARNING);
+        AbstractLogger consoleLogger = new ConsoleLogger(AbstractLogger.INFO);
+        errorLogger.setNextLogger(fileLogger);
+        fileLogger.setNextLogger(consoleLogger);
+        return errorLogger;
+     }
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -121,4 +134,27 @@ public class ApiscraperApplication extends SpringBootServletInitializer{
                 repositoryService.saveAPI(api);
         }
     }
+
+        @Configuration
+        @Transactional
+        @Profile("test")
+        public class sendDatabaseTest implements InitializingBean {
+
+                @Override
+                public void afterPropertiesSet() throws Exception {
+                        List<User> userList = new ArrayList<>();
+                        List<Role> roleList = new ArrayList<>();
+                        Role role = new Role();
+                        role.setName("Admin");
+                        User user = new User();
+                        user.setUsername("Admin");
+                        user.setPassword("Root");
+                        repositoryService.saveRole(role);
+                        roleList.add(role);
+                        userList.add(user);
+                        role.setUsers(userList);
+                        user.setRoles(roleList);
+                        userService.save(user);
+                }
+        }
 }
