@@ -1,9 +1,9 @@
 package com.a1.apiscraper.logic;
 
 public abstract class AbstractLogger {
-    public static int INFO = 1;
-    public static int DEBUG = 2;
-    public static int ERROR = 3;
+    public final static int INFO = 1;
+    public final static int WARNING = 2;
+    public final  static int ERROR = 3;
 
     protected int level;
 
@@ -24,4 +24,6 @@ public abstract class AbstractLogger {
     }
 
     abstract protected void write(String message);
+
+
 }
