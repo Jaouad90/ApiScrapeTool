@@ -23,7 +23,7 @@ public class ProxyImpl implements Proxy{
     @Autowired
     private SecurityService securityService;
 
-    private AbstractLogger logger = getChainOfLoggers();
+    private AbstractLogger logger;
 
     public ProxyImpl(){
         this.logger = getChainOfLoggers();
