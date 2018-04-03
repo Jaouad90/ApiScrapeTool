@@ -90,7 +90,7 @@ public class APIController {
     @RequestMapping(value = "/api/restore/{apiid}/{mementoid}")
     public ModelAndView restoreState(@PathVariable("apiid") API api, @PathVariable("mementoid") APIMemento apiMemento ) {
         api = proxyService.proxyRestoreAPIFromMemento(api, apiMemento);
-        return new ModelAndView("redirect:api/" + api.getId());
+        return new ModelAndView("redirect:/api/" + api.getId());
 
     }
 
