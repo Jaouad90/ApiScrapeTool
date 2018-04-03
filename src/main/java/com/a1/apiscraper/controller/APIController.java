@@ -27,15 +27,18 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
 
+import static com.a1.apiscraper.ApiscraperApplication.getChainOfLoggers;
+
+
 @Controller
 public class APIController {
 
     DateTimeFormatter formatter;
 
     //Constant strings
-    private static final String timeIntervals  = "timeintervals";
-    private static final String decorators  = "decorators";
-    private static final String scrapebehaviors  = "scrapebehaviors";
+    private static final String TIMEINTERVALS = "timeintervals";
+    private static final String DECORATORS  = "decorators";
+    private static final String SCRAPEBEHAVIORS  = "scrapebehaviors";
 
     @Autowired
     private RepositoryService repositoryService;
@@ -48,16 +51,15 @@ public class APIController {
         formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
                         .withLocale( Locale.ENGLISH)
                         .withZone( ZoneId.systemDefault() );
-
         this.apiExporter = apiExporter;
     }
 
 
     @RequestMapping(value = "/api/add", method = RequestMethod.GET)
     public String showForm(Model model) {
-        model.addAttribute(decorators, repositoryService.getAllDecorators());
-        model.addAttribute(scrapebehaviors, repositoryService.getAllScrapeBehaviors());
-        model.addAttribute(timeIntervals, repositoryService.getAllTimeIntervals());
+        model.addAttribute(DECORATORS, repositoryService.getAllDecorators());
+        model.addAttribute(SCRAPEBEHAVIORS, repositoryService.getAllScrapeBehaviors());
+        model.addAttribute(TIMEINTERVALS, repositoryService.getAllTimeIntervals());
         model.addAttribute("api", new API());
         return "api/edit";
     }
@@ -66,7 +68,6 @@ public class APIController {
     @RequestMapping(value = "/api", method = RequestMethod.POST)
     public ModelAndView submit(@Valid @ModelAttribute("api") API apiModel, BindingResult result) {
         if (result.hasErrors()) {
-            //loggerChain.logMessage(1, "Niet alle velden correct ingevoerd");
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("api/edit");
             modelAndView.addObject("formErrors", result.getAllErrors());
@@ -76,14 +77,14 @@ public class APIController {
             return modelAndView;
         }
         API api = proxyService.proxySaveAPIModel(apiModel);
-
         return new ModelAndView("redirect:/api/" + api.getId());
     }
 
     @RequestMapping(value = "/api/{id}")
-    public ModelAndView view(@PathVariable("id") API api) { ;
+    public ModelAndView view(@PathVariable("id") long id) {
+        API api = repositoryService.getSingleAPI(id);
         api.getTimeInterval().getTimeList();
-        return new ModelAndView("home/detail", "api", api);
+        return new ModelAndView("api/detail", "api", api);
     }
 
     @Transactional
@@ -100,28 +101,35 @@ public class APIController {
         //create editView
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("api/edit");
-        modelAndView.addObject(timeIntervals, repositoryService.getAllTimeIntervals());
+        modelAndView.addObject(TIMEINTERVALS, repositoryService.getAllTimeIntervals());
         modelAndView.addObject("api", api);
-        modelAndView.addObject(scrapebehaviors, repositoryService.getAllScrapeBehaviors());
-        modelAndView.addObject(decorators, repositoryService.getAllDecorators());
+        modelAndView.addObject(SCRAPEBEHAVIORS, repositoryService.getAllScrapeBehaviors());
+        modelAndView.addObject(DECORATORS, repositoryService.getAllDecorators());
         api.getEndpoints();
         return modelAndView;
     }
 
     @RequestMapping(value="/result/{resultid}", method=RequestMethod.GET)
     @ResponseBody
-    public void downloadFile(@PathVariable(value="resultid") Result result, @RequestParam String format, HttpServletResponse response) {
+    public void downloadFile(@PathVariable(value="resultid") Result result, @RequestParam String format, HttpServletResponse response) throws IOException {
+        loggerChain.logMessage(AbstractLogger.WARNING, "downloaden gestart");
         apiExporter.setFormat(format);
         File file = apiExporter.convertedData(result);
+        InputStream inputStream = null;
         response.setContentType("application/" + format);
         response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
         response.setHeader("Content-Length", String.valueOf(file.length()));
         try {
-            InputStream inputStream = new FileInputStream(file);
+            inputStream = new FileInputStream(file);
             FileCopyUtils.copy(inputStream, response.getOutputStream());
             inputStream.close();
+
         } catch (IOException e1) {
-            System.out.println(e1.getMessage());
+            loggerChain.logMessage(AbstractLogger.WARNING, "IOexception : " + e1.getMessage());
+        } finally {
+            if (inputStream !=null) {
+                inputStream.close();
+            }
         }
     }
 }

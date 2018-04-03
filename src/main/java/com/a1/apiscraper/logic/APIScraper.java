@@ -12,7 +12,7 @@ import java.util.HashMap;
 @Getter
 @Setter
 public abstract class APIScraper  {
-
+    private AbstractLogger loggerChain = getLoggerChain();
     private API api;
 
     private ScrapeBehavior scrapeBehavior;
@@ -34,7 +34,7 @@ public abstract class APIScraper  {
             try {
                 throw new Exception("ScrapeBehavior is not set");
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
                 return new HashMap<>();
             }
         }
@@ -47,7 +47,7 @@ public abstract class APIScraper  {
             try {
                 throw new Exception("ScrapeBehavior is not set");
             } catch (Exception e) {
-                e.printStackTrace();
+                loggerChain.logMessage(AbstractLogger.WARNING, e.getMessage());
             }
         }
     }
