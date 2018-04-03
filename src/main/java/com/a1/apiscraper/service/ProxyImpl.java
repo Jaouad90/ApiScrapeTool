@@ -46,7 +46,6 @@ public class ProxyImpl implements Proxy{
         repositoryService.saveAPIConfig(config);
     }
 
-
     public void proxyAutoLogin(String username, String password){
         logger.logMessage(1,"De user met username: " + username + "probeert in te loggen");
         securityService.autologin(username, password);

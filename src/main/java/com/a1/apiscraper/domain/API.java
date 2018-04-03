@@ -34,7 +34,7 @@ public class API {
 
     private String state;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @   ManyToOne(cascade = CascadeType.ALL)
     public TimeInterval timeInterval;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
