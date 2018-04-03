@@ -34,6 +34,7 @@ import static com.a1.apiscraper.ApiscraperApplication.getChainOfLoggers;
 public class APIController {
 
     DateTimeFormatter formatter;
+    AbstractLogger loggerChain = getChainOfLoggers();
 
     //Constant strings
     private static final String TIMEINTERVALS = "timeintervals";
@@ -68,12 +69,13 @@ public class APIController {
     @RequestMapping(value = "/api", method = RequestMethod.POST)
     public ModelAndView submit(@Valid @ModelAttribute("api") API apiModel, BindingResult result) {
         if (result.hasErrors()) {
+            loggerChain.logMessage(1, "Niet alle velden correct ingevoerd");
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("api/edit");
             modelAndView.addObject("formErrors", result.getAllErrors());
-            modelAndView.addObject(scrapebehaviors, repositoryService.getAllScrapeBehaviors());
-            modelAndView.addObject(decorators, repositoryService.getAllDecorators());
-            modelAndView.addObject(timeIntervals, repositoryService.getAllTimeIntervals());
+            modelAndView.addObject(SCRAPEBEHAVIORS, repositoryService.getAllScrapeBehaviors());
+            modelAndView.addObject(DECORATORS, repositoryService.getAllDecorators());
+            modelAndView.addObject(TIMEINTERVALS, repositoryService.getAllTimeIntervals());
             return modelAndView;
         }
         API api = proxyService.proxySaveAPIModel(apiModel);

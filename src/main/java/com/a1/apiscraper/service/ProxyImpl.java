@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+
+import static com.a1.apiscraper.ApiscraperApplication.getChainOfLoggers;
+
 @Service
 public class ProxyImpl implements Proxy{
     @Autowired
@@ -20,7 +23,7 @@ public class ProxyImpl implements Proxy{
     @Autowired
     private SecurityService securityService;
 
-    private AbstractLogger logger;
+    private AbstractLogger logger = getChainOfLoggers();
 
     public ProxyImpl(){
         this.logger = getChainOfLoggers();
@@ -49,16 +52,5 @@ public class ProxyImpl implements Proxy{
     public void proxyAutoLogin(String username, String password){
         logger.logMessage(1,"De user met username: " + username + "probeert in te loggen");
         securityService.autologin(username, password);
-    }
-
-    private static AbstractLogger getChainOfLoggers(){
-        AbstractLogger errorLogger = new ErrorLogger(AbstractLogger.ERROR);
-        AbstractLogger fileLogger = new WarningLogger(AbstractLogger.WARNING);
-        AbstractLogger consoleLogger = new ConsoleLogger(AbstractLogger.INFO);
-
-        errorLogger.setNextLogger(fileLogger);
-        fileLogger.setNextLogger(consoleLogger);
-
-        return errorLogger;
     }
 }
