@@ -1,11 +1,11 @@
 package com.a1.apiscraper;
 
 import com.a1.apiscraper.controller.APIRestController;
-import com.a1.apiscraper.domain.*;
-import com.a1.apiscraper.repository.APIRepository;
+import com.a1.apiscraper.domain.API;
+import com.a1.apiscraper.domain.APIConfig;
+import com.a1.apiscraper.domain.Endpoint;
+import com.a1.apiscraper.domain.Result;
 import com.a1.apiscraper.service.RepositoryService;
-import io.swagger.annotations.Api;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,19 +13,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.sql.Date;
 import java.time.Instant;
