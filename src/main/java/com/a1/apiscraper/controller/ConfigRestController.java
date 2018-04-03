@@ -2,6 +2,7 @@ package com.a1.apiscraper.controller;
 
 import com.a1.apiscraper.domain.APIConfig;
 import com.a1.apiscraper.domain.ScrapeBehavior;
+import com.a1.apiscraper.service.Proxy;
 import com.a1.apiscraper.service.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 public class ConfigRestController {
     @Autowired
     private RepositoryService repositoryService;
+    @Autowired
+    private Proxy proxyService;
 
     @RequestMapping(value = "/{id}", method= RequestMethod.GET)
     public APIConfig showAPIConfig(@PathVariable Long id){
@@ -22,8 +25,7 @@ public class ConfigRestController {
         APIConfig config = repositoryService.getAPIConfig(id);
         ScrapeBehavior scrapeBehavior = repositoryService.getScrapeBehavior(scrapeId);
         config.setScrapeBehavior(scrapeBehavior);
-        repositoryService.saveAPIConfig(config);
+        proxyService.proxySaveAPIConfig(config);
         return config;
     }
-
 }

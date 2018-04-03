@@ -3,6 +3,7 @@ package com.a1.apiscraper.service;
 import com.a1.apiscraper.domain.*;
 import org.springframework.stereotype.Repository;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -27,9 +28,10 @@ public interface RepositoryService {
     //Find Single
     API getSingleAPI(Long id);
     User getUserByUsername(String username);
-    Result getResultByID(Long id);
     ScrapeBehavior getScrapeBehavior(Long id);
     APIConfig getAPIConfig(Long id );
+    Result getResultByID(Long id);
+    List getLastResultsByAPI(API api);
     //-->
 
     //<!--
