@@ -57,8 +57,13 @@ public class APIExporter
     {
         if(file.exists())
         {
-            file.delete();
-            System.out.println("File deleted successfully");
+            boolean deleted = file.delete();
+            if (deleted == true) {
+                System.out.println("File deleted successfully");
+            }
+            else {
+                System.out.println("File not deleted");
+            }
         }
         else
         {

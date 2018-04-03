@@ -14,8 +14,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.a1.apiscraper.ApiscraperApplication.getChainOfLoggers;
+
 public class NormalScrapeBehavior implements ScrapeBehavior {
 
+    AbstractLogger loggerChain = getChainOfLoggers();
     @Override
     public HashMap<Endpoint, Result> scrape(API api) {
         HashMap<Endpoint, Result> endpointResults = new HashMap<>();
@@ -28,10 +31,12 @@ public class NormalScrapeBehavior implements ScrapeBehavior {
             try {
                 resultString = Unirest.get(api.getBaseUrl() + endpoint.getValue().getName()).asString();
             } catch (UnirestException e) {
-                e.printStackTrace();
+                loggerChain.logMessage(AbstractLogger.WARNING, "Unirest exception tijdens ophalen : " + e.getMessage());
             }
-
-            String output = resultString.getBody();
+            String output =  "";
+            if (resultString != null) {
+                output = resultString.getBody();
+            }
             result.setResult(output);
             Date date = Date.from(Instant.now());
             result.setDateTimeStamp(date);

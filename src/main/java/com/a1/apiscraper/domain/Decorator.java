@@ -20,5 +20,5 @@ public class Decorator {
     @GeneratedValue
     private Long id;
 
-    public String name;
+    private String name;
 }

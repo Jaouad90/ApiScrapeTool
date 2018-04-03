@@ -27,16 +27,19 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
 
+import static com.a1.apiscraper.ApiscraperApplication.getChainOfLoggers;
+
+
 @Controller
 public class APIController {
 
     DateTimeFormatter formatter;
-    AbstractLogger loggerChain;
+    AbstractLogger loggerChain = getChainOfLoggers();
 
     //Constant strings
-    private static final String timeIntervals  = "timeintervals";
-    private static final String decorators  = "decorators";
-    private static final String scrapebehaviors  = "scrapebehaviors";
+    private static final String TIMEINTERVALS = "timeintervals";
+    private static final String DECORATORS  = "decorators";
+    private static final String SCRAPEBEHAVIORS  = "scrapebehaviors";
 
     @Autowired
     private RepositoryService repositoryService;
@@ -50,27 +53,15 @@ public class APIController {
                         .withLocale( Locale.ENGLISH)
                         .withZone( ZoneId.systemDefault() );
         //Benodigd voor gescheiden service/controller
-        this.loggerChain = getChainOfLoggers();
         this.apiExporter = apiExporter;
     }
 
-    private static AbstractLogger getChainOfLoggers(){
-
-        AbstractLogger errorLogger = new ErrorLogger(AbstractLogger.ERROR);
-        AbstractLogger fileLogger = new WarningLogger(AbstractLogger.DEBUG);
-        AbstractLogger consoleLogger = new ConsoleLogger(AbstractLogger.INFO);
-
-        errorLogger.setNextLogger(fileLogger);
-        fileLogger.setNextLogger(consoleLogger);
-
-        return errorLogger;
-    }
 
     @RequestMapping(value = "/api/add", method = RequestMethod.GET)
     public String showForm(Model model) {
-        model.addAttribute(decorators, repositoryService.getAllDecorators());
-        model.addAttribute(scrapebehaviors, repositoryService.getAllScrapeBehaviors());
-        model.addAttribute(timeIntervals, repositoryService.getAllTimeIntervals());
+        model.addAttribute(DECORATORS, repositoryService.getAllDecorators());
+        model.addAttribute(SCRAPEBEHAVIORS, repositoryService.getAllScrapeBehaviors());
+        model.addAttribute(TIMEINTERVALS, repositoryService.getAllTimeIntervals());
         model.addAttribute("api", new API());
         return "api/edit";
     }
@@ -83,9 +74,9 @@ public class APIController {
                 ModelAndView modelAndView = new ModelAndView();
                 modelAndView.setViewName("api/edit");
                 modelAndView.addObject("formErrors", result.getAllErrors());
-                modelAndView.addObject(scrapebehaviors, repositoryService.getAllScrapeBehaviors());
-                modelAndView.addObject(decorators, repositoryService.getAllDecorators());
-                modelAndView.addObject(timeIntervals, repositoryService.getAllTimeIntervals());
+                modelAndView.addObject(SCRAPEBEHAVIORS, repositoryService.getAllScrapeBehaviors());
+                modelAndView.addObject(DECORATORS, repositoryService.getAllDecorators());
+                modelAndView.addObject(TIMEINTERVALS, repositoryService.getAllTimeIntervals());
                 return modelAndView;
             }
             API api = apiService.saveAPIModel(apiModel);
@@ -101,11 +92,7 @@ public class APIController {
     @Transactional
     @RequestMapping(value = "/api/restore/{apiid}/{mementoid}")
     public ModelAndView restoreState(@PathVariable("apiid") API api, @PathVariable("mementoid") APIMemento apiMemento ) {
-//
-//        //Restore Memento
-//        apiMemento.getId();
-//        api.getStateFromMemento(apiMemento);
-//        repositoryService.saveAPI(api);
+        //Restore Memento
         api = apiService.restoreAPIFromMemento(api, apiMemento);
         return new ModelAndView("redirect:/api/" + api.getId());
     }
@@ -116,28 +103,33 @@ public class APIController {
         //create editView
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("api/edit");
-        modelAndView.addObject(timeIntervals, repositoryService.getAllTimeIntervals());
+        modelAndView.addObject(TIMEINTERVALS, repositoryService.getAllTimeIntervals());
         modelAndView.addObject("api", api);
-        modelAndView.addObject(scrapebehaviors, repositoryService.getAllScrapeBehaviors());
-        modelAndView.addObject(decorators, repositoryService.getAllDecorators());
+        modelAndView.addObject(SCRAPEBEHAVIORS, repositoryService.getAllScrapeBehaviors());
+        modelAndView.addObject(DECORATORS, repositoryService.getAllDecorators());
         api.getEndpoints();
         return modelAndView;
     }
 
     @RequestMapping(value="/result/{resultid}", method=RequestMethod.GET)
     @ResponseBody
-    public void downloadFile(@PathVariable(value="resultid") Result result, @RequestParam String format, HttpServletResponse response) {
+    public void downloadFile(@PathVariable(value="resultid") Result result, @RequestParam String format, HttpServletResponse response) throws IOException {
+        loggerChain.logMessage(AbstractLogger.WARNING, "downloaden gestart");
         apiExporter.setFormat(format);
         File file = apiExporter.convertedData(result);
+        InputStream inputStream = null;
         response.setContentType("application/" + format);
         response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
         response.setHeader("Content-Length", String.valueOf(file.length()));
         try {
-            InputStream inputStream = new FileInputStream(file);
+            inputStream = new FileInputStream(file);
             FileCopyUtils.copy(inputStream, response.getOutputStream());
             inputStream.close();
+
         } catch (IOException e1) {
-            System.out.println(e1.getMessage());
+            loggerChain.logMessage(AbstractLogger.WARNING, "IOexception : " + e1.getMessage());
+        } finally {
+            inputStream.close();
         }
     }
 }
