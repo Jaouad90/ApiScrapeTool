@@ -27,8 +27,8 @@ public class APIManager {
     private RepositoryService repositoryService;
 
     @Transactional
-    @Scheduled(cron = "0 0/30 * * * ?")
-//    @Scheduled(cron = "0/30 * * * * ?")
+ //   @Scheduled(cron = "0 0/30 * * * ?")
+    @Scheduled(cron = "0/30 * * * * ?")
     public void scrapeTask() {
         ArrayList<API> allAPIs = (ArrayList<API>) repositoryService.getAllAPIs();
 
