@@ -57,7 +57,7 @@ public class APIRestController {
     }
 
     @RequestMapping(value = "/{id}/scrape", method= RequestMethod.GET)
-    public HashMap<Endpoint, Result> scrapeApi(@PathVariable Long id) {
+    public HashMap<String, Result> scrapeApi(@PathVariable Long id) {
         return proxyService.proxyScrapeSingleAPI(id);
     }
 

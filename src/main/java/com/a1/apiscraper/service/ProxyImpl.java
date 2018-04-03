@@ -2,9 +2,6 @@ package com.a1.apiscraper.service;
 
 import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.logic.AbstractLogger;
-import com.a1.apiscraper.logic.ConsoleLogger;
-import com.a1.apiscraper.logic.ErrorLogger;
-import com.a1.apiscraper.logic.WarningLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +26,7 @@ public class ProxyImpl implements Proxy{
         this.logger = getChainOfLoggers();
     }
 
-    public HashMap<Endpoint, Result> proxyScrapeSingleAPI(long apiID){
+    public HashMap<String, Result> proxyScrapeSingleAPI(long apiID){
         logger.logMessage(1,"Er wordt via onze RESTAPI een scrape aan gezet met APIID: " + apiID);
         return restFacade.scrapeSingleApi(apiID);
     }

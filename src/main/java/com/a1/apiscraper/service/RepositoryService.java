@@ -3,7 +3,6 @@ package com.a1.apiscraper.service;
 import com.a1.apiscraper.domain.*;
 import org.springframework.stereotype.Repository;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -47,6 +46,14 @@ public interface RepositoryService {
     void saveScrapeBehavior(ScrapeBehavior scrapeBehavior);
     void saveTimeInterval(TimeInterval timeInterval);
 
+    //-->
+//-->
+
+//<!--
+//Some
+    //<!--
+    //Find some
+    Result getLatestResultForEndpoint(Long id);
     //-->
 //-->
 }

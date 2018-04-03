@@ -131,6 +131,13 @@ public class RepositoryServiceImpl implements RepositoryService {
     public void saveTimeInterval(TimeInterval timeInterval) {
         timeIntervalRepository.save(timeInterval);
     }
+
+    public Result getLatestResultForEndpoint(Long id) {
+        return (Result) em.createQuery("SELECT r FROM Endpoint e JOIN e.results r WHERE e.id = :id ORDER BY r.dateTimeStamp DESC")
+                .setParameter("id", id)
+                .setMaxResults(1)
+                .getSingleResult();
+    }
     //-->
 //-->
 }
