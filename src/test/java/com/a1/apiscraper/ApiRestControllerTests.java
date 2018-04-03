@@ -1,9 +1,7 @@
 package com.a1.apiscraper;
 
 import com.a1.apiscraper.controller.APIRestController;
-import com.a1.apiscraper.domain.API;
-import com.a1.apiscraper.domain.APIConfig;
-import com.a1.apiscraper.domain.CareTaker;
+import com.a1.apiscraper.domain.*;
 import com.a1.apiscraper.repository.APIRepository;
 import com.a1.apiscraper.service.RepositoryService;
 import io.swagger.annotations.Api;
@@ -27,6 +25,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.sql.Date;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -63,40 +64,46 @@ public class ApiRestControllerTests {
         api1.setConfig(apiConfig1);
 
         api2.setId(2L);
-        api2.setName("Coinmarketcap");
-        api2.setBaseUrl("https://coinmarketcap.com/api/v1/");
+        api2.setName("Marktplaats");
+        api2.setBaseUrl("https://www.marktplaats.nl/kijkinuwwijk/");
         APIConfig apiConfig2 = new APIConfig();
         apiConfig2.setId(2L);
         api2.setConfig(apiConfig2);
+        Endpoint endpoint = new Endpoint();
+        endpoint.setId(1L);
+        endpoint.setName("items.json?ids=m1262177404");
+        Result result1 = new Result();
+        result1.setId(1L);
+        result1.setResult("{\"valid\":true,\"callback\":null,\"value\":{\"ads\":[{\"title\":\"Trui van het merk Soliver maat M/L\",\"imageUrl\":\"//i.ebayimg.com/00/s/MTAyNFg3NjQ=/z/FXoAAOSwmXlansGj/$_82.JPG\",\"vipUrl\":\"https://link.marktplaats.nl/m1262177404\",\"price\":\"Bieden\"}]},\"errors\":null,\"messages\":null}");
+        result1.setDateTimeStamp(Date.from(Instant.now()));
+        Result result2 = new Result();
+        result2.setId(2L);
+        result2.setResult("{\"valid\":true,\"callback\":null,\"value\":{\"ads\":[{\"title\":\"Trui van het merk Soliver maat M/L\",\"imageUrl\":\"//i.ebayimg.com/00/s/MTAyNFg3NjQ=/z/FXoAAOSwmXlansGj/$_82.JPG\",\"vipUrl\":\"https://link.marktplaats.nl/m1262177404\",\"price\":\"Bieden\"}]},\"errors\":null,\"messages\":null}");
+        result2.setDateTimeStamp(Date.from(Instant.now().plusSeconds(172800L)));
+
         mockMvc = MockMvcBuilders.standaloneSetup(apiRestController)
                 .build();
     }
 
     @Test
     public void findOneAPI() throws Exception {
-
         Mockito.when(repositoryService.getSingleAPI(1L)).thenReturn(api1);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/v1/api/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(MockMvcResultMatchers.content().string(containsString("Coindesk")))
-                .andDo(MockMvcResultHandlers.print());
-
+                .andExpect(MockMvcResultMatchers.content().string(containsString("Coindesk")));
     }
 
     @Test
     public void findAllAPIS() throws Exception {
-
         Mockito.when(repositoryService.getAllAPIs()).thenReturn(Arrays.asList(api1, api2));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/v1/api/list"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.content().string(containsString("Coindesk")))
-                .andExpect(MockMvcResultMatchers.content().string(containsString("Coinmarketcap")))
-                .andDo(MockMvcResultHandlers.print());
-
+                .andExpect(MockMvcResultMatchers.content().string(containsString("Coinmarketcap")));
     }
 
 }
