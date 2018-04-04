@@ -27,9 +27,10 @@ public interface RepositoryService {
     //Find Single
     API getSingleAPI(Long id);
     User getUserByUsername(String username);
-    Result getResultByID(Long id);
     ScrapeBehavior getScrapeBehavior(Long id);
     APIConfig getAPIConfig(Long id );
+    Result getResultByID(Long id);
+    List getLastResultsByAPI(API api);
     //-->
 
     //<!--
@@ -45,6 +46,14 @@ public interface RepositoryService {
     void saveScrapeBehavior(ScrapeBehavior scrapeBehavior);
     void saveTimeInterval(TimeInterval timeInterval);
 
+    //-->
+//-->
+
+//<!--
+//Some
+    //<!--
+    //Find some
+    Result getLatestResultForEndpoint(Long id);
     //-->
 //-->
 }

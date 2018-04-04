@@ -1,9 +1,6 @@
 package com.a1.apiscraper.service;
 
-import com.a1.apiscraper.domain.API;
-import com.a1.apiscraper.domain.APIConfig;
-import com.a1.apiscraper.domain.APIMemento;
-import com.a1.apiscraper.domain.CareTaker;
+import com.a1.apiscraper.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +8,9 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 @Service
 public class APIServiceImpl implements APIService {
@@ -70,4 +69,11 @@ public class APIServiceImpl implements APIService {
         return api;
     }
 
+    public HashMap<String, Result> getLatestResultsForEndpoints(Map<Long, Endpoint> endpoints, String baseUrl) {
+        HashMap<String, Result> latestResults = new HashMap<>();
+        for (Endpoint endpoint : endpoints.values()) {
+            latestResults.put(baseUrl + endpoint.getName(), repositoryService.getLatestResultForEndpoint(endpoint.getId()));
+        }
+        return latestResults;
+    }
 }

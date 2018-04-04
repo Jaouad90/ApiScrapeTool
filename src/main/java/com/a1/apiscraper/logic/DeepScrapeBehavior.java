@@ -19,9 +19,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.a1.apiscraper.ApiscraperApplication.getChainOfLoggers;
+
 @Service
 public class DeepScrapeBehavior implements ScrapeBehavior {
 
+    private AbstractLogger loggerChain = getChainOfLoggers();
     @Override
     public HashMap<Endpoint, Result> scrape(API api) {
         HashMap<Endpoint, Result> endpointResults = new HashMap<>();
@@ -33,12 +36,15 @@ public class DeepScrapeBehavior implements ScrapeBehavior {
             try {
                 resultString = Unirest.get(api.getBaseUrl() + endpoint.getValue().getName()).asString();
             } catch (UnirestException e) {
-                e.printStackTrace();
+                loggerChain.logMessage(AbstractLogger.WARNING, "Unirest exception tijdens ophalen : " + e.getMessage());
             }
-            String output = resultString.getBody();
-            result.setResult(output);
-            Date date = Date.from(Instant.now());
-            result.setDateTimeStamp(date);
+            String output = "";
+            if (resultString != null) {
+                output = resultString.getBody();
+            }
+                result.setResult(output);
+                Date date = Date.from(Instant.now());
+                result.setDateTimeStamp(date);
 
             UrlDetector parser = new UrlDetector(output, UrlDetectorOptions.Default);
 
